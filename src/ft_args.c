@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   try.c                                              :+:      :+:    :+:   */
+/*   ft_args.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 11:56:58 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/01 15:05:12 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/01 17:43:52 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "minishell.h"
 
 int	ft_status(char c)
 {
@@ -51,7 +50,7 @@ int	ft_len(char *s, int *j)
 	return (len);
 }
 
-char	*ft_split(char *s)
+char	*ft_args(char *s)
 {
 	int			len;
 	char		*res;
@@ -73,19 +72,18 @@ char	*ft_split(char *s)
 	return (res);
 }
 
-void	display(char *s)
+t_token	*make_token(char *s)
 {
+	t_token	*token;
 	char	*res;
 
 	res = ft_split(s);
+	token = ft_lstnew(res, 0);
 	while (res != NULL)
 	{
-		printf("%s\n", res);
 		res = ft_split(s);
+		if (res != NULL)
+			ft_lstadd_back(&token, ft_lstnew(res, 0));
 	}
-}
-
-int	main(void)
-{
-	display("      < in awk      ''   \"      f     \" \"'{print $2}'\"   ");
+	return (token);
 }
