@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 14:24:43 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/01 10:55:55 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/01 11:25:16 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ int	ft_quotes(int *state, char *s, char *charset)
 	i = 0;
 	if (s && s[i] == 34 || s[i] == 39)
 	{
-		*state = ft_status(s[i]);
+		if (*state == 0)
+			*state = ft_status(s[i]);
 		i++;
 	}
 	while(s && s[i])
@@ -92,16 +93,18 @@ int	ft_count(char *s, char *charset)
 		state = ft_status(s[0]);
 	i = 0;
 	count = 0;
-	while (s && *s)
+	while (s && s[i])
 	{
 		if (state == 0)
 		{
 			i += ft_default(&state, &s[i], charset);
+			// printf("AFTER STATE 0:%s,%d\n", &s[i], i);
 			count++;
 		}
 		if (state == 1 || state == 2)
 		{
 			i += ft_quotes(&state, &s[i], charset);
+			// printf("AFTER STATE 2:%s,%d\n", &s[i], i);
 			count++;	
 		}
 	}
@@ -111,11 +114,11 @@ int	ft_count(char *s, char *charset)
 
 int	main(void)
 {
-	char *s = "'h' awk";
-	int	state = 0;
+	char *s = "                 \"print     awk\"       print";
+	// int	state = 0;
 	char *charset = " ";
-	char *s1 = "'je'";
-	int	nb = 0;
+	// char *s1 = "'je'";
+	// int	nb = 0;
 	// nb += ft_quotes(&state, s, charset);
 	// s++;
 	// nb += ft_quotes(&state, &s1, charset);
