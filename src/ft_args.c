@@ -6,17 +6,19 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 11:56:58 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/02 16:00:16 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/02 18:08:25 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 
-int	ft_status(char c)
+int	ft_status(char c, int reset)
 {
 	static int	status = 0;
-
+	
+	if (reset == 1)
+		status = 0;
 	if (c == 39 && status == 0)
 		status = 1;
 	else if (c == '\"' && status == 0)
@@ -48,7 +50,6 @@ int	ft_len(char *s, int *j)
 {
 	int	len;
 	int	state;
-	int	tmp;
 
 	while (s[*j] == ' ')
 		(*j)++;
@@ -59,8 +60,7 @@ int	ft_len(char *s, int *j)
 		return (2);
 	while (s[len + *j])
 	{
-		tmp = state;
-		state = ft_status(s[len + *j]);
+		state = ft_status(s[len + *j], 0);
 		len++;
 		if (check_sep(s[len + *j], s[len + *j -1]) && state == 0)
 			break ;
@@ -104,63 +104,4 @@ t_token	*make_token(char *s)
 			t_lstadd_back(&token, t_lstnew(res, 0));
 	}
 	return (token);
-}
-
-void get_type(t_token *token)
-{
-	if (!ft_strncmp(token->value, ">>", 2) || !ft_strncmp(token->value, "<<", 2)
-			|| !ft_strncmp(token->value, ">", 1) || !ft_strncmp(token->value, "<", 1))
-	{
-		if (!ft_strncmp(token->value, ">>", 2))
-			token->type = HOUT;
-		else if (!ft_strncmp(token->value, ">", 1))
-			token->type = OUT;
-		else if (!ft_strncmp(token->value, "<", 1))
-			token->type = IN;
-		if (!ft_strncmp(token->value, "<<", 2))
-			token->type = HIN;
-		if (!ft_strncmp(token->value, "<<", 2))
-		{
-			token = token->next;
-			if (token)
-				token->type = LIM;
-		}
-		else
-		{
-			token = token->next;
-			if (token)
-				token->type = FD;
-		}
-	}
-}
-
-void	ft_type(t_token **token)
-{
-	t_token *cur;
-
-	cur = *token;
-	while (cur)
-	{
-		get_type(cur);
-		if (!ft_strncmp(cur->value, "|", 1))
-			cur->type = PIPE;
-		cur = cur->next;
-	}
-}
-
-#include <stdio.h>
-
-int	main(void)
-{
-	char *s;
-	t_token *token;
-
-	s = "echo > ' hello tst\"";
-	token = make_token(s);
-	ft_type(&token);
-	while (token)
-	{
-		printf("token:%s, type:%d\n", token->value, token->type);
-		token = token->next;
-	}
 }

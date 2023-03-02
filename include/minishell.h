@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/02 11:40:04 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/02 18:17:09 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,26 @@
 # define MINISHELL_H
 
 # include <stdlib.h>
+# include <stdio.h>
+# include "libft.h"
 
 enum				e_state
 {
-	DOUBLE = 2,
-	SIMPLE = 1,
-	SPLIT = 0
+	SPLIT,
+	SIMPLE,
+	DOUBLE
 };
 
 enum				e_type
 {
-	WORD = 0,
-	FD = 1,
-	LIM = 2,
-	IN = 3,
-	OUT = 4,
-	HIN = 5,
-	HOUT = 6,
-	PIPE = 7
+	WORD,
+	FD,
+	LIM,
+	IN,
+	OUT,
+	HIN,
+	HOUT,
+	PIPE
 };
 
 typedef struct s_token
@@ -51,12 +53,18 @@ typedef struct s_cmd
 }					t_cmd;
 
 // Parsing split arguments
-int					ft_status(char c);
+int					ft_status(char c, int reset);
 int					ft_len(char *s, int *j);
 char				*ft_args(char *s);
 t_token				*make_token(char *s);
+
+// Get token type
 void				get_type(t_token *token);
 void				ft_type(t_token **token);
+
+// Check for syntax error
+int					ft_parser(t_token **token);
+int					check_quotes(char *s);
 
 // Linked list for tokens
 t_token				*t_lstnew(char *value, int type);
