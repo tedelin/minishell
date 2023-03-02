@@ -6,11 +6,12 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 11:56:58 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/01 17:43:52 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/02 15:14:15 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft.h"
 
 int	ft_status(char c)
 {
@@ -27,6 +28,22 @@ int	ft_status(char c)
 	return (status);
 }
 
+int	check_sep(char c, char b)
+{
+	char	*sep;
+	int		i;
+
+	sep = " >|<";
+	i = 0;
+	while (sep[i])
+	{
+		if (sep[i] == c || sep[i] == b)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	ft_len(char *s, int *j)
 {
 	int	len;
@@ -37,6 +54,9 @@ int	ft_len(char *s, int *j)
 		(*j)++;
 	state = 0;
 	len = 0;
+	if (!ft_strncmp(&s[len + *j], ">>", 2)
+		|| !ft_strncmp(&s[len + *j], "<<", 2))
+		return (2);
 	while (s[len + *j])
 	{
 		tmp = state;
@@ -44,7 +64,7 @@ int	ft_len(char *s, int *j)
 		len++;
 		if (state == 0 && tmp != 0)
 			break ;
-		if (s[len + *j] == ' ' && state == 0)
+		if (check_sep(s[len + *j], s[len + *j -1]) && state == 0)
 			break ;
 	}
 	return (len);
@@ -58,7 +78,7 @@ char	*ft_args(char *s)
 	static int	j = 0;
 
 	while (s[j] == ' ')
-			j++;
+		j++;
 	if (!s || (s && s[j] == 0))
 		return (NULL);
 	len = ft_len(s, &j);
@@ -77,13 +97,72 @@ t_token	*make_token(char *s)
 	t_token	*token;
 	char	*res;
 
-	res = ft_split(s);
-	token = ft_lstnew(res, 0);
+	res = ft_args(s);
+	token = t_lstnew(res, 0);
 	while (res != NULL)
 	{
-		res = ft_split(s);
+		res = ft_args(s);
 		if (res != NULL)
-			ft_lstadd_back(&token, ft_lstnew(res, 0));
+			t_lstadd_back(&token, t_lstnew(res, 0));
 	}
 	return (token);
+}
+
+void get_type(t_token *token)
+{
+	if (!ft_strncmp(token->value, ">>", 2) || !ft_strncmp(token->value, "<<", 2)
+			|| !ft_strncmp(token->value, ">", 1) || !ft_strncmp(token->value, "<", 1))
+	{
+		if (!ft_strncmp(token->value, ">>", 2))
+			token->type = HOUT;
+		else if (!ft_strncmp(token->value, ">", 1))
+			token->type = OUT;
+		else if (!ft_strncmp(token->value, "<", 1))
+			token->type = IN;
+		if (!ft_strncmp(token->value, "<<", 2))
+			token->type = HIN;
+		if (!ft_strncmp(token->value, "<<", 2))
+		{
+			token = token->next;
+			if (token)
+				token->type = LIM;
+		}
+		else
+		{
+			token = token->next;
+			if (token)
+				token->type = FD;
+		}
+	}
+}
+
+void	ft_type(t_token **token)
+{
+	t_token *cur;
+
+	cur = *token;
+	while (cur)
+	{
+		get_type(cur);
+		if (!ft_strncmp(cur->value, "|", 1))
+			cur->type = PIPE;
+		cur = cur->next;
+	}
+}
+
+#include <stdio.h>
+
+int	main(void)
+{
+	char *s;
+	t_token *token;
+
+	s = "echo \"a\"$L'+ 2'$HOME_";
+	token = make_token(s);
+	ft_type(&token);
+	while (token)
+	{
+		printf("token:%s, type:%d\n", token->value, token->type);
+		token = token->next;
+	}
 }
