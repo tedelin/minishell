@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 16:10:45 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/02 19:01:07 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/02 21:43:56 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 void	get_type(t_token *token)
 {
-	if (!ft_strncmp(token->value, ">>", 2) || !ft_strncmp(token->value, "<<", 2)
+	if (token->value && (!ft_strncmp(token->value, ">>", 2)
+        || !ft_strncmp(token->value, "<<", 2)
 		|| !ft_strncmp(token->value, ">", 1)
-		|| !ft_strncmp(token->value, "<", 1))
+		|| !ft_strncmp(token->value, "<", 1)))
 	{
 		if (!ft_strncmp(token->value, ">>", 2))
 			token->type = HOUT;
@@ -49,7 +50,7 @@ void	ft_type(t_token **token)
 	while (cur)
 	{
 		get_type(cur);
-		if (!ft_strncmp(cur->value, "|", 1))
+		if (cur->value && !ft_strncmp(cur->value, "|", 1))
 			cur->type = PIPE;
 		cur = cur->next;
 	}
@@ -60,7 +61,7 @@ int	main(void)
 	char *s;
 	t_token *token;
 
-	s = "awdawd   '{ print $2}' \"wdawa\" 'gfddgfd ";
+	s = "' '";
 	token = make_token(s);
 	ft_type(&token);
 	if (ft_parser(&token) == 1)

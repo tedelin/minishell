@@ -6,14 +6,14 @@
 #    By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/27 14:55:19 by tedelin           #+#    #+#              #
-#    Updated: 2023/03/02 17:24:03 by tedelin          ###   ########.fr        #
+#    Updated: 2023/03/02 21:33:21 by tedelin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 INCLUDE = -I./include -I./libft
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 SRC =  $(addprefix src/, ft_parser.c ft_token.c lst_token.c ft_args.c)
 OBJS = $(addprefix obj/, ft_parser.o ft_token.o lst_token.o ft_args.o)
 
@@ -30,10 +30,12 @@ obj/%.o: src/%.c
 	$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $^
 
 clean:
+	make -C libft clean
 	rm -rf $(OBJS)
 	rm -rf obj
 
 fclean: clean
+	make -C libft fclean
 	rm -rf $(NAME)
 
 re: fclean all
