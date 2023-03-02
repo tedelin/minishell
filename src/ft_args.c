@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 11:56:58 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/02 15:14:15 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/02 16:00:16 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ int	ft_len(char *s, int *j)
 		tmp = state;
 		state = ft_status(s[len + *j]);
 		len++;
-		if (state == 0 && tmp != 0)
-			break ;
 		if (check_sep(s[len + *j], s[len + *j -1]) && state == 0)
 			break ;
 	}
@@ -157,7 +155,7 @@ int	main(void)
 	char *s;
 	t_token *token;
 
-	s = "echo \"a\"$L'+ 2'$HOME_";
+	s = "echo > ' hello tst\"";
 	token = make_token(s);
 	ft_type(&token);
 	while (token)
