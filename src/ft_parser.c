@@ -6,36 +6,11 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 16:13:01 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/02 21:43:17 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/03 11:12:25 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// pipe au debut ou a la fin
-// quotes 
-// redirections pas 3 a la suite
-// pas de redirection opposer
-
-
-// int	check_quotes(char *s)
-// {
-//     printf("premier = %c //  dernier = %c\n", s[0], s[ft_strlen(s) - 1]);
-// 	if ((s[0] == 34 || s[0] == 39) && ft_strlen(s) > 1)
-// 	{
-//         if (s[ft_strlen(s) - 1] != s[0])
-//             return (1);
-// 	}
-//     else if((s[ft_strlen(s) - 1] == 34 || s[ft_strlen(s) - 1] == 39)
-//         && ft_strlen(s) > 1)
-// 	{
-// 		if (s[0] != s[ft_strlen(s) - 1])
-// 			 return (1);
-// 	}
-// 	if (ft_strlen(s) == 1 && (s[0] == 34 || s[0] == 39))
-//              return (1);
-//     return (0);
-// }
 
 int check_quotes(char *s)
 {
@@ -55,9 +30,9 @@ int check_quotes(char *s)
 		count++;
 		i++;
 	}
-	while (s[i])
+	while (s[i + 1])
 		i++;
-	if (old_i != i && (s[i] == s[old_i]))
+	if (old_i != i && s[i] == s[old_i])
 		count++;
 	if ((count != 2 && count != 0) || (count == 1 && ft_strlen(s) == 1))
 		return (1);
