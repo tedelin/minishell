@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 16:10:45 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/03 11:32:38 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/03 11:45:34 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	ft_type(t_token **token)
 	{
 		if (cur->value && !ft_strncmp(cur->value, "|", 1))
 			cur->type = PIPE;
-		if (!ft_strncmp(cur->value, ">>", 2))
+		if (cur->value && !ft_strncmp(cur->value, ">>", 2))
 			cur->type = HOUT;
-		else if (!ft_strncmp(cur->value, ">", 1))
+		else if (cur->value && !ft_strncmp(cur->value, ">", 1))
 			cur->type = OUT;
-		else if (!ft_strncmp(cur->value, "<", 1))
+		else if (cur->value && !ft_strncmp(cur->value, "<", 1))
 			cur->type = IN;
-		else if (!ft_strncmp(cur->value, "<<", 2))
+		else if (cur->value && !ft_strncmp(cur->value, "<<", 2))
 			cur->type = HIN;
 		if (cur->type == HIN && cur->next)
 			cur->next->type = LIM;
@@ -44,7 +44,7 @@ int	main(void)
 	char *s;
 	t_token *token;
 
-	s = "< in 'ls -la | cat > out";
+	s = NULL;
 	token = make_token(s);
 	ft_type(&token);
 	if (ft_parser(&token) == 1)
