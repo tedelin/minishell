@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 11:56:58 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/03 11:46:12 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/03 11:58:44 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,10 @@ char	*ft_args(char *s)
 	int			i;
 	static int	j = 0;
 
+	while (s && s[j] == ' ')
+		j++;
 	if (!s || (s && s[j] == 0))
 		return (NULL);
-	while (s[j] == ' ')
-		j++;
 	len = ft_len(s, &j);
 	res = malloc(sizeof(char) * (len + 1));
 	if (!res)

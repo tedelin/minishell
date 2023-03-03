@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 16:10:45 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/03 11:45:34 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/03 11:56:04 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(void)
 	char *s;
 	t_token *token;
 
-	s = NULL;
+	s = "> ";
 	token = make_token(s);
 	ft_type(&token);
 	if (ft_parser(&token) == 1)
