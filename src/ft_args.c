@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 11:56:58 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/14 15:58:33 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/14 16:05:30 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,18 +92,17 @@ char	*ft_args(char *s)
 	return (res);
 }
 
-t_token	*make_token(char *s)
+int make_token(t_token **lst_token, char *s)
 {
-	t_token	*token;
 	char	*res;
 
 	res = ft_args(s);
-	token = t_lstnew(res, 0);
+	*lst_token = t_lstnew(res, 0);
 	while (res != NULL)
 	{
 		res = ft_args(s);
 		if (res != NULL)
-			t_lstadd_back(&token, t_lstnew(res, 0));
+			t_lstadd_back(lst_token, t_lstnew(res, 0));
 	}
-	return (token);
+	return (ft_type(lst_token));
 }

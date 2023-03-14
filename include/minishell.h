@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/14 15:51:10 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/14 16:05:06 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define MINISHELL_H
 
 # include "libft.h"
+# include <readline/readline.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <readline/readline.h>
 
 enum				e_state
 {
@@ -57,11 +57,11 @@ typedef struct s_cmd
 int					ft_status(char c, int reset);
 int					ft_len(char *s, int *j);
 char				*ft_args(char *s);
-t_token				*make_token(char *s);
+int					make_token(t_token **lst_token, char *s);
 
 // Get token type
 void				get_type(t_token *token);
-void				ft_type(t_token **token);
+int					ft_type(t_token **token);
 
 // Check for syntax error
 int					ft_parser(t_token **token);
