@@ -6,16 +6,17 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/02 18:17:09 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/14 15:51:10 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdlib.h>
-# include <stdio.h>
 # include "libft.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <readline/readline.h>
 
 enum				e_state
 {
@@ -69,5 +70,14 @@ int					check_quotes(char *s);
 // Linked list for tokens
 t_token				*t_lstnew(char *value, int type);
 void				t_lstadd_back(t_token **lst, t_token *new);
+
+// Expansion
+void				magic_space(char **s);
+void				new_token(t_token *current, t_token *previous);
+void				ft_expansion(t_token **token);
+int					ft_change(char *value);
+char				*ft_dollar(char *new_str);
+char				*ft_var(char *new_str);
+char				*get_var(char **env, char *var);
 
 #endif

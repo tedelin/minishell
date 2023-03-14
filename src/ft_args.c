@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 11:56:58 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/03 11:58:44 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/14 15:58:33 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	ft_status(char c, int reset)
 	
 	if (reset == 1)
 		status = 0;
+	else if (reset == 2)
+		return (status);
 	if (c == 39 && status == 0)
 		status = 1;
 	else if (c == '\"' && status == 0)

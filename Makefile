@@ -6,16 +6,16 @@
 #    By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/27 14:55:19 by tedelin           #+#    #+#              #
-#    Updated: 2023/03/02 21:33:21 by tedelin          ###   ########.fr        #
+#    Updated: 2023/03/14 15:51:55 by tedelin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 INCLUDE = -I./include -I./libft
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
-SRC =  $(addprefix src/, ft_parser.c ft_token.c lst_token.c ft_args.c)
-OBJS = $(addprefix obj/, ft_parser.o ft_token.o lst_token.o ft_args.o)
+CFLAGS = -g -lreadline#-Wall -Wextra -Werror -g
+SRC =  $(addprefix src/, ft_parser.c lst_token.c ft_args.c ft_expansion.c main.c)
+OBJS = $(addprefix obj/, ft_parser.o lst_token.o ft_args.o ft_expansion.o main.o)
 
 all: $(NAME)
 
