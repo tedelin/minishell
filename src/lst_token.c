@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lst.c                                              :+:      :+:    :+:   */
+/*   lst_token.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:39:51 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/01 17:40:38 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/15 18:13:18 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,25 @@ void	t_lstadd_back(t_token **lst, t_token *new)
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = new;
+}
+
+void	free_lst(t_token *lst)
+{
+	t_token	*tmp;
+
+	while (lst)
+	{
+		tmp = lst;
+		lst = lst->next;
+		free(tmp);
+	}
+}
+
+void	print_lst(t_token **lst)
+{
+	while (*lst)
+	{
+		printf("value:%s, type:%d\n", (*lst)->value, (*lst)->type);
+		*lst = (*lst)->next;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 11:56:58 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/14 16:05:30 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/15 18:13:00 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int	ft_status(char c, int reset)
 {
 	static int	status = 0;
-	
+
 	if (reset == 1)
 		status = 0;
 	else if (reset == 2)
@@ -92,7 +92,7 @@ char	*ft_args(char *s)
 	return (res);
 }
 
-int make_token(t_token **lst_token, char *s)
+int	make_token(t_token **lst_token, char *s)
 {
 	char	*res;
 

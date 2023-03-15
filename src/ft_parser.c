@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 16:13:01 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/14 16:00:59 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/15 18:11:26 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int	ft_type(t_token **token)
 			cur->type = IN;
 		if (cur->type == HIN && cur->next && !ft_next_type(cur->next->value))
 			cur->next->type = LIM;
-		else if (cur->next && cur->type != WORD && !ft_next_type(cur->next->value))
+		else if (cur->next && cur->type != WORD
+			&& !ft_next_type(cur->next->value))
 			cur->next->type = FD;
 		if (cur->next && cur->next->type != WORD)
 			cur = cur->next;
@@ -57,12 +58,12 @@ int	ft_type(t_token **token)
 	return (ft_parser(token));
 }
 
-int check_quotes(char *s)
+int	check_quotes(char *s)
 {
 	int	i;
-	int count;
+	int	count;
 	int	old_i;
-	
+
 	if (!s)
 		return (0);
 	i = 0;
@@ -86,7 +87,7 @@ int check_quotes(char *s)
 
 int	ft_parser(t_token **token)
 {
-	t_token *begin;
+	t_token	*begin;
 
 	begin = *token;
 	if (begin->type == PIPE)
@@ -97,12 +98,14 @@ int	ft_parser(t_token **token)
 			return (1);
 		if (begin->type >= IN && begin->type <= HOUT)
 		{
-			if (begin->next && begin->next->type != FD && begin->next->type != LIM)
+			if (begin->next && begin->next->type != FD
+				&& begin->next->type != LIM)
 				return (1);
 		}
-		begin = begin->next;  
+		begin = begin->next;
 	}
-	if (check_quotes(begin->value) || (begin->type >= IN && begin->type <= PIPE))	
+	if (check_quotes(begin->value) || (begin->type >= IN
+			&& begin->type <= PIPE))
 		return (1);
-	return (0);
+	return (ft_expansion(token));
 }
