@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 17:09:48 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/16 15:03:41 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/16 18:21:31 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int ac, char **av, char **env)
 	lst = NULL;
 	ft_get_env(env, 0);
 	// input = readline("minishell$");
-	input = "< in awk 'print $2'hello | ls > out";
+	input = "< in awk \"print $PATH\"hello | ls > out";
 	if (!input)
 		return (1);
 	if (make_token(&lst, input))

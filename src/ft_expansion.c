@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:52:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/16 15:32:43 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/16 18:31:26 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ char	*get_var(char **env, char *var)
 {
 	int	i;
 
+	i = -1;
 	if (!var)
 		return (NULL);
-	i = -1;
 	while (env && env[++i])
 	{
 		if (!ft_strncmp(env[i], var, ft_strlen(var)))
@@ -27,7 +27,7 @@ char	*get_var(char **env, char *var)
 	return (NULL);
 }
 
-char	*ft_var(char *new_str)
+char	*ft_var(char *str)
 {
 	int		i;
 	int		j;
@@ -37,19 +37,19 @@ char	*ft_var(char *new_str)
 	j = 0;
 	i = -1;
 	k = 0;
-	while (new_str[++i])
+	while (str && str[++i])
 	{
-		if (new_str[i] == '$')
+		if (str[i] == '$')
 		{
 			j++;
-			while (new_str[i + j] && ft_isalnum(new_str[i + j]))
+			while (str[i + j] && ft_isalnum(str[i + j]))
 				j++;
-			if (new_str[i + j] == '_')
+			if (str[i + j] == '_')
 				return (NULL);
 			var = malloc(sizeof(char) * j);
 			i++;
 			while (k < j - 1)
-				var[k++] = new_str[i++];
+				var[k++] = str[i++];
 			var[i] = 0;
 			return (var);
 		}
@@ -81,26 +81,31 @@ int	len_d(char **env, char *s)
 
 char	*ft_dollar(char **env, char *s)
 {
+	int		i;
+	int		j;
 	char	*new;
-	int	i;
-	char *var;
+	char	*var;
+	char	*tmp;
 
 	new = malloc(sizeof(char) * (len_d(env, s) + 1));
 	i = -1;
-	while (*s && ft_strchr(s, '$'))
+	j = 0;
+	while (s && s[j] && ft_strchr(s, '$'))
 	{
-		var = get_var(env, ft_var(ft_strchr(s, '$')));
-		while (*s && *s != '$')
-			new[++i] = *s++;
-		while (*s && ((ft_isalnum(*s) || *s == '$') || *s == '_'))
-			s++;
+		tmp = ft_var(ft_strchr(&s[j], '$'));
+		var = get_var(env, tmp);
+		free(tmp);
+		while (s[j] && s[j] != '$')
+			new[++i] = s[j++];
+		while (s[j] && ((ft_isalnum(s[j]) || s[j] == '$') || s[j] == '_'))
+			j++;
 		while (var && *var)
 			new[++i] = *var++;
-		while (*s && *s != '$')
-			new[++i] = *s++;
+		while (s[j] && s[j] != '$')
+			new[++i] = s[j++];
 	}
 	new[++i] = 0;
-	return (new);
+	return (free(s), new);
 }
 
 t_token	*new_token(t_token *current)
@@ -108,51 +113,53 @@ t_token	*new_token(t_token *current)
 	t_token	*new;
 	int		i;
 	int		len;
-	char	*new_str;
+	char	*str;
 
 	ft_status(0, 1);
+	i = -1;
+	len = -1;
 	if (*current->value == 39 || *current->value == 34)
 		current->value++;
-	len = -1;
 	while (!ft_status(current->value[++len], 0) && current->value[len]);
-	new_str = malloc(sizeof(char) * (len + 1));
-	i = -1;
+	str = malloc(sizeof(char) * (len + 1));
 	while (++i < len)
-		new_str[i] = *current->value++;
-	new_str[i] = '\0';
-	if ((ft_status(0, 2) == 0 || ft_status(0, 2) == 2) && ft_strchr(new_str,
-			'$'))
-		new_str = ft_dollar(ft_get_env(NULL, 1), new_str);
-	if (new_str && new_str[0])
+		str[i] = *current->value++;
+	str[i] = '\0';
+	if ((ft_status(0, 2) == 0 || ft_status(0, 2) == 2) && ft_strchr(str, '$'))
+		str = ft_dollar(ft_get_env(NULL, 1), str);
+	if (str && str[0])
 	{
-		new = t_lstnew(new_str, current->type);
+		new = t_lstnew(str, current->type);
 		return (new);
 	}
-	return (free(new_str), NULL);
+	return (free(str), NULL);
 }
 
 int	ft_expansion(t_token **lst)
 {
 	t_token	*new;
 	t_token	*add;
-	t_token	*old;
+	t_token	*cur;
+	char	*state;
 
 	new = NULL;
-	old = *lst;
 	add = NULL;
-	while ((*lst))
+	cur = *lst;
+	while (cur)
 	{
-		add = new_token(*lst);
+		state = cur->value;
+		add = new_token(cur);
 		while (add)
 		{
 			if (add)
 				t_lstadd_back(&new, add);
-			add = new_token(*lst);
+			add = new_token(cur);
 		}
-		(*lst) = (*lst)->next;
+		cur->value = state;
+		cur = cur->next;
 	}
 	print_lst(&new);
-	free_lst(&old);
+	free_lst(lst);
 	free_lst(&new);
 	return (0);
 }

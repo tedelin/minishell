@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/16 15:29:22 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/16 18:11:19 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void				print_lst(t_token **lst);
 
 // Expansion
 char				*get_var(char **env, char *var);
-char				*ft_var(char *new_str);
+char				*ft_var(char *str);
 int					len_d(char **env, char *s);
 char				*ft_dollar(char **env, char *s);
 t_token				*new_token(t_token *current);

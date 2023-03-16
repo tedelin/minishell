@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:39:51 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/16 15:32:35 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/16 18:17:29 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,15 @@ void	free_lst(t_token **lst)
 	{
 		tmp = (*lst);
 		(*lst) = (*lst)->next;
-		// free(tmp->value);
+		free(tmp->value);
 		free(tmp);
 	}
 }
 
 void	print_lst(t_token **lst)
 {
-	t_token *cur;
-	
+	t_token	*cur;
+
 	cur = *lst;
 	while (cur)
 	{
