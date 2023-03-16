@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:39:51 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/15 18:13:18 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/16 15:32:35 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +42,27 @@ void	t_lstadd_back(t_token **lst, t_token *new)
 	tmp->next = new;
 }
 
-void	free_lst(t_token *lst)
+void	free_lst(t_token **lst)
 {
 	t_token	*tmp;
 
-	while (lst)
+	while ((*lst))
 	{
-		tmp = lst;
-		lst = lst->next;
+		tmp = (*lst);
+		(*lst) = (*lst)->next;
+		// free(tmp->value);
 		free(tmp);
 	}
 }
 
 void	print_lst(t_token **lst)
 {
-	while (*lst)
+	t_token *cur;
+	
+	cur = *lst;
+	while (cur)
 	{
-		printf("value:%s, type:%d\n", (*lst)->value, (*lst)->type);
-		*lst = (*lst)->next;
+		printf("value:%s, type:%d\n", cur->value, cur->type);
+		cur = cur->next;
 	}
 }

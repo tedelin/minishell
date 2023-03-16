@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/16 13:22:38 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/16 15:29:22 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int					check_quotes(char *s);
 // Linked list for tokens
 t_token				*t_lstnew(char *value, int type);
 void				t_lstadd_back(t_token **lst, t_token *new);
-void				free_lst(t_token *lst);
+void				free_lst(t_token **lst);
 void				print_lst(t_token **lst);
 
 // Expansion

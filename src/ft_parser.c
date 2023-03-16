@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 16:13:01 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/15 18:11:26 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/16 15:09:35 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	check_quotes(char *s)
 		count++;
 		i++;
 	}
-	while (s[i + 1] && s[i] != s[old_i])
+	while (s[i] && s[i + 1] && s[i] != s[old_i])
 		i++;
 	if (old_i != i && s[i] == s[old_i])
 		count++;
