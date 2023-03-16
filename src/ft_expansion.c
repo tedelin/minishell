@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:52:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/15 18:17:30 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/16 13:06:24 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,52 @@ char	*ft_var(char *new_str)
 	return (NULL);
 }
 
+int	len_d(char **env, char *s)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = 0;
+	while (s && s[i] && ft_strchr(&s[i], '$'))
+	{
+		while (s[i] && s[i] != '$')
+		{
+			len++;
+			i++;
+		}
+		len += ft_strlen(get_var(env, ft_var(&s[i])));
+		i++;
+	}
+	while (s && s[i] && len++)
+		i++;
+	return (len);
+}
+
+char	*ft_dollar(char **env, char *s)
+{
+	char	*new;
+	int	i;
+	char *var;
+
+	new = malloc(sizeof(char) * (len_d(env, s) + 1));
+	i = -1;
+	while (*s && ft_strchr(s, '$'))
+	{
+		var = get_var(env, ft_var(ft_strchr(s, '$')));
+		while (*s && *s != '$')
+			new[++i] = *s++;
+		while (*s && (ft_isalnum(*s) || *s == '$'))
+			s++;
+		while (var && *var)
+			new[++i] = *var++;
+		while (*s && *s != '$')
+			new[++i] = *s++;
+	}
+	new[++i] = 0;
+	return (new);
+}
+
 t_token	*new_token(t_token *current)
 {
 	t_token	*new;
@@ -64,10 +110,7 @@ t_token	*new_token(t_token *current)
 	if (*current->value == 39 || *current->value == 34)
 		current->value++;
 	len = -1;
-	while (!ft_status(current->value[++len], 0) && current->value[len])
-		;
-	if (len == 0)
-		return (NULL);
+	while (!ft_status(current->value[++len], 0) && current->value[len]);
 	new_str = malloc(sizeof(char) * (len + 1));
 	i = -1;
 	while (++i < len)
