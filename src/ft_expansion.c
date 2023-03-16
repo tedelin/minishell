@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:52:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/16 13:06:24 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/16 13:22:58 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ char	*get_var(char **env, char *var)
 {
 	int	i;
 
+	if (!var)
+		return (NULL);
 	i = -1;
 	while (env && env[++i])
 	{
@@ -42,6 +44,8 @@ char	*ft_var(char *new_str)
 			j++;
 			while (new_str[i + j] && ft_isalnum(new_str[i + j]))
 				j++;
+			if (new_str[i + j] == '_')
+				return (NULL);
 			var = malloc(sizeof(char) * j);
 			i++;
 			while (k < j - 1)
@@ -88,7 +92,7 @@ char	*ft_dollar(char **env, char *s)
 		var = get_var(env, ft_var(ft_strchr(s, '$')));
 		while (*s && *s != '$')
 			new[++i] = *s++;
-		while (*s && (ft_isalnum(*s) || *s == '$'))
+		while (*s && ((ft_isalnum(*s) || *s == '$') || *s == '_'))
 			s++;
 		while (var && *var)
 			new[++i] = *var++;
@@ -116,9 +120,9 @@ t_token	*new_token(t_token *current)
 	while (++i < len)
 		new_str[i] = *current->value++;
 	new_str[i] = '\0';
-	// if ((ft_status(0, 2) == 0 || ft_status(0, 2) == 2) && ft_strchr(new_str,
-	// 		'$'))
-	// 	new_str = ft_dollar(new_str);
+	if ((ft_status(0, 2) == 0 || ft_status(0, 2) == 2) && ft_strchr(new_str,
+			'$'))
+		new_str = ft_dollar(ft_get_env(NULL, 1), new_str);
 	if (new_str && new_str[0])
 	{
 		new = t_lstnew(new_str, current->type);
