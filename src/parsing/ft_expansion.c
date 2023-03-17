@@ -6,107 +6,12 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:52:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/16 18:31:26 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/17 10:21:05 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_var(char **env, char *var)
-{
-	int	i;
-
-	i = -1;
-	if (!var)
-		return (NULL);
-	while (env && env[++i])
-	{
-		if (!ft_strncmp(env[i], var, ft_strlen(var)))
-			return (env[i] + ft_strlen(var) + 1);
-	}
-	return (NULL);
-}
-
-char	*ft_var(char *str)
-{
-	int		i;
-	int		j;
-	int		k;
-	char	*var;
-
-	j = 0;
-	i = -1;
-	k = 0;
-	while (str && str[++i])
-	{
-		if (str[i] == '$')
-		{
-			j++;
-			while (str[i + j] && ft_isalnum(str[i + j]))
-				j++;
-			if (str[i + j] == '_')
-				return (NULL);
-			var = malloc(sizeof(char) * j);
-			i++;
-			while (k < j - 1)
-				var[k++] = str[i++];
-			var[i] = 0;
-			return (var);
-		}
-	}
-	return (NULL);
-}
-
-int	len_d(char **env, char *s)
-{
-	int	i;
-	int	len;
-
-	i = 0;
-	len = 0;
-	while (s && s[i] && ft_strchr(&s[i], '$'))
-	{
-		while (s[i] && s[i] != '$')
-		{
-			len++;
-			i++;
-		}
-		len += ft_strlen(get_var(env, ft_var(&s[i])));
-		i++;
-	}
-	while (s && s[i] && len++)
-		i++;
-	return (len);
-}
-
-char	*ft_dollar(char **env, char *s)
-{
-	int		i;
-	int		j;
-	char	*new;
-	char	*var;
-	char	*tmp;
-
-	new = malloc(sizeof(char) * (len_d(env, s) + 1));
-	i = -1;
-	j = 0;
-	while (s && s[j] && ft_strchr(s, '$'))
-	{
-		tmp = ft_var(ft_strchr(&s[j], '$'));
-		var = get_var(env, tmp);
-		free(tmp);
-		while (s[j] && s[j] != '$')
-			new[++i] = s[j++];
-		while (s[j] && ((ft_isalnum(s[j]) || s[j] == '$') || s[j] == '_'))
-			j++;
-		while (var && *var)
-			new[++i] = *var++;
-		while (s[j] && s[j] != '$')
-			new[++i] = s[j++];
-	}
-	new[++i] = 0;
-	return (free(s), new);
-}
 
 t_token	*new_token(t_token *current)
 {
@@ -115,6 +20,8 @@ t_token	*new_token(t_token *current)
 	int		len;
 	char	*str;
 
+	if (!current->value)
+		return (NULL);
 	ft_status(0, 1);
 	i = -1;
 	len = -1;

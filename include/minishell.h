@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/16 18:11:19 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/17 16:58:56 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,21 @@ enum				e_type
 	HOUT,
 	PIPE
 };
+
+enum				e_env
+{
+	INIT,
+	GET,
+	ADD,
+	EDIT,
+	FREE,
+};
+
+typedef struct s_env
+{
+	char			*var;
+	struct s_env	*next;
+}					t_env;
 
 typedef struct s_token
 {
@@ -73,15 +88,27 @@ void				t_lstadd_back(t_token **lst, t_token *new);
 void				free_lst(t_token **lst);
 void				print_lst(t_token **lst);
 
-// Expansion
-char				*get_var(char **env, char *var);
+// Linked list for env
+void				lstadd_back_env(t_env **lst, t_env *new);
+t_env				*lstnew_env(char *value);
+void	print_env(t_env **lst);
+void	free_env(t_env **lst);
+
+// Dollar expansion
+char				*get_var(t_env *env, char *var);
 char				*ft_var(char *str);
-int					len_d(char **env, char *s);
-char				*ft_dollar(char **env, char *s);
+int					len_d(t_env *env, char *s);
+char				*ft_dollar(t_env *env, char *s);
+
+// Expansion
 t_token				*new_token(t_token *current);
 int					ft_expansion(t_token **token);
 
 // Environment
-char				**ft_get_env(char **env, int get);
+t_env				*ft_get_env(char **env, int get, char *var);
+void				ft_build_env(t_env **lst_env, char **env);
+
+//Builtins
+void	ft_export(char *name);
 
 #endif

@@ -1,23 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 12:00:00 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/17 10:07:46 by tedelin          ###   ########.fr       */
+/*   Created: 2023/03/03 17:09:48 by tedelin           #+#    #+#             */
+/*   Updated: 2023/03/17 15:04:09 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-size_t	ft_strlen(const char *s)
+int	main(int ac, char **av, char **env)
 {
-	size_t	i;
-
-	i = 0;
-	while (s && s[i])
-		i++;
-	return (i);
+	char	*input;
+	t_token	*lst;
+	
+	ft_get_env(env, 0);
+	while (1)
+	{
+		input = readline("minishell$");
+		// input = "$PATH";
+		if (!input)
+			return (1);
+		lst = NULL;
+		if (make_token(&lst, input))
+		{
+			printf("Parse Error\n");
+			return (0);
+		}
+		// free(input);
+	}
+	ft_get_env(NULL, 2);
 }

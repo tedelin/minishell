@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/03 17:09:48 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/16 18:21:31 by tedelin          ###   ########.fr       */
+/*   Created: 2023/03/17 10:42:47 by tedelin           #+#    #+#             */
+/*   Updated: 2023/03/17 13:27:25 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
 
-int	main(int ac, char **av, char **env)
+void	ft_pwd(void)
 {
-	char	*input;
-	t_token	*lst;
+	char	*pwd;
 
-	lst = NULL;
-	ft_get_env(env, 0);
-	// input = readline("minishell$");
-	input = "< in awk \"print $PATH\"hello | ls > out";
-	if (!input)
-		return (1);
-	if (make_token(&lst, input))
-	{
-		printf("Parse Error\n");
-		return (0);
-	}
-	// free(input);
+	pwd = getcwd(NULL, 0);
+	printf("%s\n", pwd);
+	free(pwd);
 }
+
