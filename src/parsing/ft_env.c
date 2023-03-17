@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:19:35 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/17 17:05:32 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/17 18:08:22 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,38 +21,76 @@ void	ft_build_env(t_env **lst_env, char **env)
 	}
 }
 
-t_env *ft_get_env(char **env, int opt, char *var)
+char	*ft_get_env(t_env *env, char *var)
 {
-	static t_env *envp = NULL;
+	t_env	*cur;
 
-	if (opt == INIT)
-		ft_build_env(&envp, env);
-	if (opt == GET && var)
+	cur = env;
+	while (cur)
 	{
-		
-	}
-	if (opt == SET)
-	if (opt == 2)
-	{
-		free_env(&envp);
-		envp = NULL;
-		return (NULL);
+		if (ft_strncmp(cur->var, var, ft_strlen(var)) == 0)
+			return (cur->var + ft_strlen(var) + 1);
+		cur = cur->next;
 	}
 	return (NULL);
 }
 
-// t_env **ft_new_env(char **env, int get)
-// {
-// 	static t_env *envp = NULL;
+void	edit_env(t_env **env, char *var)
+{
+	t_env	*cur;
+	int		i;
 
-// 	if (get == 1)
-// 		return (&envp);
-// 	if (get == 2)
-// 	{
-// 		free_env(&envp);
-// 		envp = NULL;
-// 		return (NULL);
-// 	}
-// 	ft_build_env(&envp, env);
-// 	return (NULL);
-// }
+	i = -1;
+	cur = *env;
+	while (var && var[++i] != '=')
+		;
+	while (cur)
+	{
+		if (!ft_strncmp(var, cur->var, i + 1))
+			cur->var = var;
+		cur = cur->next;
+	}
+}
+
+void	ft_del(t_env **env, char *name)
+{
+	t_env *cur;
+	t_env *prev;
+
+	cur = *env;
+	prev = NULL;
+	while (cur)
+	{
+		if (!ft_strncmp(cur->var, name, ft_strlen(name)))
+		{
+			if (prev)
+				prev->next = cur->next;
+			else
+				cur = cur->next;
+			return ;
+		}
+		prev = cur;
+		cur = cur->next;
+	}
+}
+
+char	*ft_env(char **env, int opt, char *var)
+{
+	static t_env	*envp = NULL;
+	
+	if (opt == INIT)
+		ft_build_env(&envp, env);
+	if (var && opt == GET)
+		return (ft_get_env(envp, var));
+	if (var && opt == ADD)
+		lstadd_back_env(&envp, lstnew_env(var));
+	if (var && opt == EDIT)
+		edit_env(&envp, var);
+	if (var && opt == DEL)
+		ft_del(&envp, var);
+	if (opt == FREE)
+		return (free_env(&envp), NULL);
+	if (opt == 10)
+		return (print_env(&envp), NULL);
+	return (NULL);
+}

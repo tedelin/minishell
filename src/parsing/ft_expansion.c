@@ -6,12 +6,11 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:52:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/17 10:21:05 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/17 17:42:05 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 t_token	*new_token(t_token *current)
 {
@@ -33,7 +32,7 @@ t_token	*new_token(t_token *current)
 		str[i] = *current->value++;
 	str[i] = '\0';
 	if ((ft_status(0, 2) == 0 || ft_status(0, 2) == 2) && ft_strchr(str, '$'))
-		str = ft_dollar(ft_get_env(NULL, 1), str);
+		str = ft_dollar(str);
 	if (str && str[0])
 	{
 		new = t_lstnew(str, current->type);

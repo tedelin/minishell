@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 13:45:33 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/17 14:51:39 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/17 17:43:42 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_env	*lstnew_env(char *value)
 	new->next = NULL;
 	return (new);
 }
+
 void	print_env(t_env **lst)
 {
 	t_env	*cur;

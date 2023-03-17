@@ -6,26 +6,11 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:20:40 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/17 17:01:05 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/17 17:40:08 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// char	*get_var(t_env *env, char *var)
-// {
-// 	t_env *cur;
-// 	int	len;
-
-// 	cur = env;
-// 	while (cur && var)
-// 	{
-// 		if (!ft_strncmp(cur->var, var, ft_strlen(var)))
-// 			return (cur->var + ft_strlen(var) + 1);
-// 		cur = cur->next;
-// 	}
-// 	return (NULL);
-// }
 
 char	*ft_var(char *str)
 {
@@ -56,7 +41,7 @@ char	*ft_var(char *str)
 	return (NULL);
 }
 
-int	len_d(t_env *env, char *s)
+int	len_d(char *s)
 {
 	int		i;
 	int		len;
@@ -72,7 +57,7 @@ int	len_d(t_env *env, char *s)
 			i++;
 		}
 		tmp = ft_var(&s[i]);
-		len += ft_strlen(get_var(env, tmp));
+		len += ft_strlen(ft_env(NULL, GET, tmp));
 		free(tmp);
 		i++;
 	}
@@ -81,7 +66,7 @@ int	len_d(t_env *env, char *s)
 	return (len);
 }
 
-char	*ft_dollar(t_env *env, char *s)
+char	*ft_dollar(char *s)
 {
 	int		i;
 	int		j;
@@ -91,11 +76,11 @@ char	*ft_dollar(t_env *env, char *s)
 
 	i = -1;
 	j = 0;
-	new = malloc(sizeof(char) * (len_d(env, s) + 1));
+	new = malloc(sizeof(char) * (len_d(s) + 1));
 	while (s && s[j] && ft_strchr(s, '$'))
 	{
 		tmp = ft_var(ft_strchr(&s[j], '$'));
-		var = get_var(env, tmp);
+		var = ft_env(NULL, GET, tmp);
 		free(tmp);
 		while (s[j] && s[j] != '$')
 			new[++i] = s[j++];
