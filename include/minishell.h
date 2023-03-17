@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/17 16:58:56 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/17 17:51:30 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ enum				e_env
 	GET,
 	ADD,
 	EDIT,
+	DEL,
 	FREE,
 };
 
@@ -91,24 +92,29 @@ void				print_lst(t_token **lst);
 // Linked list for env
 void				lstadd_back_env(t_env **lst, t_env *new);
 t_env				*lstnew_env(char *value);
-void	print_env(t_env **lst);
-void	free_env(t_env **lst);
+void				print_env(t_env **lst);
+void				free_env(t_env **lst);
 
 // Dollar expansion
 char				*get_var(t_env *env, char *var);
 char				*ft_var(char *str);
-int					len_d(t_env *env, char *s);
-char				*ft_dollar(t_env *env, char *s);
+int					len_d(char *s);
+char				*ft_dollar(char *s);
 
 // Expansion
 t_token				*new_token(t_token *current);
 int					ft_expansion(t_token **token);
 
 // Environment
-t_env				*ft_get_env(char **env, int get, char *var);
 void				ft_build_env(t_env **lst_env, char **env);
+char				*ft_get_env(t_env *env, char *var);
+void				edit_env(t_env **env, char *var);
+void				ft_del(t_env **env, char *name);
+char				*ft_env(char **env, int get, char *var);
 
 //Builtins
-void	ft_export(char *name);
+void				ft_export(char *name);
+void				ft_echo(char *opt, char **args);
+void				ft_pwd(void);
 
 #endif
