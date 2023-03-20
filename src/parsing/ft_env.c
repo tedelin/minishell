@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:19:35 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/17 18:08:22 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/20 11:04:45 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*ft_env(char **env, int opt, char *var)
 		ft_del(&envp, var);
 	if (opt == FREE)
 		return (free_env(&envp), NULL);
-	if (opt == 10)
+	if (opt == PRINT)
 		return (print_env(&envp), NULL);
 	return (NULL);
 }

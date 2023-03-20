@@ -6,13 +6,11 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:42:47 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/17 13:27:25 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/20 16:22:49 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
+#include "minishell.h"
 
 void	ft_pwd(void)
 {

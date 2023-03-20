@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 15:09:37 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/17 17:44:17 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/20 11:06:51 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,5 @@
 
 void	ft_unset(char *name)
 {
-	t_env **env;
-	t_env *prev;
-
-	env = ft_env(NULL, 1);
-	prev = NULL;
-	while (env && *env)
-	{
-		if (ft_strncmp((*env)->var, name, ft_strlen(name)) == 0)
-		{
-			free((*env)->var);
-			(*env)->var = NULL;
-			if (prev)
-				prev->next = (*env)->next;
-			else
-				(*env) = (*env)->next;
-			return ;
-		}
-		prev = (*env);
-		(*env) = (*env)->next;
-	}
+	ft_env(NULL, DEL, name);
 }

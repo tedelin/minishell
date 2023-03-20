@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/17 17:51:30 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/20 15:59:43 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ enum				e_type
 	WORD,
 	FD,
 	LIM,
-	IN,
-	OUT,
-	HIN,
-	HOUT,
+	RIN,
+	ROUT,
+	DRIN,
+	DROUT,
 	PIPE
 };
 
@@ -45,6 +45,7 @@ enum				e_env
 	EDIT,
 	DEL,
 	FREE,
+	PRINT,
 };
 
 typedef struct s_env
@@ -95,6 +96,12 @@ t_env				*lstnew_env(char *value);
 void				print_env(t_env **lst);
 void				free_env(t_env **lst);
 
+// Linked list for cmd
+void				lstadd_back_cmd(t_cmd **lst, t_cmd *new);
+t_cmd				*lstnew_cmd(void);
+void				print_cmd(t_cmd **lst);
+void				free_cmd(t_cmd **lst);
+
 // Dollar expansion
 char				*get_var(t_env *env, char *var);
 char				*ft_var(char *str);
@@ -112,9 +119,12 @@ void				edit_env(t_env **env, char *var);
 void				ft_del(t_env **env, char *name);
 char				*ft_env(char **env, int get, char *var);
 
+//Token to cmd
+int					build_cmd(t_token **lst);
+
 //Builtins
 void				ft_export(char *name);
-void				ft_echo(char *opt, char **args);
+void				ft_echo(t_cmd *cmd);
 void				ft_pwd(void);
 
 #endif

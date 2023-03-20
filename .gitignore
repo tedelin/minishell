@@ -1,3 +1,4 @@
 old/
 .vscode/
 src/pipex/libft/*.o
+test.txt
