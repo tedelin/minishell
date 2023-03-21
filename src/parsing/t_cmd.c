@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:33 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/21 13:29:36 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/21 17:07:05 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	build_cmd(t_token **lst)
 		if (cur)
 			cur = cur->next;
 	}
+	print_cmd(&cmd); //debug
 	return (free_lst(lst), free_cmd(&cmd), 0);
 }
 
-// print_cmd(&cmd); //debug

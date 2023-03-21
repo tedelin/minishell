@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/21 11:37:51 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/21 16:49:46 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ enum				e_env
 	INIT,
 	GET,
 	ADD,
+	APPEND,
 	EDIT,
 	DEL,
 	FREE,
@@ -116,6 +117,7 @@ int					ft_expansion(t_token **token);
 void				ft_build_env(t_env **lst_env, char **env);
 char				*ft_get_env(t_env *env, char *var);
 void				edit_env(t_env **env, char *var);
+void				append_env(t_env **env, char *name);
 void				ft_del(t_env **env, char *name);
 char				*ft_env(char **env, int get, char *var);
 
@@ -123,8 +125,9 @@ char				*ft_env(char **env, int get, char *var);
 int					build_cmd(t_token **lst);
 
 //Builtins
-void				ft_export(char *name);
+void				ft_export(t_cmd *cmd);
 void				ft_echo(t_cmd *cmd);
 void				ft_pwd(void);
+void    ft_cd();
 
 #endif

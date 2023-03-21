@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:52:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/21 13:26:52 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/21 14:20:31 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	ft_expansion(t_token **lst)
 		tmp = new_token(cur);
 		while (tmp)
 		{
-			add = ft_strjoin(add, tmp);
+			add = ft_strjoin(add, tmp, 3);
 			tmp = new_token(cur);
 		}
 		t_lstadd_back(&new, t_lstnew(add, cur->type));

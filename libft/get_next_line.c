@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:14:40 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/12 13:18:39 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/21 14:22:54 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	*get_next_line(int fd)
 				return (free(stash), NULL);
 			return (line);
 		}
-		stash = ft_strjoin(stash, buff);
+		stash = ft_strjoingnl(stash, buff);
 		return (get_next_line(fd));
 	}
 	else if (stash && !line)

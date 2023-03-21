@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:14:19 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/21 13:12:53 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/21 14:19:55 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static size_t	ft_str_len(const char *s)
 	return (i);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2, int opt)
 {
 	char	*new;
 	int		j;
@@ -42,5 +42,9 @@ char	*ft_strjoin(char *s1, char *s2)
 			new[j++] = s2[i++];
 		new[j] = '\0';
 	}
-	return (free(s1), free(s2), new);
+	if (opt == 1 || opt == 3)
+		free(s1);
+	if (opt == 2 || opt == 3)
+		free(s2);
+	return (new);
 }

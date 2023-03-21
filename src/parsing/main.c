@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 17:09:48 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/21 13:18:46 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/21 17:20:01 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,28 @@
 
 int	main(int ac, char **av, char **env)
 {
-	char	*input;
-	t_token	*lst;
-
 	ft_env(env, INIT, NULL);
-	// input = readline("minishell$");
-	input = "echo 'hello' world";
-	if (!input)
-		return (1);
-	// if (!ft_strncmp("exit", input, 4))
-	// 	exit(0);
-	lst = NULL;
-	ft_env(NULL, ADD, "T=\"test\"");
-	if (make_token(&lst, input))
-	{
-		printf("Parse Error\n");
-		return (0);
-	}
-	// free(input);
-	ft_env(NULL, FREE, NULL);
+	ft_cd();
+	ft_env(NULL, PRINT, NULL);
+	
+	// char	*input;
+	// t_token	*lst;
+
+	// ft_env(env, INIT, NULL);
+	// // input = readline("minishell$");
+	// ft_env(NULL, ADD, "TST=\"ls -la\"");
+	// input = "$TST";
+	// if (!input)
+	// 	return (1);
+	// // if (!ft_strncmp("exit", input, 4))
+	// // 	exit(0);
+	// lst = NULL;
+	// if (make_token(&lst, input))
+	// {
+	// 	printf("Parse Error\n");
+	// 	return (0);
+	// }
+	// // ft_env(NULL, PRINT, NULL);
+	// // free(input);
+	// ft_env(NULL, FREE, NULL);
 }
