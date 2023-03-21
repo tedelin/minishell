@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 13:27:33 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/17 18:17:10 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/21 13:27:06 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 void	ft_export(char *name)
 {
-	char *res;
-	int len;
+	char	*res;
+	int		len;
 
 	if (!name)
 		return ;
 	len = -1;
-	while (name[++len] && name[len] != '=');
+	while (name[++len] && name[len] != '=')
+		;
 	res = ft_substr(name, 0, len);
 	printf("%s\n", res);
 	if (ft_env(NULL, GET, res))

@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:41:46 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/21 11:16:55 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/21 13:30:59 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_echo(t_cmd *cmd)
 	i = 1;
 	n = 0;
 	if (!cmd->arg->next)
-		return;
+		return ;
 	arg = cmd->arg->next;
 	if (!ft_strncmp(arg->value, "-n", 2))
 	{
@@ -32,8 +32,8 @@ void	ft_echo(t_cmd *cmd)
 	}
 	while (arg)
 	{
-		if (ft_strncmp(arg->value, "-n", 2)
-			|| (!ft_strncmp(arg->value, "-n", 2) && arg->value[2]))
+		if (ft_strncmp(arg->value, "-n", 2) || (!ft_strncmp(arg->value, "-n", 2)
+				&& arg->value[2]))
 			ft_putstr_fd(arg->value, 1);
 		arg = arg->next;
 	}
@@ -41,9 +41,9 @@ void	ft_echo(t_cmd *cmd)
 		ft_putstr_fd("\n", 1);
 }
 
-int main()
+int	main(void)
 {
-	t_cmd *cmd;
+	t_cmd	*cmd;
 
 	lstadd_back_cmd(&cmd, lstnew_cmd());
 	t_lstadd_back(&cmd->arg, t_lstnew("echo", 0));

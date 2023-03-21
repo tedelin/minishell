@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:15:04 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/21 10:50:19 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/21 13:31:12 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	check_add(char *s)
 {
 	int	i;
-	
+
 	if (!s)
 		return (0);
 	if (!ft_strchr(s, '='))
@@ -31,7 +31,7 @@ int	check_add(char *s)
 
 void	ft_export(t_cmd *cmd)
 {
-	t_token *arg;
+	t_token	*arg;
 
 	arg = cmd->arg;
 	while (arg)

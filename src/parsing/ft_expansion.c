@@ -6,15 +6,14 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:52:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/20 15:54:59 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/21 13:26:52 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*new_token(t_token *current)
+char	*new_token(t_token *current)
 {
-	t_token	*new;
 	int		i;
 	int		len;
 	char	*str;
@@ -26,7 +25,8 @@ t_token	*new_token(t_token *current)
 	len = -1;
 	if (*current->value == 39 || *current->value == 34)
 		current->value++;
-	while (!ft_status(current->value[++len], 0) && current->value[len]);
+	while (!ft_status(current->value[++len], 0) && current->value[len])
+		;
 	str = malloc(sizeof(char) * (len + 1));
 	while (++i < len)
 		str[i] = *current->value++;
@@ -34,18 +34,16 @@ t_token	*new_token(t_token *current)
 	if ((ft_status(0, 2) == 0 || ft_status(0, 2) == 2) && ft_strchr(str, '$'))
 		str = ft_dollar(str);
 	if (str && str[0])
-	{
-		new = t_lstnew(str, current->type);
-		return (new);
-	}
+		return (str);
 	return (free(str), NULL);
 }
 
 int	ft_expansion(t_token **lst)
 {
 	t_token	*new;
-	t_token	*add;
 	t_token	*cur;
+	char	*add;
+	char	*tmp;
 	char	*state;
 
 	new = NULL;
@@ -54,18 +52,20 @@ int	ft_expansion(t_token **lst)
 	while (cur)
 	{
 		state = cur->value;
-		add = new_token(cur);
-		while (add)
+		tmp = new_token(cur);
+		while (tmp)
 		{
-			if (add)
-				t_lstadd_back(&new, add);
-			add = new_token(cur);
+			add = ft_strjoin(add, tmp);
+			tmp = new_token(cur);
 		}
+		t_lstadd_back(&new, t_lstnew(add, cur->type));
+		add = NULL;
 		cur->value = state;
 		cur = cur->next;
 	}
-	print_lst(&new);
-	// free_lst(&new);
-	printf("------------------------\n------------------------\n");
 	return (free_lst(lst), build_cmd(&new));
 }
+
+// free_lst(&new);
+// 	free_lst(lst);
+// 	printf("------------------------\n------------------------\n");

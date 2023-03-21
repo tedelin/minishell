@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:24:01 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/20 14:09:03 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/21 13:28:53 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ t_cmd	*lstnew_cmd(void)
 void	print_cmd(t_cmd **lst)
 {
 	t_cmd	*cur;
-	t_token *tmp_arg;
-	t_token *tmp_red;
+	t_token	*tmp_arg;
+	t_token	*tmp_red;
 
 	cur = *lst;
 	tmp_arg = cur->arg;
@@ -54,15 +54,16 @@ void	print_cmd(t_cmd **lst)
 		while (tmp_arg)
 		{
 			printf("arg->value : %s\n", tmp_arg->value);
-       		printf("arg->type : %u\n", tmp_arg->type);
+			printf("arg->type : %u\n", tmp_arg->type);
 			tmp_arg = tmp_arg->next;
 		}
-        printf("---------------\n");
-        while(tmp_red)
-        {
-            printf("red->value : %s\nred->type : %u\n", tmp_red->value, tmp_red->type);
-		    tmp_red = tmp_red->next;
-        }
+		printf("---------------\n");
+		while (tmp_red)
+		{
+			printf("red->value : %s\nred->type : %u\n", tmp_red->value,
+				tmp_red->type);
+			tmp_red = tmp_red->next;
+		}
 		cur = cur->next;
 	}
 }
@@ -75,8 +76,8 @@ void	free_cmd(t_cmd **lst)
 	{
 		tmp = (*lst);
 		(*lst) = (*lst)->next;
-        free_lst(&tmp->arg);
-        free_lst(&tmp->red);
+		free_lst(&tmp->arg);
+		free_lst(&tmp->red);
 		free(tmp);
 	}
 }

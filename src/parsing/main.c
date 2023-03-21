@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 17:09:48 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/21 10:03:16 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/21 13:18:46 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	main(int ac, char **av, char **env)
 	t_token	*lst;
 
 	ft_env(env, INIT, NULL);
-	input = readline("minishell$");
-	// input = "echo > a > b > c test";
+	// input = readline("minishell$");
+	input = "echo 'hello' world";
 	if (!input)
 		return (1);
 	// if (!ft_strncmp("exit", input, 4))
@@ -31,6 +31,6 @@ int	main(int ac, char **av, char **env)
 		printf("Parse Error\n");
 		return (0);
 	}
-	free(input);
+	// free(input);
 	ft_env(NULL, FREE, NULL);
 }

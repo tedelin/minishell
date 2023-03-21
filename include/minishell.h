@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/20 15:59:43 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/21 11:37:51 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int					len_d(char *s);
 char				*ft_dollar(char *s);
 
 // Expansion
-t_token				*new_token(t_token *current);
+char				*new_token(t_token *current);
 int					ft_expansion(t_token **token);
 
 // Environment

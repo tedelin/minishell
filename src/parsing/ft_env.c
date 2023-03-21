@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:19:35 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/21 10:11:05 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/21 13:29:57 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ void	ft_build_env(t_env **lst_env, char **env)
 char	*ft_get_env(t_env *env, char *var)
 {
 	t_env	*cur;
-	int	i;
+	int		i;
 
 	cur = env;
 	while (cur)
 	{
-		// if (ft_strncmp(cur->var, var, ft_strlen(var)) == 0)
 		i = 0;
-		while (cur->var[i] == var[i] && cur->var[i] != '=' && cur->var[i] && var[i])
+		while (cur->var[i] == var[i] && cur->var[i] != '=' && cur->var[i]
+			&& var[i])
 			i++;
 		if (cur->var[i] == '=' && !var[i])
 			return (cur->var + ft_strlen(var) + 1);
@@ -59,8 +59,8 @@ void	edit_env(t_env **env, char *var)
 
 void	ft_del(t_env **env, char *name)
 {
-	t_env *cur;
-	t_env *prev;
+	t_env	*cur;
+	t_env	*prev;
 
 	cur = *env;
 	prev = NULL;
@@ -81,8 +81,9 @@ void	ft_del(t_env **env, char *name)
 
 char	*ft_env(char **env, int opt, char *var)
 {
-	static t_env	*envp = NULL;
-	
+	static t_env	*envp;
+
+	envp = NULL;
 	if (opt == INIT)
 		ft_build_env(&envp, env);
 	if (var && opt == GET)
