@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:39:51 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/22 12:42:03 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/22 14:09:01 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ void	print_lst(t_token **lst)
 
 int	t_lstsize(t_token **lst)
 {
-	int	i;
-	t_token *temp;
+	int		i;
+	t_token	*temp;
 
 	temp = *lst;
 	if (!temp)

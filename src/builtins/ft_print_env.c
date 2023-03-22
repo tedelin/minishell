@@ -6,18 +6,18 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:41:46 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/21 14:08:14 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/22 14:09:10 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_print_env()
+void	ft_print_env(void)
 {
 	ft_env(NULL, PRINT, NULL);
 }
 
-int main(void)
-{
-    ft_print_env();
-}
+// int main(void)
+// {
+//     ft_print_env();
+// }

@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 11:56:58 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/20 15:48:27 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/22 13:42:50 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,18 @@ int	ft_len(char *s, int *j)
 	return (len);
 }
 
-char	*ft_args(char *s)
+char	*ft_args(char *s, int reset)
 {
 	int			len;
 	char		*res;
 	int			i;
 	static int	j = 0;
 
+	if (reset == 1)
+	{
+		j = 0;
+		return (NULL);
+	}
 	while (s && s[j] == ' ')
 		j++;
 	if (!s || (s && s[j] == 0))
@@ -96,11 +101,12 @@ int	make_token(t_token **lst_token, char *s)
 {
 	char	*res;
 
-	res = ft_args(s);
+	ft_args(NULL, 1);
+	res = ft_args(s, 0);
 	*lst_token = t_lstnew(res, 0);
 	while (res)
 	{
-		res = ft_args(s);
+		res = ft_args(s, 0);
 		if (res)
 			t_lstadd_back(lst_token, t_lstnew(res, 0));
 	}

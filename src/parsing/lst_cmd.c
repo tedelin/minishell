@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:24:01 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/21 13:28:53 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/22 13:52:26 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	print_cmd(t_cmd **lst)
 			printf("arg->type : %u\n", tmp_arg->type);
 			tmp_arg = tmp_arg->next;
 		}
-		printf("---------------\n");
 		while (tmp_red)
 		{
 			printf("red->value : %s\nred->type : %u\n", tmp_red->value,

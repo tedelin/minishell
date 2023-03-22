@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:33 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/21 17:07:05 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/22 14:09:26 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ int	build_cmd(t_token **lst)
 	{
 		while (cur && cur->type != PIPE)
 		{
-			if (cur->type == WORD)
+			if (cur->value && cur->type == WORD)
 				t_lstadd_back(&cmd->arg, t_lstnew(ft_strdup(cur->value),
 						cur->type));
-			else if (cur->type == FD)
+			else if (cur->value && cur->type == FD)
 				t_lstadd_back(&cmd->red, t_lstnew(ft_strdup(cur->value),
 						previous->type));
 			previous = cur;
@@ -38,7 +38,5 @@ int	build_cmd(t_token **lst)
 		if (cur)
 			cur = cur->next;
 	}
-	print_cmd(&cmd); //debug
 	return (free_lst(lst), free_cmd(&cmd), 0);
 }
-
