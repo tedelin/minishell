@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/21 16:49:46 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/22 10:14:39 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ t_token				*t_lstnew(char *value, int type);
 void				t_lstadd_back(t_token **lst, t_token *new);
 void				free_lst(t_token **lst);
 void				print_lst(t_token **lst);
+int	t_lstsize(t_token **lst);
 
 // Linked list for env
 void				lstadd_back_env(t_env **lst, t_env *new);
@@ -127,7 +128,7 @@ int					build_cmd(t_token **lst);
 //Builtins
 void				ft_export(t_cmd *cmd);
 void				ft_echo(t_cmd *cmd);
-void				ft_pwd(void);
+char				*ft_pwd(int opt);
 void    ft_cd();
 
 #endif

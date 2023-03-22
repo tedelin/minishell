@@ -6,7 +6,7 @@
 #    By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/09 17:21:15 by tedelin           #+#    #+#              #
-#    Updated: 2023/03/21 16:57:21 by tedelin          ###   ########.fr        #
+#    Updated: 2023/03/22 10:34:49 by tedelin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,35 +18,37 @@ SRCS = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_strle
 	ft_strchr.c ft_strrchr.c ft_strncmp.c ft_memchr.c ft_memcmp.c ft_strnstr.c ft_atoi.c \
 	ft_strdup.c ft_calloc.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c ft_strmapi.c ft_striteri.c \
 	ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_len_until.c
-OBJS = $(SRCS:.c=.o)
+OBJS = $(addprefix obj/, $(SRCS:.c=.o))
 SRCS_BONUS = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c \
 	    ft_lstclear.c ft_lstiter.c ft_lstmap.c
-OBJS_BONUS = $(SRCS_BONUS:.c=.o)
+OBJS_BONUS = $(addprefix obj/, $(SRCS_BONUS:.c=.o))
 SRCS_PRINTF = ft_printf.c ft_printf_utils.c ft_printf_utils2.c
-OBJS_PRINTF = $(SRCS_PRINTF:.c=.o)
+OBJS_PRINTF = $(addprefix obj/, $(SRCS_PRINTF:.c=.o))
 SRCS_GNL = get_next_line.c get_next_line_utils.c
-OBJS_GNL = $(SRCS_GNL:.c=.o)
+OBJS_GNL = $(addprefix obj/, $(SRCS_GNL:.c=.o))
+INCLUDE = -I.
 
 all: $(NAME) bonus gnl printf
 
-$(NAME): $(OBJS) libft.h
-	@$(CC) $(CFLAGS) -c $(SRCS)
+$(NAME): $(OBJS)
 	@ar -rsc $(NAME) $(OBJS)
 
-bonus: $(OBJ_BONUS) libft.h
-	@$(CC) $(CFLAGS) -c $(SRCS_BONUS)
+bonus: $(OBJS_BONUS)
 	@ar -rsc $(NAME) $(OBJS_BONUS)
 
-gnl: $(OBJS_GNL) libft.h
-	@$(CC) $(CFLAGS) -c $(SRCS_GNL)
+gnl: $(OBJS_GNL)
 	@ar -rsc $(NAME) $(OBJS_GNL)
 
-printf: $(OBJS_{PRINTF) libft.h
-	@$(CC) $(CFLAGS) -c $(SRCS_PRINTF)
+printf: $(OBJS_PRINTF)
 	@ar -rsc $(NAME) $(OBJS_PRINTF)
+
+obj/%.o: %.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $^
 
 clean:
 	@rm -f $(OBJS) $(OBJS_BONUS) $(OBJS_GNL) $(OBJS_PRINTF)
+	@rm -rf obj
 
 fclean: clean
 	@rm -f $(NAME)

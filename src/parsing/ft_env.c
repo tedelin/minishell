@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:19:35 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/21 17:21:11 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/22 12:42:02 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,15 @@ char	*ft_get_env(t_env *env, char *var)
 {
 	t_env	*cur;
 	int		i;
+	int		j;
 
 	cur = env;
+	i = ft_strlen(var);
 	while (cur)
 	{
-		i = 0;
-		while (cur->var[i] == var[i] && cur->var[i] != '=' && cur->var[i]
-			&& var[i])
-			i++;
-		if (cur->var[i] == '=' && !var[i])
-			return (cur->var + ft_strlen(var) + 1);
+		j = ft_len_until(cur->var, '=');
+		if (!ft_strncmp(var, cur->var, i) && i == j)
+			return (cur->var + i + 1);
 		cur = cur->next;
 	}
 	return (NULL);
@@ -53,6 +52,7 @@ void	edit_env(t_env **env, char *var)
 		j = ft_len_until(cur->var, '=');
 		if (!ft_strncmp(var, cur->var, i) && i == j)
 		{
+			free(cur->var);
 			cur->var = var;
 			return ;
 		}
