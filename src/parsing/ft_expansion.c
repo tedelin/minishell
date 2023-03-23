@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:52:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/23 13:25:40 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/23 16:25:16 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@
 // 	len = -1;
 // 	if (*current->value == 39 || *current->value == 34)
 // 		current->value++;
-// 	while (!ft_status(current->value[++len], 0) && current->value[len])
-// 		;
+// 	while (!ft_status(current->value[++len], 0) && current->value[len]);
 // 	str = malloc(sizeof(char) * (len + 1));
 // 	while (++i < len)
 // 		str[i] = *current->value++;
@@ -38,35 +37,32 @@
 // 	return (free(str), NULL);
 // }
 
-
-
 char	*new_token(t_token *current)
 {
-	int	i;
-	int	len;
+	int		i;
+	int		len;
+	int		state;
 	char	*str;
 
 	if (!current->value)
 		return (NULL);
-	if (ft_status(*current->value, 0) != 0)
-		current->value++;
-	printf("state:%d\n", ft_status(0, 2));
 	ft_status(0, 1);
 	i = -1;
 	len = -1;
-	while (!ft_status(current->value[++len], 0) && current->value[len]);
+	state = ft_status(*current->value, 0);
+	if (*current->value == 39 || *current->value == 34)
+		current->value++;
+	while (ft_status(current->value[++len], 0) == state && current->value[len]);
 	str = malloc(sizeof(char) * (len + 1));
 	while (++i < len)
 		str[i] = *current->value++;
 	str[i] = '\0';
-	if ((ft_status(0, 2) == 0 || ft_status(0, 2) == 2) && ft_strchr(str, '$'))
+	if ((state == 0 || state == 2) && ft_strchr(str, '$'))
 		str = ft_dollar(str);
 	if (str && str[0])
 		return (str);
 	return (free(str), NULL);
 }
-
-
 
 int	ft_expansion(t_token **lst)
 {

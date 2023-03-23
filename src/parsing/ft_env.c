@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:19:35 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/23 11:22:28 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/23 14:29:36 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	edit_env(t_env **env, char *var)
 	int		i;
 	int		j;
 
+	if (!var)
+		return ;
 	i = ft_len_until(var, '=');
 	cur = *env;
 	while (cur)
@@ -58,6 +60,7 @@ void	edit_env(t_env **env, char *var)
 		}
 		cur = cur->next;
 	}
+	ft_env(NULL, ADD, var);
 }
 
 void	append_env(t_env **env, char *name)

@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:15:04 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/23 11:22:21 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/23 14:27:47 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ft_export(t_cmd *cmd)
 	while (arg)
 	{
 		if (check_add(arg->value) == 1)
-			ft_env(NULL, ADD, arg->value);
+			ft_env(NULL, EDIT, ft_strdup(arg->value));
 		else if (check_add(arg->value) == 2)
 			ft_env(NULL, APPEND, arg->value);
 		else
