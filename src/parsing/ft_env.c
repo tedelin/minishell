@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:19:35 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/22 14:11:27 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/23 11:22:28 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,16 @@ void	ft_del(t_env **env, char *name)
 {
 	t_env	*cur;
 	t_env	*prev;
+	int		j;
+	int		i;
 
 	cur = *env;
 	prev = NULL;
+	i = ft_strlen(name);
 	while (cur)
 	{
-		if (!ft_strncmp(cur->var, name, ft_strlen(name)))
+		j = ft_len_until(cur->var, '=');
+		if (!ft_strncmp(cur->var, name, i) && i == j)
 		{
 			if (prev)
 				prev->next = cur->next;
@@ -108,7 +112,7 @@ void	ft_del(t_env **env, char *name)
 char	*ft_env(char **env, int opt, char *var)
 {
 	static t_env	*envp = NULL;
-
+	
 	if (opt == INIT)
 		ft_build_env(&envp, env);
 	if (var && opt == GET)

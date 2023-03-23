@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:15:04 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/22 14:08:55 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/23 11:22:21 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check_add(char *s)
 {
 	int	i;
 
-	if (!s || !ft_strchr(s, '=') || ft_isdigit(s[0]))
+	if (!s || !ft_isalpha(s[0]) || !ft_strchr(s, '='))
 		return (0);
 	i = -1;
 	while (s[++i] && s[i] != '=')

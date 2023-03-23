@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:41:41 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/22 14:10:44 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/23 10:57:16 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_exit(t_cmd *cmd)
 	if (cmd->arg && !cmd->arg->next && !ft_strncmp(cmd->arg->value, "exit", 4))
 		exit(0);
 	tmp = cmd->arg->next;
-	if (tmp->value)
+	if (tmp && tmp->value)
 	{
 		i = 0;
 		if (!ft_isdigit(tmp->value[i]) && tmp->value[i] != '-'

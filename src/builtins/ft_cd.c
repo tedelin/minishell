@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:41:46 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/22 13:28:49 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/23 10:57:30 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	cd_size(t_cmd *cmd)
 	}
 	if (t_lstsize(&cmd->arg) == 1)
 	{
-		ft_pwd(0);
 		oldpwd();
 		if (ft_env(NULL, GET, "HOME") == NULL)
 		{
@@ -50,7 +49,6 @@ int	cd_size(t_cmd *cmd)
 		}
 		chdir(ft_env(NULL, GET, "HOME"));
 		pwd();
-		ft_pwd(0);
 		return (1);
 	}
 	return (0);

@@ -6,17 +6,23 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/22 14:07:30 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/23 10:47:27 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include "libft.h"
+# include <errno.h>
+# include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <unistd.h>
 
 enum				e_state
 {
@@ -128,7 +134,7 @@ int					build_cmd(t_token **lst);
 void				oldpwd(void);
 void				pwd(void);
 int					cd_size(t_cmd *cmd);
-void				ft_cd(void);
+void				ft_cd(t_cmd *cmd);
 
 // Builtin echo - ft_echo.c
 int					new_line(t_token **arg, int n);
@@ -143,5 +149,13 @@ void				ft_export(t_cmd *cmd);
 
 // Buitin pwd - ft_pwd.c
 char				*ft_pwd(int opt);
+
+// Buitin unset - ft_unset.c
+void				ft_unset(t_cmd *cmd);
+// Exec - ft_exec.c
+int					is_builtin(t_cmd *cmd);
+void				free_tab(char **tab);
+char				**ft_lst_to_tab(t_token *lst);
+int					ft_exec(t_cmd **lst);
 
 #endif
