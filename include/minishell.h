@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcatal-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/23 10:47:27 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/24 18:24:12 by mcatal-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void				ft_del(t_env **env, char *name);
 char				*ft_env(char **env, int get, char *var);
 
 // Expansion - ft_expansion.c
-char				*new_token(t_token *current);
+void				new_token(char *s, t_token **new);
 int					ft_expansion(t_token **token);
 
 // Get token type - ft_parser.c
