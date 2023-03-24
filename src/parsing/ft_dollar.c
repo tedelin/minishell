@@ -82,9 +82,9 @@ char	*ft_dollar(char *s)
 		tmp = ft_var(ft_strchr(&s[j], '$'));
 		var = ft_env(NULL, GET, tmp);
 		free(tmp);
-		while (s[j] && s[j] != '$')
-			new[++i] = s[j++];
-		while (s[j] && ((ft_isalnum(s[j]) || s[j] == '$') || s[j] == '_'))
+		if (s[j] == '$')
+			j++;
+		while (s[j] && (ft_isalnum(s[j]) || s[j] == '_'))
 			j++;
 		while (var && *var)
 			new[++i] = *var++;
