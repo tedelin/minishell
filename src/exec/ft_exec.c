@@ -37,18 +37,18 @@ int	is_builtin(t_cmd *cmd)
 		return (1);
 }
 
-/* void	free_tab(char **tab) */
-/* { */
-/* 	int	i; */
+void	tab_free(char **tab)
+{
+	int	i;
 
-/* 	i = 0; */
-/* 	while (tab && tab[i]) */
-/* 	{ */
-/* 		free(tab[i]); */
-/* 		i++; */
-/* 	} */
-/* 	free(tab); */
-/* } */
+	i = 0;
+	while (tab && tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
 
 char	**ft_lst_to_tab(t_token *lst)
 {
@@ -101,7 +101,7 @@ int	ft_exec(t_cmd **lst)
 		// if (is_builtin(cur))
 		// 	exec_cmd(cur_arg, n++);
 		is_builtin(cur);
-		free_tab(cur_arg);
+		tab_free(cur_arg);
 		cur = cur->next;
 	}
 	return (0);

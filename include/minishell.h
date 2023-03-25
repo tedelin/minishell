@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/23 10:47:27 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/25 15:41:29 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ char				*ft_pwd(int opt);
 void				ft_unset(t_cmd *cmd);
 // Exec - ft_exec.c
 int					is_builtin(t_cmd *cmd);
-void				free_tab(char **tab);
+void				tab_free(char **tab);
 char				**ft_lst_to_tab(t_token *lst);
 int					ft_exec(t_cmd **lst);
 
