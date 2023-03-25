@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_dollar.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcatal-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:20:40 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/17 17:40:08 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/24 23:57:02 by mcatal-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,13 @@ int	len_d(char *s)
 	return (len);
 }
 
-char	*ft_dollar(char *s)
+char	*ft_dollar(char *s, int opt, int i)
 {
-	int		i;
 	int		j;
 	char	*new;
 	char	*var;
 	char	*tmp;
 
-	i = -1;
 	j = 0;
 	new = malloc(sizeof(char) * (len_d(s) + 1));
 	while (s && s[j] && ft_strchr(s, '$'))
@@ -90,6 +88,8 @@ char	*ft_dollar(char *s)
 			new[++i] = *var++;
 		while (s[j] && s[j] != '$')
 			new[++i] = s[j++];
+		if (opt == 1)
+			new[++i] = ' ';
 	}
 	new[++i] = 0;
 	return (free(s), new);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcatal-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 17:09:48 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/23 15:43:00 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/24 21:23:01 by mcatal-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int ac, char **av, char **env)
 	ft_env(env, INIT, NULL);
 	while (1)
 	{
-		input = readline("minishell$");
+		input = readline("minishell>");
 		if (!input)
 			return (1);
 		lst = NULL;
