@@ -37,18 +37,18 @@ int	is_builtin(t_cmd *cmd)
 		return (1);
 }
 
-void	free_tab(char **tab)
-{
-	int	i;
+/* void	free_tab(char **tab) */
+/* { */
+/* 	int	i; */
 
-	i = 0;
-	while (tab && tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-}
+/* 	i = 0; */
+/* 	while (tab && tab[i]) */
+/* 	{ */
+/* 		free(tab[i]); */
+/* 		i++; */
+/* 	} */
+/* 	free(tab); */
+/* } */
 
 char	**ft_lst_to_tab(t_token *lst)
 {

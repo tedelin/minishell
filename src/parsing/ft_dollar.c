@@ -3,42 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_dollar.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcatal-d <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:20:40 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/24 23:57:02 by mcatal-d         ###   ########.fr       */
+/*   Updated: 2023/03/25 15:14:53 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_var(char *str)
+char	*ft_var(char *s)
 {
-	int		i;
-	int		j;
-	int		k;
+	int	i;
+	int	j;
 	char	*var;
 
-	j = 0;
 	i = -1;
-	k = 0;
-	while (str && str[++i])
-	{
-		if (str[i] == '$')
-		{
-			j++;
-			while (str[i + j] && ft_isalnum(str[i + j]))
-				j++;
-			if (str[i + j] == '_')
-				return (NULL);
-			var = malloc(sizeof(char) * j);
-			while (k < j - 1)
-				var[k++] = str[++i];
-			var[i] = 0;
-			return (var);
-		}
-	}
-	return (NULL);
+	while (s && ft_isalnum(s[++i]));
+	if (!s || s[i] == '_')
+		return (NULL);
+	var = malloc(sizeof(char) * (i + 1));
+	j = -1;
+	while (s && ++j < i)
+		var[j] = s[j];
+	var[j] = 0;
+	return (var);
 }
 
 int	len_d(char *s)
@@ -49,47 +38,50 @@ int	len_d(char *s)
 
 	i = 0;
 	len = 0;
-	while (s && s[i] && ft_strchr(&s[i], '$'))
+	while (s && s[i])
 	{
 		while (s[i] && s[i] != '$')
 		{
-			len++;
 			i++;
+			len++;
 		}
-		tmp = ft_var(&s[i]);
-		len += ft_strlen(ft_env(NULL, GET, tmp));
-		free(tmp);
-		i++;
+		if (s[i] && s[i++] == '$')
+		{
+			tmp = ft_var(&s[i]);
+			while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
+				i++;
+			len += ft_strlen(ft_env(NULL, GET, tmp));
+			free(tmp);
+		}
 	}
-	while (s && s[i] && len++)
-		i++;
 	return (len);
 }
 
-char	*ft_dollar(char *s, int opt, int i)
+char	*ft_dollar(char *s, int state)
 {
+	int		i;
 	int		j;
 	char	*new;
 	char	*var;
 	char	*tmp;
 
+	i = -1;
 	j = 0;
 	new = malloc(sizeof(char) * (len_d(s) + 1));
-	while (s && s[j] && ft_strchr(s, '$'))
+	while (s && s[j])
 	{
-		tmp = ft_var(ft_strchr(&s[j], '$'));
-		var = ft_env(NULL, GET, tmp);
-		free(tmp);
-		if (s[j] == '$')
-			j++;
-		while (s[j] && (ft_isalnum(s[j]) || s[j] == '_'))
-			j++;
-		while (var && *var)
-			new[++i] = *var++;
 		while (s[j] && s[j] != '$')
 			new[++i] = s[j++];
-		if (opt == 1)
-			new[++i] = ' ';
+		if (s[j] && s[j++] == '$')
+		{
+			tmp = ft_var(&s[j]);
+			var = ft_env(NULL, GET, tmp);
+			free(tmp);
+			while (s[j] && (ft_isalnum(s[j]) || s[j] == '_'))
+				j++;
+			while (var && *var)
+				new[++i] = *var++;
+		}
 	}
 	new[++i] = 0;
 	return (free(s), new);

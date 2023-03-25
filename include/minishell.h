@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcatal-d <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/24 23:57:08 by mcatal-d         ###   ########.fr       */
+/*   Updated: 2023/03/23 10:47:27 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 # include "libft.h"
 # include <errno.h>
 # include <fcntl.h>
-# include <readline/history.h>
-# include <readline/readline.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 
 enum				e_state
 {
@@ -87,7 +87,7 @@ int					make_token(t_token **lst_token, char *s);
 // Dollar expansion - ft_dollar.c
 char				*ft_var(char *str);
 int					len_d(char *s);
-char				*ft_dollar(char *s, int opt, int i);
+char				*ft_dollar(char *s, int state);
 // char				*get_var(t_env *env, char *var);
 
 // Environment - ft_env.c
@@ -99,8 +99,9 @@ void				ft_del(t_env **env, char *name);
 char				*ft_env(char **env, int get, char *var);
 
 // Expansion - ft_expansion.c
-void				new_token(char *s, t_token **new, int j);
-void				mult_token(char *str, t_token **new, char *final, int i);
+void				magic_space(char *s, int rm);
+void				ft_expand(t_token **new, char *s);
+void				new_token(char *s, t_token **new);
 int					ft_expansion(t_token **token);
 
 // Get token type - ft_parser.c
