@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/26 19:41:41 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/26 23:30:28 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,8 @@ char				*ft_env(char **env, int get, char *var);
 
 // Expansion - ft_expansion.c
 void				magic_space(char *s, int rm);
-void				ft_expand(t_token **new, char *s);
-void	new_token(char *s, t_token **new);
+void				ft_expand(t_token **new, char *s, int type);
+void				new_token(t_token **new, char *s, int type);
 int					ft_expansion(t_token **token);
 
 // Get token type - ft_parser.c
