@@ -87,9 +87,9 @@ void	make_red(t_cmd *cmd)
 
 int	ft_exec(t_cmd **lst)
 {
-	t_cmd *cur;
-	char **cur_arg;
-	int n;
+	t_cmd	*cur;
+	char	**cur_arg;
+	int		n;
 
 	cur = *lst;
 	n = 1;
