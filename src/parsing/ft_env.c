@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcatal-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:19:35 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/23 14:29:36 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/26 18:14:12 by mcatal-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	ft_del(t_env **env, char *name)
 char	*ft_env(char **env, int opt, char *var)
 {
 	static t_env	*envp = NULL;
-	
+
 	if (opt == INIT)
 		ft_build_env(&envp, env);
 	if (var && opt == GET)

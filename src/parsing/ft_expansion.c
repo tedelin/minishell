@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expansion.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcatal-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:52:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/25 15:39:50 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/26 18:15:47 by mcatal-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ void	magic_space(char *s, int rm)
 	while (s && s[++i])
 	{
 		if ((s[i] == ' ' && rm == 0) || (s[i] == -32 && rm == 1))
-			s[i] = s[i] * - 1;
+			s[i] = s[i] * -1;
 	}
 }
 
 void	ft_expand(t_token **new, char *s)
 {
-	char **args;
-	int	i;
+	char	**args;
+	int		i;
 
 	args = ft_split(s, ' ');
 	i = -1;
@@ -38,17 +38,13 @@ void	ft_expand(t_token **new, char *s)
 		t_lstadd_back(new, t_lstnew(args[i], WORD));
 }
 
-void	new_token(char *s, t_token **new)
+void	new_token(char *s, t_token **new, int j, char *final)
 {
 	int		i;
-	int		j;
 	int		len;
 	int		state;
 	char	*str;
-	char	*final;
 
-	j = 0;
-	final = NULL;
 	while (s && s[j])
 	{
 		ft_status(0, 1);
@@ -57,11 +53,12 @@ void	new_token(char *s, t_token **new)
 		state = ft_status(s[j], 0);
 		if (s[j] == 39 || s[j] == 34)
 			j++;
-		while (ft_status(s[++len + j], 0) == state && s[len + j]);
+		while (ft_status(s[++len + j], 0) == state && s[len + j])
+			;
 		str = ft_substr(s, j, len);
 		j += len;
 		if ((state == 0 || state == 2) && ft_strchr(str, '$'))
-			str = ft_dollar(str, state);
+			str = ft_dollar(str, state, 0);
 		if (state == 2)
 			magic_space(str, 0);
 		final = ft_strjoin(final, str, 0);
@@ -79,10 +76,10 @@ int	ft_expansion(t_token **lst)
 	cur = *lst;
 	while (cur && cur->value)
 	{
-		new_token(cur->value, &new);
+		new_token(cur->value, &new, 0, NULL);
 		cur = cur->next;
 	}
-	// print_lst(&new);
-	// return (0);
 	return (free_lst(lst), build_cmd(&new));
 }
+// print_lst(&new);
+// return (0);
