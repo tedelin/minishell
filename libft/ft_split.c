@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 17:09:42 by tedelin           #+#    #+#             */
-/*   Updated: 2023/01/24 18:12:45 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/27 11:28:40 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static	char	*ft_wordadd(const char *s, char c)
 	return (word);
 }
 
-void	free_tab(char **tab, int j)
+static void	free_error(char **tab, int j)
 {
 	int	i;
 
@@ -84,7 +84,7 @@ char	**ft_split(char const *s, char c)
 		{
 			tab[j] = ft_wordadd(&s[i], c);
 			if (!tab[j])
-				return (free_tab(tab, j), NULL);
+				return (free_error(tab, j), NULL);
 			j++;
 			while (s[i] != c && s[i])
 				i++;

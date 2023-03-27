@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:52:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/26 23:28:48 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/27 11:35:18 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ void	ft_expand(t_token **new, char *s, int type)
 		magic_space(args[i], 1);
 	i = -1;
 	while (args && args[++i])
-		t_lstadd_back(new, t_lstnew(args[i], type));
+		t_lstadd_back(new, t_lstnew(ft_strdup(args[i]), type));
+	free(s);
+	tab_free(args);
 }
 
 void	new_token(t_token **new, char *s, int type)
@@ -62,7 +64,7 @@ void	new_token(t_token **new, char *s, int type)
 			str = ft_dollar(str, state);
 		if (state != 0)
 			magic_space(str, 0);
-		final = ft_strjoin(final, str, 0);
+		final = ft_strjoin(final, str, 3);
 	}
 	ft_expand(new, final, type);
 }
@@ -82,6 +84,8 @@ int	ft_expansion(t_token **lst)
 		cur = cur->next;
 	}
 	print_lst(&new);
+	free_lst(lst);
+	free_lst(&new);
 	return (0);
 	// return (free_lst(lst), build_cmd(&new));
 }

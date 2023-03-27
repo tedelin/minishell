@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 16:13:01 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/21 13:28:35 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/27 11:24:17 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,9 @@ int	ft_parser(t_token **token)
 	t_token	*begin;
 
 	begin = *token;
-	if (begin->type == PIPE)
+	if (begin && begin->type == PIPE)
 		return (1);
-	while (begin->next)
+	while (begin && begin->next)
 	{
 		if (check_quotes(begin->value))
 			return (1);
