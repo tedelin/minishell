@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcatal-d <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:19:35 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/26 18:14:12 by mcatal-d         ###   ########.fr       */
+/*   Updated: 2023/03/28 17:20:03 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,23 @@
 
 void	ft_build_env(t_env **lst_env, char **env)
 {
+	t_env	*tmp;
+	char	*add;
+	
 	while (env && *env)
 	{
-		lstadd_back_env(lst_env, lstnew_env(ft_strdup(*env)));
+		add = ft_strdup(*env);
+		if (add)
+			tmp = lstnew_env(add);
+		else
+		{
+			free(add);
+			return ;
+		}
+		if (tmp)
+			lstadd_back_env(lst_env, tmp);
+		else
+			return ;
 		env++;
 	}
 }

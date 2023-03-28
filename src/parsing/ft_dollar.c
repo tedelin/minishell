@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:20:40 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/26 23:08:50 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/28 14:37:07 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,31 +58,37 @@ int	len_d(char *s)
 	return (len);
 }
 
-char	*ft_dollar(char *s, int state)
+void	ft_expand_var(char *s, char *new, int *i, int *j)
+{
+	char	*tmp;
+	char	*var;
+
+	tmp = ft_var(&s[*j]);
+	var = ft_env(NULL, GET, tmp);
+	free(tmp);
+	while (s[*j] && (ft_isalnum(s[*j]) || s[*j] == '_'))
+		(*j)++;
+	while (var && *var)
+		new[++(*i)] = *var++;
+}
+
+char	*ft_dollar(char *s)
 {
 	int		i;
 	int		j;
 	char	*new;
-	char	*var;
-	char	*tmp;
 
 	i = -1;
 	j = 0;
 	new = malloc(sizeof(char) * (len_d(s) + 1));
+	if (!new)
+		return (free(s), NULL);
 	while (s && s[j])
 	{
 		while (s[j] && s[j] != '$')
 			new[++i] = s[j++];
 		if (s[j] && s[j++] == '$')
-		{
-			tmp = ft_var(&s[j]);
-			var = ft_env(NULL, GET, tmp);
-			free(tmp);
-			while (s[j] && (ft_isalnum(s[j]) || s[j] == '_'))
-				j++;
-			while (var && *var)
-				new[++i] = *var++;
-		}
+			ft_expand_var(s, new, &i, &j);
 	}
 	new[++i] = 0;
 	return (free(s), new);

@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 16:13:01 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/27 11:24:17 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/28 12:38:54 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,26 +61,12 @@ int	ft_type(t_token **token)
 int	check_quotes(char *s)
 {
 	int	i;
-	int	count;
-	int	old_i;
 
-	if (!s)
-		return (0);
-	i = 0;
-	count = 0;
-	while (s[i] && s[i] != 34 && s[i] != 39)
-		i++;
-	old_i = i;
-	if (s[i] == 34 || s[i] == 39)
-	{
-		count++;
-		i++;
-	}
-	while (s[i] && s[i + 1] && s[i] != s[old_i])
-		i++;
-	if (old_i != i && s[i] == s[old_i])
-		count++;
-	if ((count != 2 && count != 0) || (count == 1 && ft_strlen(s) == 1))
+	i = -1;
+	ft_status(0, 1);
+	while (s && s[++i])
+		ft_status(s[i], 0);
+	if (ft_status(0, 2) != 0)
 		return (1);
 	return (0);
 }

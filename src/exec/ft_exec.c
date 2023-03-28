@@ -66,17 +66,40 @@ char	**ft_lst_to_tab(t_token *lst)
 	return (tab);
 }
 
+void	ft_heredoc(t_cmd *cmd)
+{
+	char	*line;
+
+	
+	cmd->in = open("tmpfile.txt", O_CREAT | O_WRONLY | O_TRUNC, 0664);
+	while (1)
+	{
+		line = readline("pipe heredoc>");
+		if (!line || (ft_strncmp(cmd->red->value, line, ft_strlen(cmd->red->value)) == 0
+				&& (ft_strlen(line) == ft_strlen(cmd->red->value))))
+		{
+			free(line);
+			break ;
+		}
+		ft_putstr_fd(line, cmd->in);
+		free(line);
+	}
+}
+
 void	make_red(t_cmd *cmd)
 {
 	while (cmd->red)
 	{
 		if (cmd->red->type == RIN)
-			cmd->fd_in = open(cmd->red->value, O_RDONLY);
+			cmd->in = open(cmd->red->value, O_RDONLY);
 		else if (cmd->red->type == ROUT)
-			cmd->fd_out = open(cmd->red->value, O_WRONLY | O_CREAT | O_TRUNC,
+			cmd->out = open(cmd->red->value, O_WRONLY | O_CREAT | O_TRUNC,
 					0644);
-		// else if (red->type == DRIN)
-		// else if (red->type == DROUT)
+		else if (cmd->red->type == DRIN)
+			ft_heredoc(cmd);
+		else if (cmd->red->type == DROUT)
+			cmd->out = open(cmd->red->value, O_WRONLY | O_CREAT | O_APPEND,
+					0644);
 		cmd->red = cmd->red->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:33 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/27 15:08:40 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/28 17:20:02 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	build_cmd(t_token **lst)
 			if (cur->value && cur->type == WORD)
 				t_lstadd_back(&cmd->arg, t_lstnew(ft_strdup(cur->value),
 						cur->type));
-			else if (cur->value && cur->type == FD)
+			else if (cur->value && (cur->type == FD || cur->type == LIM))
 				t_lstadd_back(&cmd->red, t_lstnew(ft_strdup(cur->value),
 						previous->type));
 			previous = cur;
@@ -38,7 +38,6 @@ int	build_cmd(t_token **lst)
 		if (cur)
 			cur = cur->next;
 	}
+	// print_cmd(&cmd); //debug
 	return (free_lst(lst), ft_exec(&cmd));
 }
-
-	// print_cmd(&cmd); //debug

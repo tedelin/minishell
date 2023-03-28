@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/27 15:00:16 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/28 17:20:03 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,9 @@ typedef struct s_cmd
 {
 	t_token			*arg;
 	t_token			*red;
-	int				fd_in;
-	int				fd_out;
+	int				in;
+	int				out;
+	int				fd[2];
 	struct s_cmd	*next;
 }					t_cmd;
 
@@ -87,7 +88,7 @@ int					make_token(t_token **lst_token, char *s);
 // Dollar expansion - ft_dollar.c
 char				*ft_var(char *str);
 int					len_d(char *s);
-char				*ft_dollar(char *s, int state);
+char				*ft_dollar(char *s);
 // char				*get_var(t_env *env, char *var);
 
 // Environment - ft_env.c
