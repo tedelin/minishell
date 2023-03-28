@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/26 23:30:28 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/27 15:00:16 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,9 @@ char				*ft_pwd(int opt);
 
 // Buitin unset - ft_unset.c
 void				ft_unset(t_cmd *cmd);
+
+// Buitin env - env_cmd.c
+void				env_cmd(t_cmd *cmd);
 // Exec - ft_exec.c
 int					is_builtin(t_cmd *cmd);
 void				tab_free(char **tab);

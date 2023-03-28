@@ -24,7 +24,7 @@ int	is_builtin(t_cmd *cmd)
 	else if (!ft_strncmp(cmd->arg->value, "echo", 4) && len == 4)
 		return (ft_echo(cmd), 0);
 	else if (!ft_strncmp(cmd->arg->value, "env", 3) && len == 3)
-		return (ft_env(NULL, PRINT, NULL), 0);
+		return (env_cmd(cmd), 0);
 	else if (!ft_strncmp(cmd->arg->value, "export", 6) && len == 6)
 		return (ft_export(cmd), 0);
 	else if (!ft_strncmp(cmd->arg->value, "pwd", 3) && len == 3)

@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:52:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/27 11:35:18 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/27 15:08:16 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ int	ft_expansion(t_token **lst)
 		new_token(&new, cur->value, cur->type);
 		cur = cur->next;
 	}
-	print_lst(&new);
-	free_lst(lst);
-	free_lst(&new);
-	return (0);
-	// return (free_lst(lst), build_cmd(&new));
+	// print_lst(&new);
+	// free_lst(lst);
+	// free_lst(&new);
+	// return (0);
+	return (free_lst(lst), build_cmd(&new));
 }
