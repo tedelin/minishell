@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:19:35 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/28 17:20:03 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/29 15:07:30 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_build_env(t_env **lst_env, char **env)
 	}
 }
 
-char	*ft_get_env(t_env *env, char *var)
+void	ft_get_env(t_env *env, char *var, char *res)
 {
 	t_env	*cur;
 	int		i;
@@ -47,10 +47,12 @@ char	*ft_get_env(t_env *env, char *var)
 	{
 		j = ft_len_until(cur->var, '=');
 		if (!ft_strncmp(var, cur->var, i) && i == j)
-			return (cur->var + i + 1);
+		{
+			res = cur->var + i + 1;
+			return ;
+		}
 		cur = cur->next;
 	}
-	return (NULL);
 }
 
 void	edit_env(t_env **env, char *var)
@@ -74,7 +76,7 @@ void	edit_env(t_env **env, char *var)
 		}
 		cur = cur->next;
 	}
-	ft_env(NULL, ADD, var);
+	ft_env(NULL, ADD, var, NULL);
 }
 
 void	append_env(t_env **env, char *name)
@@ -126,14 +128,14 @@ void	ft_del(t_env **env, char *name)
 	}
 }
 
-char	*ft_env(char **env, int opt, char *var)
+t_env	*ft_env(char **env, int opt, char *var, char *res)
 {
 	static t_env	*envp = NULL;
 
 	if (opt == INIT)
 		ft_build_env(&envp, env);
 	if (var && opt == GET)
-		return (ft_get_env(envp, var));
+		ft_get_env(envp, var, res);
 	if (var && opt == ADD)
 		lstadd_back_env(&envp, lstnew_env(ft_strdup(var)));
 	if (var && opt == APPEND)
@@ -143,8 +145,10 @@ char	*ft_env(char **env, int opt, char *var)
 	if (var && opt == DEL)
 		ft_del(&envp, var);
 	if (opt == FREE)
-		return (free_env(&envp), NULL);
+		free_env(&envp);
 	if (opt == PRINT)
-		return (print_env(&envp), NULL);
+		print_env(&envp);
+	if (opt == LST)
+		return (envp);
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 15:09:37 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/23 11:04:14 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/29 15:07:30 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_unset(t_cmd *cmd)
 		cmd->arg = cmd->arg->next;
 		while (cmd->arg)
 		{
-			ft_env(NULL, DEL, cmd->arg->value);
+			ft_env(NULL, DEL, cmd->arg->value, NULL);
 			cmd->arg = cmd->arg->next;
 		}
 	}

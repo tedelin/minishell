@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:20:40 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/28 14:37:07 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/29 15:07:30 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ int	len_d(char *s)
 	int		i;
 	int		len;
 	char	*tmp;
+	char *res;
 
+	res = NULL;
 	i = 0;
 	len = 0;
 	while (s && s[i])
@@ -51,7 +53,8 @@ int	len_d(char *s)
 			tmp = ft_var(&s[i]);
 			while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
 				i++;
-			len += ft_strlen(ft_env(NULL, GET, tmp));
+			ft_env(NULL, GET, tmp, res);
+			len += ft_strlen(res);
 			free(tmp);
 		}
 	}
@@ -61,15 +64,16 @@ int	len_d(char *s)
 void	ft_expand_var(char *s, char *new, int *i, int *j)
 {
 	char	*tmp;
-	char	*var;
+	char	*res;
 
+	res = NULL;
 	tmp = ft_var(&s[*j]);
-	var = ft_env(NULL, GET, tmp);
+	ft_env(NULL, GET, tmp, res);
 	free(tmp);
 	while (s[*j] && (ft_isalnum(s[*j]) || s[*j] == '_'))
 		(*j)++;
-	while (var && *var)
-		new[++(*i)] = *var++;
+	while (res && *res)
+		new[++(*i)] = *res++;
 }
 
 char	*ft_dollar(char *s)

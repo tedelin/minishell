@@ -1,23 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_env.c                                     :+:      :+:    :+:   */
+/*   bonus_lst.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/17 16:41:46 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/22 14:09:10 by tedelin          ###   ########.fr       */
+/*   Created: 2023/02/09 17:12:25 by tedelin           #+#    #+#             */
+/*   Updated: 2023/03/29 14:59:57 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_print_env(void)
+t_pid	*pid_lstnew(pid_t content)
 {
-	ft_env(NULL, PRINT, NULL);
+	t_pid	*tmp;
+
+	tmp = malloc(sizeof(t_pid));
+	if (tmp)
+	{
+		tmp->content = content;
+		tmp->next = NULL;
+	}
+	return (tmp);
 }
 
-// int main(void)
-// {
-//     ft_print_env();
-// }
+t_pid	*pid_lstlast(t_pid *lst)
+{
+	while (lst && lst->next)
+		lst = lst->next;
+	return (lst);
+}
+
+void	pid_lstadd_back(t_pid **lst, t_pid *new)
+{
+	t_pid	*last;
+
+	if (!*lst)
+		*lst = new;
+	else
+	{
+		last = pid_lstlast(*lst);
+		last->next = new;
+	}
+}

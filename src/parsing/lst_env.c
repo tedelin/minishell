@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 13:45:33 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/28 15:06:07 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/29 15:04:05 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,21 @@ void	free_env(t_env **lst)
 		free(tmp->var);
 		free(tmp);
 	}
+}
+
+int	env_lstsize(t_env **lst)
+{
+	int		i;
+	t_env	*temp;
+
+	temp = *lst;
+	if (!temp)
+		return (0);
+	i = 0;
+	while (temp)
+	{
+		temp = temp->next;
+		i++;
+	}
+	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/28 17:20:03 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/29 15:06:12 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 # include "libft.h"
 # include <errno.h>
 # include <fcntl.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
-# include <readline/history.h>
-# include <readline/readline.h>
 
 enum				e_state
 {
@@ -53,6 +53,7 @@ enum				e_env
 	DEL,
 	FREE,
 	PRINT,
+	LST,
 };
 
 typedef struct s_env
@@ -78,6 +79,12 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }					t_cmd;
 
+typedef struct s_pid
+{
+	pid_t			content;
+	struct s_pid	*next;
+}					t_pid;
+
 // Parsing split arguments - ft_args.c
 int					ft_status(char c, int reset);
 int					check_sep(char c, char b);
@@ -93,11 +100,11 @@ char				*ft_dollar(char *s);
 
 // Environment - ft_env.c
 void				ft_build_env(t_env **lst_env, char **env);
-char				*ft_get_env(t_env *env, char *var);
+void				ft_get_env(t_env *env, char *var, char *res);
 void				edit_env(t_env **env, char *var);
 void				append_env(t_env **env, char *name);
 void				ft_del(t_env **env, char *name);
-char				*ft_env(char **env, int get, char *var);
+t_env				*ft_env(char **env, int get, char *var, char *res);
 
 // Expansion - ft_expansion.c
 void				magic_space(char *s, int rm);
@@ -122,6 +129,7 @@ void				lstadd_back_env(t_env **lst, t_env *new);
 t_env				*lstnew_env(char *value);
 void				print_env(t_env **lst);
 void				free_env(t_env **lst);
+int					env_lstsize(t_env **lst);
 
 // Linked list for tokens - lst_token.c
 t_token				*t_lstnew(char *value, int type);
@@ -162,6 +170,21 @@ void				env_cmd(t_cmd *cmd);
 int					is_builtin(t_cmd *cmd);
 void				tab_free(char **tab);
 char				**ft_lst_to_tab(t_token *lst);
-int					ft_exec(t_cmd **lst);
+int					launch_exec(t_cmd **lst);
+
+// Lstcustom
+t_pid				*pid_lstnew(pid_t content);
+t_pid				*pid_lstlast(t_pid *lst);
+void				pid_lstadd_back(t_pid **lst, t_pid *new);
+
+// Pipex - pipex.c
+void				ft_process(t_cmd *cmd, t_pid **lst_pid, int n);
+void				ft_child(t_cmd *cmd, t_pid **lst_pid, int n);
+void				ft_exec(t_cmd *cmd, t_pid **lst_pid);
+char				*ft_access(char **args, char **env);
+char				**ft_path(char **env);
+void				exit_child(t_cmd *cmd, t_pid **lst_pid, char *msg);
+char				**ft_lst_to_tab_env(t_env *lst);
+char				**ft_lst_to_tab(t_token *lst);
 
 #endif

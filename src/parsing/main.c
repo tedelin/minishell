@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 17:09:48 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/28 15:09:06 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/29 15:07:30 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-	ft_env(env, INIT, NULL);
+	ft_env(env, INIT, NULL, NULL);
 	while (1)
 	{
 		input = readline("minishell>");
@@ -32,8 +32,8 @@ int	main(int ac, char **av, char **env)
 		if (error == 1)
 			return (printf("Parse Error\n"), 0);
 		else if (error == 2)
-			return (printf("Malloc failed\n"), ft_env(NULL, FREE, NULL), 2);
+			return (printf("Malloc failed\n"), ft_env(NULL, FREE, NULL, NULL), 2);
 		free(input);
 	}
-	ft_env(NULL, FREE, NULL);
+	ft_env(NULL, FREE, NULL, NULL);
 }

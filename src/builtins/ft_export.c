@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:15:04 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/23 14:27:47 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/29 15:07:30 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void	ft_export(t_cmd *cmd)
 	while (arg)
 	{
 		if (check_add(arg->value) == 1)
-			ft_env(NULL, EDIT, ft_strdup(arg->value));
+			ft_env(NULL, EDIT, ft_strdup(arg->value), NULL);
 		else if (check_add(arg->value) == 2)
-			ft_env(NULL, APPEND, arg->value);
+			ft_env(NULL, APPEND, arg->value, NULL);
 		else
 			printf("minishell: export: `%s': not a valid identifier\n",
 				arg->value);

@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:41:46 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/23 10:57:30 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/29 15:07:30 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	oldpwd(void)
 
 	pwd = ft_pwd(1);
 	pwd_join = ft_strjoin("OLDPWD=", pwd, 2);
-	ft_env(NULL, EDIT, pwd_join);
+	ft_env(NULL, EDIT, pwd_join, NULL);
 }
 
 void	pwd(void)
@@ -29,11 +29,14 @@ void	pwd(void)
 
 	pwd = ft_pwd(1);
 	pwd_join = ft_strjoin("PWD=", pwd, 2);
-	ft_env(NULL, EDIT, pwd_join);
+	ft_env(NULL, EDIT, pwd_join, NULL);
 }
 
 int	cd_size(t_cmd *cmd)
 {
+	char *res;
+	
+	res = NULL;
 	if (t_lstsize(&cmd->arg) > 2)
 	{
 		printf("minishell: cd: too many arguments\n");
@@ -42,12 +45,14 @@ int	cd_size(t_cmd *cmd)
 	if (t_lstsize(&cmd->arg) == 1)
 	{
 		oldpwd();
-		if (ft_env(NULL, GET, "HOME") == NULL)
+		ft_env(NULL, GET, "HOME", res);
+		if (res == NULL)
 		{
 			printf("minishell: cd: HOME not set\n");
 			return (1);
 		}
-		chdir(ft_env(NULL, GET, "HOME"));
+		ft_env(NULL, GET, "HOME", NULL);
+		chdir(res);
 		pwd();
 		return (1);
 	}
@@ -56,14 +61,17 @@ int	cd_size(t_cmd *cmd)
 
 void	ft_cd(t_cmd *cmd)
 {
+	char *res;
 	int	i;
 
+	res = NULL;
 	if (!cd_size(cmd))
 	{
 		i = chdir(cmd->arg->next->value);
 		if (i == 0)
 		{
-			chdir(ft_env(NULL, GET, "OLDPWD"));
+			ft_env(NULL, GET, "OLDPWD", res);
+			chdir(res);
 			oldpwd();
 			chdir(cmd->arg->next->value);
 			pwd();

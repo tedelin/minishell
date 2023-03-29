@@ -66,6 +66,22 @@ char	**ft_lst_to_tab(t_token *lst)
 	return (tab);
 }
 
+char	**ft_lst_to_tab_env(t_env *lst)
+{
+	char	**tab;
+	int		i;
+
+	i = 0;
+	tab = malloc(sizeof(char *) * (env_lstsize(&lst) + 1));
+	while (lst)
+	{
+		tab[i++] = lst->var;
+		lst = lst->next;
+	}
+	tab[i] = NULL;
+	return (tab);
+}
+
 void	ft_heredoc(t_cmd *cmd)
 {
 	char	*line;
@@ -88,6 +104,8 @@ void	ft_heredoc(t_cmd *cmd)
 
 void	make_red(t_cmd *cmd)
 {
+	cmd->in = -2;
+	cmd->out = -2;
 	while (cmd->red)
 	{
 		if (cmd->red->type == RIN)
@@ -104,18 +122,16 @@ void	make_red(t_cmd *cmd)
 	}
 }
 
-// void	exec_cmd(char **args, int n)
-// {
-// }
-
-int	ft_exec(t_cmd **lst)
+int	launch_exec(t_cmd **lst)
 {
 	t_cmd	*cur;
 	char	**cur_arg;
+	t_pid	*lst_pid;
 	int		n;
 
 	cur = *lst;
 	n = 1;
+	lst_pid = NULL;
 	// printf("%s\n", cur->arg->value);
 	while (cur)
 	{
@@ -123,8 +139,9 @@ int	ft_exec(t_cmd **lst)
 		make_red(cur);
 		// if (is_builtin(cur))
 		// 	exec_cmd(cur_arg, n++);
-		is_builtin(cur);
-		tab_free(cur_arg);
+		// is_builtin(cur);
+		ft_process(cur, &lst_pid, n);
+		// tab_free(cur_arg);
 		cur = cur->next;
 	}
 	return (0);
