@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/29 15:06:12 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/29 17:16:13 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ typedef struct s_cmd
 	t_token			*red;
 	int				in;
 	int				out;
-	int				fd[2];
 	struct s_cmd	*next;
 }					t_cmd;
 
@@ -178,8 +177,8 @@ t_pid				*pid_lstlast(t_pid *lst);
 void				pid_lstadd_back(t_pid **lst, t_pid *new);
 
 // Pipex - pipex.c
-void				ft_process(t_cmd *cmd, t_pid **lst_pid, int n);
-void				ft_child(t_cmd *cmd, t_pid **lst_pid, int n);
+void				ft_process(t_cmd *cmd, t_pid **lst_pid);
+void				ft_child(t_cmd *cmd, t_pid **lst_pid);
 void				ft_exec(t_cmd *cmd, t_pid **lst_pid);
 char				*ft_access(char **args, char **env);
 char				**ft_path(char **env);

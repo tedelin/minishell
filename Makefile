@@ -6,14 +6,14 @@
 #    By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/27 14:55:19 by tedelin           #+#    #+#              #
-#    Updated: 2023/03/29 15:50:37 by tedelin          ###   ########.fr        #
+#    Updated: 2023/03/29 16:48:03 by tedelin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 INCLUDE = -I./include -I./libft
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -g # -Wall -Wextra -Werror -g
 SRC =  $(addprefix src/, $(addprefix parsing/, ft_parser.c lst_token.c ft_args.c \
 		ft_expansion.c ft_env.c ft_dollar.c lst_env.c t_cmd.c lst_cmd.c main.c) \
 		$(addprefix builtins/, ft_cd.c ft_pwd.c ft_echo.c ft_export.c ft_exit.c ft_unset.c env_cmd.c) \

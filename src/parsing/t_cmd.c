@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:22:33 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/29 15:50:37 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/29 16:37:18 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	build_cmd(t_token **lst)
 			previous = cur;
 			cur = cur->next;
 		}
-		lstadd_back_cmd(&cmd, lstnew_cmd());
+		if (cur)
+			lstadd_back_cmd(&cmd, lstnew_cmd());
 		if (cur)
 			cur = cur->next;
 		cmd = cmd->next;

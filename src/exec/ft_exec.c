@@ -127,10 +127,8 @@ int	launch_exec(t_cmd **lst)
 	t_cmd	*cur;
 	char	**cur_arg;
 	t_pid	*lst_pid;
-	int		n;
 
 	cur = *lst;
-	n = 1;
 	lst_pid = NULL;
 	// printf("%s\n", cur->arg->value);
 	while (cur)
@@ -140,8 +138,11 @@ int	launch_exec(t_cmd **lst)
 		// if (is_builtin(cur))
 		// 	exec_cmd(cur_arg, n++);
 		// is_builtin(cur);
-		ft_process(cur, &lst_pid, n);
+		ft_process(cur, &lst_pid);
+		// printf("%p\n", cur);
 		// tab_free(cur_arg);
+		// print_lst(&cur->arg);
+		// printf("\n\n\n");
 		cur = cur->next;
 	}
 	return (0);
