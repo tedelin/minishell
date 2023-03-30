@@ -145,5 +145,10 @@ int	launch_exec(t_cmd **lst)
 		// printf("\n\n\n");
 		cur = cur->next;
 	}
+	while (lst_pid)
+	{
+		waitpid(lst_pid->content, NULL, 0);
+		lst_pid = lst_pid->next;
+	}
 	return (0);
 }

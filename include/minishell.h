@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/29 17:16:13 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/30 15:32:45 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_cmd
 	t_token			*red;
 	int				in;
 	int				out;
+	int				fd[2];
 	struct s_cmd	*next;
 }					t_cmd;
 

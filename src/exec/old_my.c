@@ -16,17 +16,9 @@ void	ft_process(t_cmd *cmd, t_pid **lst_pid)
 {
 	pid_t	pid;
 	
-	if (cmd->next && pipe(cmd->fd) == -1)
-		return;
-	if (cmd->next)
-	{
-		cmd->next->in = cmd->fd[0];
-		fprintf(stderr, "cmd->next->in = %d\n", cmd->next->in);
-	}
-	fprintf(stderr, "fds is [0]:%d    [1]:%d\n", cmd->fd[0], cmd->fd[1]);
+	if (pipe(cmd->fd) == -1)
+		exit_child(cmd, lst_pid, "pipe ");
 	pid = fork();
-	if (cmd->next)
-		fprintf(stderr, "NEXT:%d\n", cmd->next->in);
 	if (pid == -1)
 		exit_child(cmd, lst_pid, "pid ");
 	if (pid == 0)
@@ -34,28 +26,18 @@ void	ft_process(t_cmd *cmd, t_pid **lst_pid)
 	else
 	{
 		pid_lstadd_back(lst_pid, pid_lstnew(pid));
-		if (cmd->fd[1] > 2)
-			close(cmd->fd[1]);
+		dup2(cmd->fd[0], STDIN_FILENO);
+		close(cmd->fd[1]);
+		close (cmd->fd[0]);
 	}
 }
 
 void	ft_child(t_cmd *cmd, t_pid **lst_pid)
 {
-	// execve("/usr/bin/ls", &cmd->arg->value, NULL);
-	// fprintf(stderr, "fds is [0]:%d    [1]:%d", cmd->in, cmd->fd[1]);
-	fprintf(stderr, "My:%d\n", cmd->in);
-	if (cmd->in > 2)
-	{
-		dup2(cmd->in, STDIN_FILENO);
-	}
 	if (cmd->next)
 		dup2(cmd->fd[1], STDOUT_FILENO);
-	if (cmd->fd[0] > 2)
-		close(cmd->fd[0]);
-	if (cmd->fd[1] > 2)
-		close(cmd->fd[1]);
-	// close(cmd->fd[0]);
-	// close(cmd->fd[1]);
+	close(cmd->fd[0]);
+	close(cmd->fd[1]);
 	ft_exec(cmd, lst_pid);
 }
 

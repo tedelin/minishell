@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 17:09:48 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/29 16:54:31 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/03/30 16:30:04 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,16 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	ft_env(env, INIT, NULL, NULL);
-	// while (1)
-	// {
-		// input = readline("minishell>");
-		input = "ls | wc -l";
-		if (!input)
-			return (1);
+	// whle(1)
+	rl_outstream = stderr;
+	int i = 0;
+	while (1)
+	{
+		input = readline("minishell>");
+		// input = get_next_line(0);
+		// input = "ls | wc -l";
+		// if (!input)
+		// 	return (1);
 		lst = NULL;
 		add_history(input);
 		error = make_token(&lst, input);
@@ -35,6 +39,9 @@ int	main(int ac, char **av, char **env)
 		else if (error == 2)
 			return (printf("Malloc failed\n"), ft_env(NULL, FREE, NULL, NULL), 2);
 		// free(input);
-	// }
+		// fflush(stdout);
+		i++;
+		// fprintf(stderr, "\n\n");
+	}
 	ft_env(NULL, FREE, NULL, NULL);
 }
