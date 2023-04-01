@@ -59,7 +59,7 @@ char	**ft_lst_to_tab(t_token *lst)
 	tab = malloc(sizeof(char *) * (t_lstsize(&lst) + 1));
 	while (lst)
 	{
-		tab[i++] = lst->value;
+		tab[i++] = ft_strdup(lst->value);
 		lst = lst->next;
 	}
 	tab[i] = NULL;
@@ -75,7 +75,7 @@ char	**ft_lst_to_tab_env(t_env *lst)
 	tab = malloc(sizeof(char *) * (env_lstsize(&lst) + 1));
 	while (lst)
 	{
-		tab[i++] = lst->var;
+		tab[i++] = ft_strdup(lst->var);
 		lst = lst->next;
 	}
 	tab[i] = NULL;
@@ -153,7 +153,7 @@ int	launch_exec(t_cmd **lst)
 	lst_pid = NULL;
 	while (cur)
 	{
-		ft_process(cur, &lst_pid);
+		ft_process(cur, &lst_pid, lst);
 		cur = cur->next;
 	}
 	ft_wait(lst_pid);

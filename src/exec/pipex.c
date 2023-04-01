@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	ft_process(t_cmd *cmd, t_pid **lst_pid)
+void	ft_process(t_cmd *cmd, t_pid **lst_pid, t_cmd **lst_cmd)
 {
 	pid_t	pid;
 	
@@ -22,9 +22,9 @@ void	ft_process(t_cmd *cmd, t_pid **lst_pid)
 		cmd->next->in = cmd->fd[0];
 	pid = fork();
 	if (pid == -1)
-		exit_child(cmd, lst_pid, "pid ");
+		exit_child(lst_cmd, lst_pid, "pid ");
 	if (pid == 0)
-		ft_child(cmd, lst_pid);
+		ft_child(cmd, lst_pid, lst_cmd);
 	else
 	{
 		pid_lstadd_back(lst_pid, pid_lstnew(pid));
@@ -35,7 +35,7 @@ void	ft_process(t_cmd *cmd, t_pid **lst_pid)
 	}
 }
 
-void	ft_child(t_cmd *cmd, t_pid **lst_pid)
+void	ft_child(t_cmd *cmd, t_pid **lst_pid, t_cmd **lst_cmd)
 {
 	if (cmd->in > 2)
 	{
@@ -48,10 +48,10 @@ void	ft_child(t_cmd *cmd, t_pid **lst_pid)
 		close(cmd->fd[0]);
 		close(cmd->fd[1]);
 	}
-	ft_exec(cmd, lst_pid);
+	ft_exec(cmd, lst_pid, lst_cmd);
 }
 
-void	ft_exec(t_cmd *cmd, t_pid **lst_pid)
+void	ft_exec(t_cmd *cmd, t_pid **lst_pid, t_cmd **lst_cmd)
 {
 	char	**args;
 	char	**env;
@@ -65,9 +65,10 @@ void	ft_exec(t_cmd *cmd, t_pid **lst_pid)
 		errno = 127;
 		ft_putstr_fd(args[0], 2);
 		ft_putendl_fd(": command not found", 2);
+		free(path);
 		tab_free(args);
 		tab_free(env);
-		exit_child(cmd, lst_pid, "main");
+		exit_child(lst_cmd, lst_pid, "main");
 	}
 }
 
@@ -84,18 +85,17 @@ char	*ft_access(char **args, char **env)
 		return (ft_strdup(args[0]));
 	tmp_cmd = ft_strjoin("/", args[0], 0);
 	if (tmp_cmd == NULL)
-		return (NULL);
+		return (tab_free(path), NULL);
 	while (path && path[++i])
 	{
 		path_cmd = ft_strjoin(path[i], tmp_cmd, 0);
 		if (!path_cmd)
-			return (NULL);
+			return (free(tmp_cmd), tab_free(path), NULL);
 		if (access(path_cmd, X_OK) == 0)
-			return (path_cmd);
+			return (free(tmp_cmd), tab_free(path), path_cmd);
 		free(path_cmd);
-		path_cmd = NULL;
 	}
-	return (NULL);
+	return (free(tmp_cmd), tab_free(path), NULL);
 }
 
 char	**ft_path(char **env)
@@ -112,7 +112,7 @@ char	**ft_path(char **env)
 	return (ft_split(env[i] + 5, ':'));
 }
 
-void	exit_child(t_cmd *cmd, t_pid **lst, char *msg)
+void	exit_child(t_cmd **lst_cmd, t_pid **lst, char *msg)
 {
 	t_pid	*tmp;
 
@@ -122,6 +122,10 @@ void	exit_child(t_cmd *cmd, t_pid **lst, char *msg)
 		(*lst) = (*lst)->next;
 		free(tmp);
 	}
-	free_cmd(&cmd);
+	if (ft_strncmp(msg, "main", 4) == 0)
+		exit(errno);
+	free_cmd(lst_cmd);
+	ft_env(NULL, FREE, NULL, NULL);
+	perror(msg);
 	exit(errno);
 }

@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/01 11:09:20 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/01 13:08:02 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 # include "libft.h"
 # include <errno.h>
 # include <fcntl.h>
-# include <readline/history.h>
-# include <readline/readline.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 
 enum				e_state
 {
@@ -172,7 +172,7 @@ int					is_builtin(t_cmd *cmd);
 void				tab_free(char **tab);
 char				**ft_lst_to_tab_env(t_env *lst);
 char				**ft_lst_to_tab(t_token *lst);
-void				ft_here_doc(t_cmd *cmd);
+void				ft_heredoc(t_cmd *cmd);
 void				make_red(t_cmd **lst);
 void				ft_wait(t_pid *lst);
 int					launch_exec(t_cmd **lst);
@@ -183,11 +183,11 @@ t_pid				*pid_lstlast(t_pid *lst);
 void				pid_lstadd_back(t_pid **lst, t_pid *new);
 
 // Pipex - pipex.c
-void				ft_process(t_cmd *cmd, t_pid **lst_pid);
-void				ft_child(t_cmd *cmd, t_pid **lst_pid);
-void				ft_exec(t_cmd *cmd, t_pid **lst_pid);
+void				ft_process(t_cmd *cmd, t_pid **lst_pid, t_cmd **lst_cmd);
+void				ft_child(t_cmd *cmd, t_pid **lst_pid, t_cmd **lst_cmd);
+void				ft_exec(t_cmd *cmd, t_pid **lst_pid, t_cmd **lst_cmd);
 char				*ft_access(char **args, char **env);
 char				**ft_path(char **env);
-void				exit_child(t_cmd *cmd, t_pid **lst_pid, char *msg);
+void				exit_child(t_cmd **lst_cmd, t_pid **lst_pid, char *msg);
 
 #endif
