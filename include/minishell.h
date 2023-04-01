@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/30 15:32:45 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/01 11:09:20 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,10 +166,15 @@ void				ft_unset(t_cmd *cmd);
 
 // Buitin env - env_cmd.c
 void				env_cmd(t_cmd *cmd);
+
 // Exec - ft_exec.c
 int					is_builtin(t_cmd *cmd);
 void				tab_free(char **tab);
+char				**ft_lst_to_tab_env(t_env *lst);
 char				**ft_lst_to_tab(t_token *lst);
+void				ft_here_doc(t_cmd *cmd);
+void				make_red(t_cmd **lst);
+void				ft_wait(t_pid *lst);
 int					launch_exec(t_cmd **lst);
 
 // Lstcustom
@@ -184,7 +189,5 @@ void				ft_exec(t_cmd *cmd, t_pid **lst_pid);
 char				*ft_access(char **args, char **env);
 char				**ft_path(char **env);
 void				exit_child(t_cmd *cmd, t_pid **lst_pid, char *msg);
-char				**ft_lst_to_tab_env(t_env *lst);
-char				**ft_lst_to_tab(t_token *lst);
 
 #endif

@@ -102,23 +102,43 @@ void	ft_heredoc(t_cmd *cmd)
 	}
 }
 
-void	make_red(t_cmd *cmd)
+void	make_red(t_cmd **lst)
 {
-	cmd->in = -2;
-	cmd->out = -2;
-	while (cmd->red)
+	t_cmd	*cur;
+
+	cur = *lst;
+	while (cur)
 	{
-		if (cmd->red->type == RIN)
-			cmd->in = open(cmd->red->value, O_RDONLY);
-		else if (cmd->red->type == ROUT)
-			cmd->out = open(cmd->red->value, O_WRONLY | O_CREAT | O_TRUNC,
-					0644);
-		else if (cmd->red->type == DRIN)
-			ft_heredoc(cmd);
-		else if (cmd->red->type == DROUT)
-			cmd->out = open(cmd->red->value, O_WRONLY | O_CREAT | O_APPEND,
-					0644);
-		cmd->red = cmd->red->next;
+		cur->in = -2;
+		cur->out = -2;
+		while (cur->red)
+		{
+			if (cur->red->type == RIN)
+				cur->in = open(cur->red->value, O_RDONLY);
+			else if (cur->red->type == ROUT)
+				cur->out = open(cur->red->value, O_WRONLY | O_CREAT | O_TRUNC,
+						0644);
+			else if (cur->red->type == DRIN)
+				ft_heredoc(cur);
+			else if (cur->red->type == DROUT)
+				cur->out = open(cur->red->value, O_WRONLY | O_CREAT | O_APPEND,
+						0644);
+			cur->red = cur->red->next;
+		}
+		cur = cur->next;
+	}
+}
+
+void	ft_wait(t_pid *lst)
+{
+	t_pid	*tmp;
+
+	while (lst)
+	{
+		waitpid(lst->content, NULL, 0);
+		tmp = lst;
+		lst = lst->next;
+		free(tmp);
 	}
 }
 
@@ -128,27 +148,15 @@ int	launch_exec(t_cmd **lst)
 	char	**cur_arg;
 	t_pid	*lst_pid;
 
+	make_red(lst);
 	cur = *lst;
 	lst_pid = NULL;
-	// printf("%s\n", cur->arg->value);
 	while (cur)
 	{
-		cur_arg = ft_lst_to_tab(cur->arg);
-		make_red(cur);
-		// if (is_builtin(cur))
-		// 	exec_cmd(cur_arg, n++);
-		// is_builtin(cur);
 		ft_process(cur, &lst_pid);
-		// printf("%p\n", cur);
-		// tab_free(cur_arg);
-		// print_lst(&cur->arg);
-		// printf("\n\n\n");
 		cur = cur->next;
 	}
-	while (lst_pid)
-	{
-		waitpid(lst_pid->content, NULL, 0);
-		lst_pid = lst_pid->next;
-	}
+	ft_wait(lst_pid);
+	free_cmd(lst);
 	return (0);
 }

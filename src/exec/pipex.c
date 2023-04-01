@@ -18,15 +18,9 @@ void	ft_process(t_cmd *cmd, t_pid **lst_pid)
 	
 	if (cmd->next && pipe(cmd->fd) == -1)
 		return;
-	if (cmd->next)
-	{
+	if (cmd->next && cmd->next->in == -2)
 		cmd->next->in = cmd->fd[0];
-		fprintf(stderr, "cmd->next->in = %d\n", cmd->next->in);
-	}
-	fprintf(stderr, "fds is [0]:%d    [1]:%d\n", cmd->fd[0], cmd->fd[1]);
 	pid = fork();
-	if (cmd->next)
-		fprintf(stderr, "NEXT:%d\n", cmd->next->in);
 	if (pid == -1)
 		exit_child(cmd, lst_pid, "pid ");
 	if (pid == 0)
@@ -36,26 +30,24 @@ void	ft_process(t_cmd *cmd, t_pid **lst_pid)
 		pid_lstadd_back(lst_pid, pid_lstnew(pid));
 		if (cmd->fd[1] > 2)
 			close(cmd->fd[1]);
+		if (cmd->in > 2)
+			close(cmd->in);
 	}
 }
 
 void	ft_child(t_cmd *cmd, t_pid **lst_pid)
 {
-	// execve("/usr/bin/ls", &cmd->arg->value, NULL);
-	// fprintf(stderr, "fds is [0]:%d    [1]:%d", cmd->in, cmd->fd[1]);
-	fprintf(stderr, "My:%d\n", cmd->in);
 	if (cmd->in > 2)
 	{
 		dup2(cmd->in, STDIN_FILENO);
+		close(cmd->in);
 	}
 	if (cmd->next)
+	{
 		dup2(cmd->fd[1], STDOUT_FILENO);
-	if (cmd->fd[0] > 2)
 		close(cmd->fd[0]);
-	if (cmd->fd[1] > 2)
 		close(cmd->fd[1]);
-	// close(cmd->fd[0]);
-	// close(cmd->fd[1]);
+	}
 	ft_exec(cmd, lst_pid);
 }
 
@@ -68,15 +60,15 @@ void	ft_exec(t_cmd *cmd, t_pid **lst_pid)
 	args = ft_lst_to_tab(cmd->arg);
 	env = ft_lst_to_tab_env(ft_env(NULL, LST, NULL, NULL));
 	path = ft_access(args, env);
-	(void) lst_pid;
-	execve(path, args, env);
-	// if (!path || execve(path, args, env) == -1)
-	// {
-	// 	errno = 127;
-	// 	ft_putstr_fd(args[0], 2);
-	// 	// ft_putendl_fd(": command not found", 2);
-	// 	exit_child(cmd, lst_pid, "main");
-	// }
+	if (!path || execve(path, args, env) == -1)
+	{
+		errno = 127;
+		ft_putstr_fd(args[0], 2);
+		ft_putendl_fd(": command not found", 2);
+		tab_free(args);
+		tab_free(env);
+		exit_child(cmd, lst_pid, "main");
+	}
 }
 
 char	*ft_access(char **args, char **env)
@@ -120,32 +112,16 @@ char	**ft_path(char **env)
 	return (ft_split(env[i] + 5, ':'));
 }
 
-void	exit_child(t_cmd *cmd, t_pid **lst_pid, char *msg)
+void	exit_child(t_cmd *cmd, t_pid **lst, char *msg)
 {
-	// t_pid	*tmp;
+	t_pid	*tmp;
 
-	// while ((*lst_pid))
-	// {
-	// 	tmp = (*lst_pid);
-	// 	(*lst_pid) = (*lst_pid)->next;
-	// 	free(tmp);
-	// 	tmp = NULL;
-	// }
-	// free(*lst_pid);
-	// free_split(data->cmd_args);
-	// free_split(data->path);
-	// free(data->cmd);
-	// free(data->cmd_path);
-	// if (data->in != -1)
-	// 	close(data->in);
-	// if (data->out != -1)
-	// 	close(data->out);
-	// if (ft_strncmp(msg, "main", 4) == 0)
-	// 	exit(errno);
-	// perror(msg);
-	(void) lst_pid;
-	(void) msg;
-	close(cmd->in);
-	close(cmd->out);
+	while (*lst)
+	{
+		tmp = *lst;
+		(*lst) = (*lst)->next;
+		free(tmp);
+	}
+	free_cmd(&cmd);
 	exit(errno);
 }
