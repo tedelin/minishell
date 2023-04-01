@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 13:19:35 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/29 15:50:37 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/01 18:21:19 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_build_env(t_env **lst_env, char **env)
 {
 	t_env	*tmp;
 	char	*add;
-	
+
 	while (env && *env)
 	{
 		add = ft_strdup(*env);

@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:20:40 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/29 15:50:37 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/01 18:19:04 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	len_d(char *s)
 	int		i;
 	int		len;
 	char	*tmp;
-	char *res;
+	char	*res;
 
 	res = NULL;
 	i = 0;

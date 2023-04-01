@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:41:46 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/29 15:50:37 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/01 18:22:20 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	pwd(void)
 
 int	cd_size(t_cmd *cmd)
 {
-	char *res;
-	
+	char	*res;
+
 	res = NULL;
 	if (t_lstsize(&cmd->arg) > 2)
 	{
@@ -61,8 +61,8 @@ int	cd_size(t_cmd *cmd)
 
 void	ft_cd(t_cmd *cmd)
 {
-	char *res;
-	int	i;
+	char	*res;
+	int		i;
 
 	res = NULL;
 	if (!cd_size(cmd))

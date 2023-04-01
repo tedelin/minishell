@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/01 13:08:02 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/01 18:24:50 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ void				print_lst(t_token **lst);
 int					t_lstsize(t_token **lst);
 
 //Token to cmd
+t_token				*ft_arg_and_red(t_token *cur, t_cmd *lst_cmd);
 int					build_cmd(t_token **lst);
 
 // Buitin cd - ft_cd.c

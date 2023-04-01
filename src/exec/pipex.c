@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/28 15:57:57 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/30 10:18:333 by tedelin          ###   ########.fr       */
+/*   Created: 2023/04/01 13:28:26 by tedelin           #+#    #+#             */
+/*   Updated: 2023/04/01 13:28:44 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	ft_process(t_cmd *cmd, t_pid **lst_pid, t_cmd **lst_cmd)
 {
 	pid_t	pid;
-	
+
 	if (cmd->next && pipe(cmd->fd) == -1)
-		return;
+		return ;
 	if (cmd->next && cmd->next->in == -2)
 		cmd->next->in = cmd->fd[0];
 	pid = fork();
@@ -56,7 +56,7 @@ void	ft_exec(t_cmd *cmd, t_pid **lst_pid, t_cmd **lst_cmd)
 	char	**args;
 	char	**env;
 	char	*path;
-	
+
 	args = ft_lst_to_tab(cmd->arg);
 	env = ft_lst_to_tab_env(ft_env(NULL, LST, NULL, NULL));
 	path = ft_access(args, env);
@@ -77,7 +77,7 @@ char	*ft_access(char **args, char **env)
 	char	*path_cmd;
 	char	**path;
 	char	*tmp_cmd;
-	int	i;
+	int		i;
 
 	i = -1;
 	path = ft_path(env);
@@ -110,22 +110,4 @@ char	**ft_path(char **env)
 	if (!env[i])
 		return (NULL);
 	return (ft_split(env[i] + 5, ':'));
-}
-
-void	exit_child(t_cmd **lst_cmd, t_pid **lst, char *msg)
-{
-	t_pid	*tmp;
-
-	while (*lst)
-	{
-		tmp = *lst;
-		(*lst) = (*lst)->next;
-		free(tmp);
-	}
-	if (ft_strncmp(msg, "main", 4) == 0)
-		exit(errno);
-	free_cmd(lst_cmd);
-	ft_env(NULL, FREE, NULL, NULL);
-	perror(msg);
-	exit(errno);
 }

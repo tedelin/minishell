@@ -6,7 +6,7 @@
 #    By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/27 14:55:19 by tedelin           #+#    #+#              #
-#    Updated: 2023/03/29 16:48:03 by tedelin          ###   ########.fr        #
+#    Updated: 2023/04/01 13:38:52 by tedelin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CFLAGS = -g # -Wall -Wextra -Werror -g
 SRC =  $(addprefix src/, $(addprefix parsing/, ft_parser.c lst_token.c ft_args.c \
 		ft_expansion.c ft_env.c ft_dollar.c lst_env.c t_cmd.c lst_cmd.c main.c) \
 		$(addprefix builtins/, ft_cd.c ft_pwd.c ft_echo.c ft_export.c ft_exit.c ft_unset.c env_cmd.c) \
-		$(addprefix exec/, ft_exec.c bonus_lst.c pipex.c))
+		$(addprefix exec/, ft_exec.c lst_pid.c pipex.c exec_utils.c))
 OBJS = $(patsubst src/%.c, obj/%.o, $(SRC))
 
 all: $(NAME)
