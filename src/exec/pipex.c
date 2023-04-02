@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:28:26 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/01 13:28:44 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/02 12:50:19 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	ft_process(t_cmd *cmd, t_pid **lst_pid, t_cmd **lst_cmd)
 		return ;
 	if (cmd->next && cmd->next->in == -2)
 		cmd->next->in = cmd->fd[0];
+	else if (cmd->next && cmd->next->in != -2)
+		close(cmd->fd[0]);
 	pid = fork();
 	if (pid == -1)
 		exit_child(lst_cmd, lst_pid, "pid ");

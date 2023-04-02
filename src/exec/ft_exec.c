@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:23:55 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/01 13:28:06 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/02 12:44:32 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,12 @@ void	ft_heredoc(t_cmd *cmd)
 {
 	char	*line;
 
-	cmd->in = open("tmpfile.txt", O_CREAT | O_WRONLY | O_TRUNC, 0664);
+	cmd->in = open(".tmp", O_CREAT | O_WRONLY | O_TRUNC, 0664);
+	if (cmd->in == -1)
+		return ;
 	while (1)
 	{
-		line = readline("pipe heredoc>");
+		line = readline(">");
 		if (!line || (ft_strncmp(cmd->red->value, line,
 					ft_strlen(cmd->red->value)) == 0
 				&& (ft_strlen(line) == ft_strlen(cmd->red->value))))
@@ -52,9 +54,11 @@ void	ft_heredoc(t_cmd *cmd)
 			free(line);
 			break ;
 		}
-		ft_putstr_fd(line, cmd->in);
+		ft_putendl_fd(line, cmd->in);
 		free(line);
 	}
+	close(cmd->in);
+	cmd->in = open(".tmp", O_RDONLY);
 }
 
 void	make_red(t_cmd **lst)
