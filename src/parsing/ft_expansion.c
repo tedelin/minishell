@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:52:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/03 13:47:47 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/03 16:27:19 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	new_token(t_token **new, char *s, int type)
 		if (state != 0)
 			magic_space(str, 0);
 		// if (str)
-			final = ft_strjoin(final, str, 3);
+		final = ft_strjoin(final, str, 3);
 	}
 	ft_expand(new, final, type);
 }

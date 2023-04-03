@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 17:09:48 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/03 11:27:16 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/03 15:21:52 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	main(int ac, char **av, char **env)
 // 	// while (1)
 // 	// {
 // 	// 	input = readline("minishell$ ");
-// 	input = "ls | wc -l";
+// 	input = "< Makefile < Makefile cat | cat | cat | wc -l";
 // 	if (!input)
 // 		return (1);
 // 	lst = NULL;

@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:23:55 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/03 13:48:13 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/03 14:16:01 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,31 +51,33 @@ void	close_before(t_cmd *cmd, int type)
 void	make_red(t_cmd **lst)
 {
 	t_cmd	*cur;
+	t_token *red;
 
 	cur = *lst;
 	while (cur)
 	{
 		cur->in = -2;
 		cur->out = -2;
-		while (cur->red)
+		red = cur->red;
+		while (red)
 		{
-			close_before(cur, cur->red->type);
-			if (cur->red->type == RIN)
-				cur->in = open(cur->red->value, O_RDONLY);
-			else if (cur->red->type == ROUT)
-				cur->out = open(cur->red->value, O_WRONLY | O_CREAT | O_TRUNC,
+			close_before(cur, red->type);
+			if (red->type == RIN)
+				cur->in = open(red->value, O_RDONLY);
+			else if (red->type == ROUT)
+				cur->out = open(red->value, O_WRONLY | O_CREAT | O_TRUNC,
 						0644);
-			else if (cur->red->type == DRIN)
+			else if (red->type == DRIN)
 				ft_heredoc(cur);
-			else if (cur->red->type == DROUT)
-				cur->out = open(cur->red->value, O_WRONLY | O_CREAT | O_APPEND,
+			else if (red->type == DROUT)
+				cur->out = open(red->value, O_WRONLY | O_CREAT | O_APPEND,
 						0644);
 			if (cur->in == -1 || cur->out == -1)
 			{
-				perror(cur->red->value);
+				perror(red->value);
 				break ;
 			}
-			cur->red = cur->red->next;
+			red = red->next;
 		}
 		cur = cur->next;
 	}

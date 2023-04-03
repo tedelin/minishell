@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:39:51 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/22 14:09:01 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/03 14:08:59 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	free_lst(t_token **lst)
 		free(tmp->value);
 		free(tmp);
 	}
-	lst = NULL;
 }
 
 void	print_lst(t_token **lst)
