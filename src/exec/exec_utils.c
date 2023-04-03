@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:25:05 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/01 13:26:33 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/03 13:48:58 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,19 @@ char	**ft_lst_to_tab_env(t_env *lst)
 	}
 	tab[i] = NULL;
 	return (tab);
+}
+
+void	ft_wait(t_pid *lst)
+{
+	t_pid	*tmp;
+
+	while (lst)
+	{
+		waitpid(lst->content, NULL, 0);
+		tmp = lst;
+		lst = lst->next;
+		free(tmp);
+	}
 }
 
 void	exit_child(t_cmd **lst_cmd, t_pid **lst, char *msg)

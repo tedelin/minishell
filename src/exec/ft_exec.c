@@ -6,36 +6,11 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:23:55 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/02 12:44:32 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/03 13:48:13 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	is_builtin(t_cmd *cmd)
-{
-	int	len;
-
-	if (!cmd->arg || !cmd->arg->value)
-		return (1);
-	len = ft_strlen(cmd->arg->value);
-	if (!ft_strncmp(cmd->arg->value, "cd", 2) && len == 2)
-		return (ft_cd(cmd), 0);
-	else if (!ft_strncmp(cmd->arg->value, "echo", 4) && len == 4)
-		return (ft_echo(cmd), 0);
-	else if (!ft_strncmp(cmd->arg->value, "env", 3) && len == 3)
-		return (env_cmd(cmd), 0);
-	else if (!ft_strncmp(cmd->arg->value, "export", 6) && len == 6)
-		return (ft_export(cmd), 0);
-	else if (!ft_strncmp(cmd->arg->value, "pwd", 3) && len == 3)
-		return (ft_pwd(0), 0);
-	else if (!ft_strncmp(cmd->arg->value, "unset", 5) && len == 5)
-		return (ft_unset(cmd), 0);
-	else if (!ft_strncmp(cmd->arg->value, "exit", 4) && len == 4)
-		return (ft_exit(cmd), 0);
-	else
-		return (1);
-}
 
 void	ft_heredoc(t_cmd *cmd)
 {
@@ -61,6 +36,18 @@ void	ft_heredoc(t_cmd *cmd)
 	cmd->in = open(".tmp", O_RDONLY);
 }
 
+void	close_before(t_cmd *cmd, int type)
+{
+	if (type == RIN && cmd->in > 2)
+		close(cmd->in);
+	else if (type == ROUT && cmd->out > 2)
+		close(cmd->out);
+	else if (type == DRIN && cmd->in > 2)
+		close(cmd->in);
+	else if (type == DROUT && cmd->out > 2)
+		close(cmd->out);
+}
+
 void	make_red(t_cmd **lst)
 {
 	t_cmd	*cur;
@@ -72,6 +59,7 @@ void	make_red(t_cmd **lst)
 		cur->out = -2;
 		while (cur->red)
 		{
+			close_before(cur, cur->red->type);
 			if (cur->red->type == RIN)
 				cur->in = open(cur->red->value, O_RDONLY);
 			else if (cur->red->type == ROUT)
@@ -82,22 +70,14 @@ void	make_red(t_cmd **lst)
 			else if (cur->red->type == DROUT)
 				cur->out = open(cur->red->value, O_WRONLY | O_CREAT | O_APPEND,
 						0644);
+			if (cur->in == -1 || cur->out == -1)
+			{
+				perror(cur->red->value);
+				break ;
+			}
 			cur->red = cur->red->next;
 		}
 		cur = cur->next;
-	}
-}
-
-void	ft_wait(t_pid *lst)
-{
-	t_pid	*tmp;
-
-	while (lst)
-	{
-		waitpid(lst->content, NULL, 0);
-		tmp = lst;
-		lst = lst->next;
-		free(tmp);
 	}
 }
 
@@ -110,6 +90,11 @@ int	launch_exec(t_cmd **lst)
 	make_red(lst);
 	cur = *lst;
 	lst_pid = NULL;
+	if (!cur->next && !is_builtin_no_child(cur))
+	{
+		free_cmd(lst);
+		return (0);
+	}
 	while (cur)
 	{
 		ft_process(cur, &lst_pid, lst);

@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:20:40 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/01 18:19:04 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/03 13:44:05 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,18 @@ int	len_d(char *s)
 	char	*res;
 
 	res = NULL;
-	i = 0;
+	i = -1;
 	len = 0;
 	while (s && s[i])
 	{
-		while (s[i] && s[i] != '$')
-		{
-			i++;
+		while (s[++i] && s[i] != '$')
 			len++;
-		}
 		if (s[i] && s[i++] == '$')
 		{
 			tmp = ft_var(&s[i]);
 			while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
 				i++;
-			ft_env(NULL, GET, tmp, res);
+			ft_env(NULL, GET, tmp, &res);
 			len += ft_strlen(res);
 			free(tmp);
 		}
@@ -68,7 +65,7 @@ void	ft_expand_var(char *s, char *new, int *i, int *j)
 
 	res = NULL;
 	tmp = ft_var(&s[*j]);
-	ft_env(NULL, GET, tmp, res);
+	ft_env(NULL, GET, tmp, &res);
 	free(tmp);
 	while (s[*j] && (ft_isalnum(s[*j]) || s[*j] == '_'))
 		(*j)++;

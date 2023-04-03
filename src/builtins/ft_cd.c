@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:41:46 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/01 18:22:20 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/03 11:19:07 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,10 @@ void	ft_cd(t_cmd *cmd)
 		}
 		printf("minishell: cd: %s: No such file or directory\n",
 			cmd->arg->next->value);
+		g_exit = 1;
+		return ;
 	}
+	g_exit = 1;
 }
 
 // int main(int ac, char **av, char **env)

@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/01 18:24:50 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/03 13:48:58 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <unistd.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+
+extern int g_exit;
 
 enum				e_state
 {
@@ -100,11 +102,11 @@ char				*ft_dollar(char *s);
 
 // Environment - ft_env.c
 void				ft_build_env(t_env **lst_env, char **env);
-void				ft_get_env(t_env *env, char *var, char *res);
+void				ft_get_env(t_env *env, char *var, char **res);
 void				edit_env(t_env **env, char *var);
 void				append_env(t_env **env, char *name);
 void				ft_del(t_env **env, char *name);
-t_env				*ft_env(char **env, int get, char *var, char *res);
+t_env				*ft_env(char **env, int get, char *var, char **res);
 
 // Expansion - ft_expansion.c
 void				magic_space(char *s, int rm);
@@ -169,7 +171,8 @@ void				ft_unset(t_cmd *cmd);
 void				env_cmd(t_cmd *cmd);
 
 // Exec - ft_exec.c
-int					is_builtin(t_cmd *cmd);
+int					is_builtin_no_child(t_cmd *cmd);
+int					is_builtin_child(t_cmd *cmd);
 void				tab_free(char **tab);
 char				**ft_lst_to_tab_env(t_env *lst);
 char				**ft_lst_to_tab(t_token *lst);

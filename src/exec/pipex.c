@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:28:26 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/02 12:50:19 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/03 11:47:09 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,28 @@ void	ft_process(t_cmd *cmd, t_pid **lst_pid, t_cmd **lst_cmd)
 
 void	ft_child(t_cmd *cmd, t_pid **lst_pid, t_cmd **lst_cmd)
 {
+	if (cmd->in == -1 || cmd->out == -1)
+		exit_child(lst_cmd, lst_pid, "main");
 	if (cmd->in > 2)
 	{
 		dup2(cmd->in, STDIN_FILENO);
 		close(cmd->in);
 	}
+	if (cmd->out > 2)
+	{
+		dup2(cmd->out, STDOUT_FILENO);
+		close(cmd->out);
+	}
+	else if (cmd->next)
+		dup2(cmd->fd[1], STDOUT_FILENO);
 	if (cmd->next)
 	{
-		dup2(cmd->fd[1], STDOUT_FILENO);
 		close(cmd->fd[0]);
 		close(cmd->fd[1]);
 	}
-	ft_exec(cmd, lst_pid, lst_cmd);
+	if (is_builtin_child(cmd))
+		ft_exec(cmd, lst_pid, lst_cmd);
+	exit(0);
 }
 
 void	ft_exec(t_cmd *cmd, t_pid **lst_pid, t_cmd **lst_cmd)
