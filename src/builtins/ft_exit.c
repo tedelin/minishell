@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:41:41 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/23 10:57:16 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/04 16:03:39 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,27 @@ int	ft_exit(t_cmd *cmd)
 	int		i;
 
 	if (cmd->arg && !cmd->arg->next && !ft_strncmp(cmd->arg->value, "exit", 4))
+	{
+		printf("exit\n");
 		exit(0);
+	}
 	tmp = cmd->arg->next;
 	if (tmp && tmp->value)
 	{
 		i = 0;
 		if (!ft_isdigit(tmp->value[i]) && tmp->value[i] != '-'
 			&& tmp->value[i] != '+')
-			return (printf("exit: %s: numeric argument required\n", tmp->value),
+			return (printf("exit\nexit: %s: numeric argument required\n", tmp->value),
 				exit(2), 1);
 		while (tmp->value[++i])
 		{
 			if (!ft_isdigit(tmp->value[i]))
-				return (printf("exit: %s: numeric argument required\n",
+				return (printf("exit\nexit: %s: numeric argument required\n",
 						tmp->value), exit(2), 1);
 		}
 		if (!tmp->next)
 			exit((unsigned int)ft_atoi(tmp->value) % 256);
-		printf("exit: too many arguments\n");
+		printf("exit\nexit: too many arguments\n");
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:23:55 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/03 14:16:01 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/04 15:47:11 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	ft_heredoc(t_cmd *cmd)
 			free(line);
 			break ;
 		}
+		line = ft_dollar(line);
 		ft_putendl_fd(line, cmd->in);
 		free(line);
 	}
@@ -89,9 +90,9 @@ int	launch_exec(t_cmd **lst)
 	char	**cur_arg;
 	t_pid	*lst_pid;
 
-	make_red(lst);
 	cur = *lst;
 	lst_pid = NULL;
+	make_red(lst);
 	if (!cur->next && !is_builtin_no_child(cur))
 	{
 		free_cmd(lst);
@@ -103,6 +104,7 @@ int	launch_exec(t_cmd **lst)
 		cur = cur->next;
 	}
 	ft_wait(lst_pid);
+	unlink(".tmp");
 	free_cmd(lst);
 	return (0);
 }

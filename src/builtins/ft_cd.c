@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:41:46 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/03 11:19:07 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/04 13:17:42 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ int	cd_size(t_cmd *cmd)
 	if (t_lstsize(&cmd->arg) == 1)
 	{
 		oldpwd();
-		ft_env(NULL, GET, "HOME", res);
+		ft_env(NULL, GET, "HOME", &res);
 		if (res == NULL)
 		{
 			printf("minishell: cd: HOME not set\n");
 			return (1);
 		}
-		ft_env(NULL, GET, "HOME", NULL);
+		ft_env(NULL, GET, "HOME", &res);
 		chdir(res);
 		pwd();
 		return (1);
@@ -70,7 +70,7 @@ void	ft_cd(t_cmd *cmd)
 		i = chdir(cmd->arg->next->value);
 		if (i == 0)
 		{
-			ft_env(NULL, GET, "OLDPWD", res);
+			ft_env(NULL, GET, "PWD", &res);
 			chdir(res);
 			oldpwd();
 			chdir(cmd->arg->next->value);

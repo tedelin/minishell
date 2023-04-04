@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:25:05 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/03 13:51:31 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/04 10:22:21 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,12 @@ void	ft_wait(t_pid *lst)
 
 	while (lst)
 	{
-		waitpid(lst->content, NULL, 0);
+		waitpid(lst->content, &g_exit, 0);
 		tmp = lst;
 		lst = lst->next;
 		free(tmp);
 	}
+	g_exit = WEXITSTATUS(g_exit);
 }
 
 void	exit_child(t_cmd **lst_cmd, t_pid **lst, char *msg)

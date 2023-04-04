@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 13:47:01 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/03 13:51:31 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/04 13:20:09 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	is_builtin_child(t_cmd *cmd)
 	else if (!ft_strncmp(cmd->arg->value, "env", 3) && len == 3)
 		return (env_cmd(cmd), 0);
 	else if (!ft_strncmp(cmd->arg->value, "pwd", 3) && len == 3)
-		return (ft_pwd(0), 0);
+		return (ft_pwd_cmd(cmd), 0);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:20:40 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/03 16:43:40 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/04 10:55:14 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,27 +39,19 @@ int	len_d(char *s)
 	char	*res;
 
 	res = NULL;
-	i = -1;
+	i = 0;
 	len = 0;
 	while (s && s[i])
 	{
-		while (s[++i] && s[i] != '$')
-			len++;
+		while (s[i] && s[i] != '$' && ++len)
+			i++;
 		if (s[i] && s[i++] == '$')
 		{
-			if (s[i] == '?')
-			{
-				tmp = ft_itoa(g_exit);
-				len += ft_strlen(tmp);
-			}
-			else
-			{
-				tmp = ft_var(&s[i]);
-				len += ft_strlen(res);	
-			}
+			tmp = ft_var(&s[i]);
 			while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
 				i++;
 			ft_env(NULL, GET, tmp, &res);
+			len += ft_strlen(res);
 			free(tmp);
 		}
 	}

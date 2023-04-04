@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/03 13:51:31 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/04 14:09:24 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include "libft.h"
 # include <errno.h>
 # include <fcntl.h>
+# include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
@@ -24,7 +25,7 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 
-extern int g_exit;
+extern int			g_exit;
 
 enum				e_state
 {
@@ -162,6 +163,7 @@ int					check_add(char *s);
 void				ft_export(t_cmd *cmd);
 
 // Buitin pwd - ft_pwd.c
+void				ft_pwd_cmd(t_cmd *cmd);
 char				*ft_pwd(int opt);
 
 // Buitin unset - ft_unset.c
@@ -193,5 +195,9 @@ void				ft_exec(t_cmd *cmd, t_pid **lst_pid, t_cmd **lst_cmd);
 char				*ft_access(char **args, char **env);
 char				**ft_path(char **env);
 void				exit_child(t_cmd **lst_cmd, t_pid **lst_pid, char *msg);
+
+// Signaux - signaux.c
+void				sigint_handler(int sig);
+void				set_sign(void);
 
 #endif
