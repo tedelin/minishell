@@ -6,36 +6,45 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:41:41 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/04 16:34:10 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/04 21:18:37 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_exit(t_cmd *cmd)
+
+void	ft_exit_free(t_cmd **lst, char *s, int state)
+{
+	if (s && (state == 2 || state == 0))
+		printf("exit\nexit: %s: numeric argument required\n", s);
+	else
+		printf("exit\n");
+	free_cmd(lst);
+	ft_env(NULL, FREE, NULL, NULL);
+	exit(state);
+}
+
+int	ft_exit(t_cmd *cmd, t_cmd **lst_cmd)
 {
 	t_token	*tmp;
 	int		i;
 
 	if (cmd->arg && !cmd->arg->next && !ft_strncmp(cmd->arg->value, "exit", 4))
-		return (printf("exit\n"), exit(0), 1);
+		ft_exit_free(lst_cmd, NULL, 0);
 	tmp = cmd->arg->next;
 	if (tmp && tmp->value)
 	{
 		i = 0;
-		if (!ft_isdigit(tmp->value[i]) && tmp->value[i] != '-'
-			&& tmp->value[i] != '+')
-			return (printf("exit\nexit: %s: numeric argument required\n",
-					tmp->value), exit(2), 1);
+		if (!ft_isdigit(tmp->value[i]) \
+			&& tmp->value[i] != '-' && tmp->value[i] != '+')
+			ft_exit_free(lst_cmd, tmp->value, 2);
 		while (tmp->value[++i])
 		{
 			if (!ft_isdigit(tmp->value[i]))
-				return (printf("exit\nexit: %s: numeric argument required\n",
-						tmp->value), exit(2), 1);
+				ft_exit_free(lst_cmd, tmp->value, 2);
 		}
 		if (!tmp->next)
-			return (printf("exit\n"), \
-				exit((unsigned int)ft_atoi(tmp->value) % 256), 1);
+			ft_exit_free(lst_cmd, NULL, (unsigned int)ft_atoi(tmp->value) % 256);
 		printf("exit\nexit: too many arguments\n");
 	}
 	return (0);

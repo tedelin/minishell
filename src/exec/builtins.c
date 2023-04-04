@@ -6,13 +6,18 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 13:47:01 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/04 13:20:09 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/04 21:24:02 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_builtin_child(t_cmd *cmd)
+// void	exec_child(t_cmd *cmd, t_cmd **lst_cmd)
+// {
+
+// }
+
+int	is_builtin_child(t_cmd *cmd, t_cmd **lst_cmd)
 {
 	int	len;
 
@@ -25,10 +30,18 @@ int	is_builtin_child(t_cmd *cmd)
 		return (env_cmd(cmd), 0);
 	else if (!ft_strncmp(cmd->arg->value, "pwd", 3) && len == 3)
 		return (ft_pwd_cmd(cmd), 0);
+	else if (!ft_strncmp(cmd->arg->value, "cd", 2) && len == 2)
+		return (ft_cd(cmd), 0);
+	else if (!ft_strncmp(cmd->arg->value, "exit", 4) && len == 4)
+		return (ft_exit(cmd, lst_cmd), 0);
+	else if (!ft_strncmp(cmd->arg->value, "export", 6) && len == 6)
+		return (ft_export(cmd), 0);
+	else if (!ft_strncmp(cmd->arg->value, "unset", 5) && len == 5)
+		return (ft_unset(cmd), 0);
 	return (1);
 }
 
-int	is_builtin_no_child(t_cmd *cmd)
+int	is_builtin_no_child(t_cmd *cmd, t_cmd **lst_cmd)
 {
 	int	len;
 
@@ -38,7 +51,7 @@ int	is_builtin_no_child(t_cmd *cmd)
 	if (!ft_strncmp(cmd->arg->value, "cd", 2) && len == 2)
 		return (ft_cd(cmd), 0);
 	else if (!ft_strncmp(cmd->arg->value, "exit", 4) && len == 4)
-		return (ft_exit(cmd), 0);
+		return (ft_exit(cmd, lst_cmd), 0);
 	else if (!ft_strncmp(cmd->arg->value, "export", 6) && len == 6)
 		return (ft_export(cmd), 0);
 	else if (!ft_strncmp(cmd->arg->value, "unset", 5) && len == 5)

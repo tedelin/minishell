@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/04 16:36:48 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/04 21:17:54 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # include <unistd.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# define E_ERR "exit\nexit: %s: numeric argument required\n"
 
 extern int			g_exit;
 
@@ -159,7 +158,8 @@ int					new_line(t_token **arg, int n);
 void				ft_echo(t_cmd *cmd);
 
 // Buitin exit - ft_exit.c
-int					ft_exit(t_cmd *cmd);
+void				ft_exit_free(t_cmd **lst, char *s, int state);
+int					ft_exit(t_cmd *cmd, t_cmd **lst_cmd);
 
 // Buitin export - ft_export.c
 int					check_add(char *s);
@@ -176,8 +176,8 @@ void				ft_unset(t_cmd *cmd);
 void				env_cmd(t_cmd *cmd);
 
 // Exec - ft_exec.c
-int					is_builtin_no_child(t_cmd *cmd);
-int					is_builtin_child(t_cmd *cmd);
+int					is_builtin_child(t_cmd *cmd, t_cmd **lst_cmd);
+int					is_builtin_no_child(t_cmd *cmd, t_cmd **lst_cmd);
 
 // Exec - ft_exec.c
 void				ft_heredoc(t_cmd *cmd);
@@ -186,7 +186,7 @@ void				red_loop(t_token *red, t_cmd *cur);
 void				make_red(t_cmd **lst);
 int					launch_exec(t_cmd **lst);
 
-// Exec Utils - exec_utils.c 
+// Exec Utils - exec_utils.c
 void				tab_free(char **tab);
 char				**ft_lst_to_tab(t_token *lst);
 char				**ft_lst_to_tab_env(t_env *lst);

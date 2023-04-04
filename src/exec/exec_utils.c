@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:25:05 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/04 10:22:21 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/04 21:41:57 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,16 +75,15 @@ void	exit_child(t_cmd **lst_cmd, t_pid **lst, char *msg)
 {
 	t_pid	*tmp;
 
-	while (*lst)
+	while (lst && *lst)
 	{
 		tmp = *lst;
 		(*lst) = (*lst)->next;
 		free(tmp);
 	}
-	if (ft_strncmp(msg, "main", 4) == 0)
-		exit(errno);
 	free_cmd(lst_cmd);
 	ft_env(NULL, FREE, NULL, NULL);
-	perror(msg);
+	if (msg && ft_strncmp(msg, "main", 4))
+		perror(msg);
 	exit(errno);
 }

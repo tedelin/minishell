@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:27:34 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/04 16:36:48 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/04 21:14:47 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	launch_exec(t_cmd **lst)
 	cur = *lst;
 	lst_pid = NULL;
 	make_red(lst);
-	if (!cur->next && !is_builtin_no_child(cur))
+	if (!cur->next && !is_builtin_no_child(cur, lst))
 	{
 		free_cmd(lst);
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 13:24:01 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/03 14:07:47 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/04 18:50:56 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,10 @@ void	free_cmd(t_cmd **lst)
 		(*lst) = (*lst)->next;
 		free_lst(&tmp->arg);
 		free_lst(&tmp->red);
+		if (tmp->in > 2)
+			close(tmp->in);
+		if (tmp->out > 2)
+			close(tmp->out);
 		free(tmp);
 	}
 }
