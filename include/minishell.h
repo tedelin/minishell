@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/04 14:09:24 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/04 16:36:48 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <unistd.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# define E_ERR "exit\nexit: %s: numeric argument required\n"
 
 extern int			g_exit;
 
@@ -101,12 +102,14 @@ int					len_d(char *s);
 char				*ft_dollar(char *s);
 // char				*get_var(t_env *env, char *var);
 
-// Environment - ft_env.c
+// Environment - ft_env_utils.c
 void				ft_build_env(t_env **lst_env, char **env);
 void				ft_get_env(t_env *env, char *var, char **res);
 void				edit_env(t_env **env, char *var);
 void				append_env(t_env **env, char *name);
 void				ft_del(t_env **env, char *name);
+
+// Environment - ft_env.c
 t_env				*ft_env(char **env, int get, char *var, char **res);
 
 // Expansion - ft_expansion.c
@@ -175,13 +178,20 @@ void				env_cmd(t_cmd *cmd);
 // Exec - ft_exec.c
 int					is_builtin_no_child(t_cmd *cmd);
 int					is_builtin_child(t_cmd *cmd);
-void				tab_free(char **tab);
-char				**ft_lst_to_tab_env(t_env *lst);
-char				**ft_lst_to_tab(t_token *lst);
+
+// Exec - ft_exec.c
 void				ft_heredoc(t_cmd *cmd);
+void				close_before(t_cmd *cmd, int type);
+void				red_loop(t_token *red, t_cmd *cur);
 void				make_red(t_cmd **lst);
-void				ft_wait(t_pid *lst);
 int					launch_exec(t_cmd **lst);
+
+// Exec Utils - exec_utils.c 
+void				tab_free(char **tab);
+char				**ft_lst_to_tab(t_token *lst);
+char				**ft_lst_to_tab_env(t_env *lst);
+void				ft_wait(t_pid *lst);
+void				exit_child(t_cmd **lst_cmd, t_pid **lst, char *msg);
 
 // Lstcustom
 t_pid				*pid_lstnew(pid_t content);
@@ -194,7 +204,6 @@ void				ft_child(t_cmd *cmd, t_pid **lst_pid, t_cmd **lst_cmd);
 void				ft_exec(t_cmd *cmd, t_pid **lst_pid, t_cmd **lst_cmd);
 char				*ft_access(char **args, char **env);
 char				**ft_path(char **env);
-void				exit_child(t_cmd **lst_cmd, t_pid **lst_pid, char *msg);
 
 // Signaux - signaux.c
 void				sigint_handler(int sig);

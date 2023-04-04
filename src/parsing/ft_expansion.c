@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:52:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/04 14:23:19 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/04 16:15:11 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,11 @@ void	new_token(t_token **new, char *s, int type)
 		while (s[++len + j] && ft_status(s[len + j], 0) == state)
 			;
 		str = ft_substr(s, j, len);
-		if (!str)
-			return ;
 		j += len + 1;
 		if ((state == 0 || state == 2) && ft_strchr(str, '$'))
 			str = ft_dollar(str);
 		if (state != 0)
 			magic_space(str, 0);
-		// if (str)
 		final = ft_strjoin(final, str, 3);
 	}
 	ft_expand(new, final, type);

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/01 13:23:55 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/04 15:47:11 by tedelin          ###   ########.fr       */
+/*   Created: 2023/04/04 16:27:34 by tedelin           #+#    #+#             */
+/*   Updated: 2023/04/04 16:36:48 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,32 @@ void	close_before(t_cmd *cmd, int type)
 		close(cmd->out);
 }
 
+void	red_loop(t_token *red, t_cmd *cur)
+{
+	while (red)
+	{
+		close_before(cur, red->type);
+		if (red->type == RIN)
+			cur->in = open(red->value, O_RDONLY);
+		else if (red->type == ROUT)
+			cur->out = open(red->value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		else if (red->type == DRIN)
+			ft_heredoc(cur);
+		else if (red->type == DROUT)
+			cur->out = open(red->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (cur->in == -1 || cur->out == -1)
+		{
+			perror(red->value);
+			break ;
+		}
+		red = red->next;
+	}
+}
+
 void	make_red(t_cmd **lst)
 {
 	t_cmd	*cur;
-	t_token *red;
+	t_token	*red;
 
 	cur = *lst;
 	while (cur)
@@ -60,26 +82,7 @@ void	make_red(t_cmd **lst)
 		cur->in = -2;
 		cur->out = -2;
 		red = cur->red;
-		while (red)
-		{
-			close_before(cur, red->type);
-			if (red->type == RIN)
-				cur->in = open(red->value, O_RDONLY);
-			else if (red->type == ROUT)
-				cur->out = open(red->value, O_WRONLY | O_CREAT | O_TRUNC,
-						0644);
-			else if (red->type == DRIN)
-				ft_heredoc(cur);
-			else if (red->type == DROUT)
-				cur->out = open(red->value, O_WRONLY | O_CREAT | O_APPEND,
-						0644);
-			if (cur->in == -1 || cur->out == -1)
-			{
-				perror(red->value);
-				break ;
-			}
-			red = red->next;
-		}
+		red_loop(red, cur);
 		cur = cur->next;
 	}
 }
