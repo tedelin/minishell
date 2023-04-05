@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:20:40 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/05 14:13:56 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/05 16:10:15 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	len_d(char *s)
 			ft_env(NULL, GET, tmp, &res);
 			free(tmp);
 			len += ft_strlen(res);
+			free(res);
 		}
 	}
 	return (len);
@@ -62,6 +63,7 @@ int	len_d(char *s)
 
 void	ft_expand_var(char *s, char *new, int *i, int *j)
 {
+	int		k;
 	char	*tmp;
 	char	*res;
 
@@ -71,8 +73,10 @@ void	ft_expand_var(char *s, char *new, int *i, int *j)
 	free(tmp);
 	while (s[*j] && (ft_isalnum(s[*j]) || s[*j] == '_' || s[*j] == '?'))
 		(*j)++;
-	while (res && *res)
-		new[++(*i)] = *res++;
+	k = 0;
+	while (res && res[k])
+		new[++(*i)] = res[k++];
+	free(res);
 }
 
 char	*ft_dollar(char *s)

@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:41:46 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/04 13:17:42 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/05 16:08:39 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	cd_size(t_cmd *cmd)
 		ft_env(NULL, GET, "HOME", &res);
 		chdir(res);
 		pwd();
+		free(res);
 		return (1);
 	}
 	return (0);
@@ -72,6 +73,7 @@ void	ft_cd(t_cmd *cmd)
 		{
 			ft_env(NULL, GET, "PWD", &res);
 			chdir(res);
+			free(res);
 			oldpwd();
 			chdir(cmd->arg->next->value);
 			pwd();

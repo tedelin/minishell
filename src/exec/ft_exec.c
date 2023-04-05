@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:27:34 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/04 21:14:47 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/05 14:30:04 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	make_red(t_cmd **lst)
 int	launch_exec(t_cmd **lst)
 {
 	t_cmd	*cur;
-	char	**cur_arg;
 	t_pid	*lst_pid;
 
 	cur = *lst;
