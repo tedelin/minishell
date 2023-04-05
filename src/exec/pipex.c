@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:28:26 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/04 21:41:31 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/05 09:39:29 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,12 @@ void	ft_exec(t_cmd *cmd, t_pid **lst_pid, t_cmd **lst_cmd)
 	char	*path;
 
 	args = ft_lst_to_tab(cmd->arg);
+	if (!args || !args[0])
+	{
+		tab_free(args);
+		exit_child(lst_cmd, lst_pid, "main");
+		return ;
+	}
 	env = ft_lst_to_tab_env(ft_env(NULL, LST, NULL, NULL));
 	path = ft_access(args, env);
 	if (!path || execve(path, args, env) == -1)
@@ -93,8 +99,8 @@ char	*ft_access(char **args, char **env)
 
 	i = -1;
 	path = ft_path(env);
-	if (access(args[0], X_OK) == 0)
-		return (ft_strdup(args[0]));
+	if (args && access(args[0], X_OK) == 0)
+		return (tab_free(path), ft_strdup(args[0]));
 	tmp_cmd = ft_strjoin("/", args[0], 0);
 	if (tmp_cmd == NULL)
 		return (tab_free(path), NULL);
