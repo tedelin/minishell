@@ -6,7 +6,7 @@
 #    By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/27 14:55:19 by tedelin           #+#    #+#              #
-#    Updated: 2023/04/04 18:35:17 by tedelin          ###   ########.fr        #
+#    Updated: 2023/04/05 13:35:00 by tedelin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,6 @@ fclean: clean
 re: fclean all
 
 val:        $(NAME)
-	valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all --suppressions=readline.supp --track-origins=yes ./${NAME}
+	valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all --suppressions=readline.supp --track-origins=yes --trace-children=yes ./${NAME}
 
 .PHONY: all clean fclean re

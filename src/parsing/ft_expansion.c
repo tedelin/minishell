@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:52:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/04 16:15:11 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/05 14:25:38 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,46 @@ void	new_token(t_token **new, char *s, int type)
 	ft_expand(new, final, type);
 }
 
+int	ft_lim_len(char *s)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	j = 0;
+	while (s && s[++i])
+	{
+		ft_status(s[i], 0);
+		j++;
+		if ((s[i] == '$' && ft_status(0, 2) == 0) || s[i] == 34 || s[i] == 39)
+			j--;
+	}
+	return (j);
+}
+
+void	ft_lim(t_token **new, char *s, int type)
+{
+	char	*new_s;
+	int		i;
+	int		j;
+
+	new_s = malloc(sizeof(char) * (ft_lim_len(s) + 1));
+	if (!new_s)
+		return ;
+	i = -1;
+	j = 0;
+	ft_status(0, 1);
+	while (s && s[++i])
+	{
+		ft_status(s[i], 0);
+		if ((s[i] == '$' && ft_status(0, 2) > 0) || (s[i] != 34 && s[i] != 39
+				&& s[i] != '$'))
+			new_s[j++] = s[i];
+	}
+	new_s[j] = 0;
+	t_lstadd_back(new, t_lstnew(new_s, type));
+}
+
 int	ft_expansion(t_token **lst)
 {
 	t_token	*new;
@@ -85,7 +125,12 @@ int	ft_expansion(t_token **lst)
 	while (cur && cur->value)
 	{
 		ft_status(0, 1);
-		new_token(&new, cur->value, cur->type);
+		if (cur->type == WORD || cur->type == FD)
+			new_token(&new, cur->value, cur->type);
+		else if (cur->type == LIM)
+			ft_lim(&new, cur->value, cur->type);
+		else
+			t_lstadd_back(&new, t_lstnew(ft_strdup(cur->value), cur->type));
 		cur = cur->next;
 	}
 	return (free_lst(lst), build_cmd(&new));

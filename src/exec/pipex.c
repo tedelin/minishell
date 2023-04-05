@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:28:26 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/05 09:39:29 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/05 14:23:39 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	ft_process(t_cmd *cmd, t_pid **lst_pid, t_cmd **lst_cmd)
 			close(cmd->fd[1]);
 		if (cmd->in > 2)
 			close(cmd->in);
+		set_sign(1);
 	}
 }
 
@@ -78,6 +79,7 @@ void	ft_exec(t_cmd *cmd, t_pid **lst_pid, t_cmd **lst_cmd)
 	}
 	env = ft_lst_to_tab_env(ft_env(NULL, LST, NULL, NULL));
 	path = ft_access(args, env);
+	set_sign(0);
 	if (!path || execve(path, args, env) == -1)
 	{
 		errno = 127;

@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:20:40 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/04 10:55:14 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/05 14:13:56 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_var(char *s)
 	int		j;
 	char	*var;
 
+	if (s && s[0] == '?')
+		return (ft_strdup("?"));
 	i = -1;
 	while (s && ft_isalnum(s[++i]))
 		;
@@ -48,11 +50,11 @@ int	len_d(char *s)
 		if (s[i] && s[i++] == '$')
 		{
 			tmp = ft_var(&s[i]);
-			while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
+			while (s[i] && (ft_isalnum(s[i]) || s[i] == '_' || s[i] == '?'))
 				i++;
 			ft_env(NULL, GET, tmp, &res);
-			len += ft_strlen(res);
 			free(tmp);
+			len += ft_strlen(res);
 		}
 	}
 	return (len);
@@ -67,7 +69,7 @@ void	ft_expand_var(char *s, char *new, int *i, int *j)
 	tmp = ft_var(&s[*j]);
 	ft_env(NULL, GET, tmp, &res);
 	free(tmp);
-	while (s[*j] && (ft_isalnum(s[*j]) || s[*j] == '_'))
+	while (s[*j] && (ft_isalnum(s[*j]) || s[*j] == '_' || s[*j] == '?'))
 		(*j)++;
 	while (res && *res)
 		new[++(*i)] = *res++;

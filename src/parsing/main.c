@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:25:01 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/04 21:21:41 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/05 14:24:24 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@ int	ft_loop(void)
 
 	while (1)
 	{
+		set_sign(0);
 		input = readline("minishell$ ");
 		if (input && input[0])
 		{
 			lst = NULL;
-			// add_history(input);
+			add_history(input);
 			error = make_token(&lst, input);
 		}
 		if (!input)
@@ -45,7 +46,6 @@ int	main(int ac, char **av, char **env)
 {
 	if (ac > 1 && av)
 		return (printf("Usage: ./minishell\n"), 1);
-	set_sign();
 	ft_env(env, INIT, NULL, NULL);
 	rl_outstream = stderr;
 	return (ft_loop());

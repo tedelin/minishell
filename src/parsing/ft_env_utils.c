@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:16:19 by mcatal-d          #+#    #+#             */
-/*   Updated: 2023/04/04 16:36:48 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/05 13:55:48 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ void	ft_get_env(t_env *env, char *var, char **res)
 
 	cur = env;
 	i = ft_strlen(var);
+	if (!ft_strncmp(var, "?", 1) && i == 1)
+	{
+		*res = ft_itoa(g_exit);
+		return ;
+	}
 	while (cur)
 	{
 		j = ft_len_until(cur->var, '=');

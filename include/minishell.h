@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/04 21:17:54 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/05 14:17:14 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,6 @@ char				**ft_path(char **env);
 
 // Signaux - signaux.c
 void				sigint_handler(int sig);
-void				set_sign(void);
+void				set_sign(int opt);
 
 #endif

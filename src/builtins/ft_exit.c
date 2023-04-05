@@ -6,12 +6,11 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:41:41 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/04 21:18:37 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/05 14:25:11 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void	ft_exit_free(t_cmd **lst, char *s, int state)
 {
@@ -44,7 +43,8 @@ int	ft_exit(t_cmd *cmd, t_cmd **lst_cmd)
 				ft_exit_free(lst_cmd, tmp->value, 2);
 		}
 		if (!tmp->next)
-			ft_exit_free(lst_cmd, NULL, (unsigned int)ft_atoi(tmp->value) % 256);
+			ft_exit_free(lst_cmd, NULL,
+				(unsigned int)ft_atoi(tmp->value) % 256);
 		printf("exit\nexit: too many arguments\n");
 	}
 	return (0);

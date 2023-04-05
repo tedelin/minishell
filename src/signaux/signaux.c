@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 14:05:41 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/04 16:06:58 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/05 14:24:15 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,14 @@ void	sigint_handler(int sig)
 		write(1, "\nminishell$ ", 12);
 }
 
-void	set_sign(void)
+void	set_sign(int opt)
 {
 	struct sigaction	sa;
 
-	sa.sa_handler = sigint_handler;
+	if (opt == 0)
+		sa.sa_handler = sigint_handler;
+	else
+		sa.sa_handler = SIG_IGN;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	sigaction(SIGINT, &sa, NULL);
