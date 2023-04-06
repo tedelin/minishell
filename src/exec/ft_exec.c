@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:27:34 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/05 14:30:04 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/06 22:04:59 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_heredoc(t_cmd *cmd)
 			free(line);
 			break ;
 		}
-		line = ft_dollar(line);
+		line = ft_dollar(line, 0);
 		ft_putendl_fd(line, cmd->in);
 		free(line);
 	}
