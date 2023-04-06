@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:20:40 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/05 16:10:15 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/06 12:09:40 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*ft_var(char *s)
 	return (var);
 }
 
-int	len_d(char *s)
+int	len_d(char *s, int state)
 {
 	int		i;
 	int		len;
@@ -49,13 +49,18 @@ int	len_d(char *s)
 			i++;
 		if (s[i] && s[i++] == '$')
 		{
-			tmp = ft_var(&s[i]);
-			while (s[i] && (ft_isalnum(s[i]) || s[i] == '_' || s[i] == '?'))
-				i++;
-			ft_env(NULL, GET, tmp, &res);
-			free(tmp);
-			len += ft_strlen(res);
-			free(res);
+			if (!s[i] && state == 2)
+				len++;
+			else
+			{
+				tmp = ft_var(&s[i]);
+				while (s[i] && (ft_isalnum(s[i]) || s[i] == '_' || s[i] == '?'))
+					i++;
+				ft_env(NULL, GET, tmp, &res);
+				free(tmp);
+				len += ft_strlen(res);
+				free(res);
+			}
 		}
 	}
 	return (len);
@@ -79,7 +84,7 @@ void	ft_expand_var(char *s, char *new, int *i, int *j)
 	free(res);
 }
 
-char	*ft_dollar(char *s)
+char	*ft_dollar(char *s, int state)
 {
 	int		i;
 	int		j;
@@ -87,15 +92,23 @@ char	*ft_dollar(char *s)
 
 	i = -1;
 	j = 0;
-	new = malloc(sizeof(char) * (len_d(s) + 1));
+	new = malloc(sizeof(char) * (len_d(s, state) + 1));
 	if (!new)
 		return (free(s), NULL);
 	while (s && s[j])
 	{
 		while (s[j] && s[j] != '$')
 			new[++i] = s[j++];
-		if (s[j] && s[j++] == '$')
-			ft_expand_var(s, new, &i, &j);
+		if (s[j] && s[j] == '$')
+		{
+			if (s[j] == '$' && !s[j + 1] && state == 2)
+				new[++i] = s[j++];
+			else
+			{
+				j++;
+				ft_expand_var(s, new, &i, &j);	
+			}
+		}
 	}
 	new[++i] = 0;
 	return (free(s), new);

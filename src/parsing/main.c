@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:25:01 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/05 16:56:51 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/06 14:23:33 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,28 +53,35 @@ int	main(int ac, char **av, char **env)
 
 // int	main(int ac, char **av, char **env)
 // {
-// 	char	*input;
-// 	int		error;
-// 	t_token	*lst;
-
-// 	(void)ac;
-// 	(void)av;
-// 	ft_env(env, INIT, NULL, NULL);
-// 	// rl_outstream = stderr;
-// 	// while (1)
-// 	// {
-// 	// 	input = readline("minishell$ ");
-// 	input = "< Makefile | cat | cat | wc -l";
-// 	if (!input)
+// 	(void) ac;
+// 	(void) av;
+// 	(void) env;
+// 	char *str = malloc(sizeof(char) * 3);
+// 	if (!str)
 // 		return (1);
-// 	lst = NULL;
-// 	// add_history(input);
-// 	error = make_token(&lst, input);
-// 	if (error == 1)
-// 		return (printf("Parse Error\n"), 0);
-// 	else if (error == 2)
-// 		return (printf("Malloc failed\n"), ft_env(NULL, FREE, NULL, NULL), 2);
-// // 	free(input);
-// 	// }
-// 	ft_env(NULL, FREE, NULL, NULL);
+// 	return (free(str), 0);
+// // 	char	*input;
+// // 	int		error;
+// // 	t_token	*lst;
+
+// // 	(void)ac;
+// // 	(void)av;
+// // 	ft_env(env, INIT, NULL, NULL);
+// // 	// rl_outstream = stderr;
+// // 	// while (1)
+// // 	// {
+// // 	// 	input = readline("minishell$ ");
+// // 	input = "< Makefile | cat | cat | wc -l";
+// // 	if (!input)
+// // 		return (1);
+// // 	lst = NULL;
+// // 	// add_history(input);
+// // 	error = make_token(&lst, input);
+// // 	if (error == 1)
+// // 		return (printf("Parse Error\n"), 0);
+// // 	else if (error == 2)
+// // 		return (printf("Malloc failed\n"), ft_env(NULL, FREE, NULL, NULL), 2);
+// // // 	free(input);
+// // 	// }
+// // 	ft_env(NULL, FREE, NULL, NULL);
 // }

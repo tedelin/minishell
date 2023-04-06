@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/05 16:56:43 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/06 14:22:31 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ int					make_token(t_token **lst_token, char *s);
 
 // Dollar expansion - ft_dollar.c
 char				*ft_var(char *str);
-int					len_d(char *s);
-char				*ft_dollar(char *s);
+int					len_d(char *s, int state);
+char				*ft_dollar(char *s, int state);
 // char				*get_var(t_env *env, char *var);
 
 // Environment - ft_env_utils.c
