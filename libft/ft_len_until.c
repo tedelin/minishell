@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_len_until.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcatal-d <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 16:51:43 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/26 17:45:55 by mcatal-d         ###   ########.fr       */
+/*   Updated: 2023/04/07 15:06:14 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,5 @@ size_t	ft_len_until(char *s, char c)
 	i = 0;
 	while (s && s[i] && s[i] != c)
 		i++;
-	if (i != ft_strlen(s))
-		return (i);
-	return (0);
+	return (i);
 }

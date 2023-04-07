@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:41:46 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/03 11:47:09 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/07 17:01:48 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ void	ft_echo(t_cmd *cmd)
 
 	n = 0;
 	if (!cmd->arg->next)
-		return ;
+	{
+		printf("\n");
+		return ;	
+	}
 	arg = cmd->arg->next;
 	if (!ft_strncmp(arg->value, "-n", 2))
 		n = new_line(&arg, n);

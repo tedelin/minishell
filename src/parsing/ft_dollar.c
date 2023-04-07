@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:20:40 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/06 22:16:10 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/07 17:53:50 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,8 @@ int	handle_len_dollar(char *s, int *i, int state)
 
 	len = 0;
 	res = NULL;
-	while (s && s[*i] && s[*i] == '$')
-		(*i)++;
-	if (s && !s[*i] && (*i > 1 || (*i == 1 && state == 2)))
-		return (*i);
-	else if (s && !s[*i] && *i == 1 && state != 2)
-		return (0);
-	else
+	(void) state;
+	if (s[*i] && ft_isalnum(s[*i]))
 	{
 		tmp = ft_var(&s[*i]);
 		while (s[*i] && (ft_isalnum(s[*i]) || s[*i] == '_' || s[*i] == '?'))
@@ -51,8 +46,10 @@ int	handle_len_dollar(char *s, int *i, int state)
 		len += ft_strlen(res);
 		free(tmp);
 		free(res);
-		return (len);
 	}
+	else
+		len++;
+	return (len);
 }
 
 int	len_d(char *s, int state)
@@ -66,7 +63,7 @@ int	len_d(char *s, int state)
 	{
 		len += ft_len_until(&s[i], '$');
 		i += ft_len_until(&s[i], '$');
-		if (s[i] == '$')
+		if (s[i++] == '$')
 			len += handle_len_dollar(s, &i, state);
 	}
 	return (len);
@@ -78,6 +75,7 @@ void	ft_expand_var(char *s, char *new, int *i, int *j)
 	char	*tmp;
 	char	*res;
 
+	*j += 1;
 	res = NULL;
 	tmp = ft_var(&s[*j]);
 	ft_env(NULL, GET, tmp, &res);
@@ -88,30 +86,6 @@ void	ft_expand_var(char *s, char *new, int *i, int *j)
 		new[++(*i)] = res[k++];
 	free(tmp);
 	free(res);
-}
-
-void	handle_expand(char *s, char *new, int *i, int *j, int state)
-{
-	int	tmp;
-
-	tmp = 0;
-	while (s[*j + tmp] && s[*j + tmp] == '$')
-		tmp++;
-	if (s && !s[*j + tmp] && (tmp > 1 || (tmp == 1 && state == 2)))
-	{
-		while (s[*j] && s[*j] == '$')
-			new[++(*i)] = s[(*j)++];
-	}
-	else if (s && !s[*i + tmp] && tmp == 1 && state != 2)
-	{
-		(*j)++;
-		return ;
-	}
-	else
-	{
-		(*j)++;
-		ft_expand_var(s, new, i, j);
-	}
 }
 
 char	*ft_dollar(char *s, int state)
@@ -129,8 +103,13 @@ char	*ft_dollar(char *s, int state)
 	{
 		while (s[j] && s[j] != '$')
 			new[++i] = s[j++];
-		if (s[j] && s[j] == '$')
-			handle_expand(s, new, &i, &j, state);
+		if (s[j] == '$')
+		{
+			if (s[j + 1] && (ft_isalnum(s[j + 1]) || s[j + 1] == '_'))
+				ft_expand_var(s, new, &i, &j);
+			else
+				new[++i] = s[j++];
+		}
 	}
 	new[++i] = 0;
 	return (free(s), new);
