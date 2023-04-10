@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:28:26 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/09 16:36:50 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/10 16:57:38 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,12 @@ void	ft_exec(t_cmd *cmd, t_pid **lst_pid, t_cmd **lst_cmd)
 	path = ft_access(args, env);
 	if (!path || execve(path, args, env) == -1)
 	{
-		errno = 127;
 		ft_putstr_fd(args[0], 2);
 		ft_putendl_fd(": command not found", 2);
 		free(path);
 		tab_free(args);
 		tab_free(env);
+		errno = 127;
 		exit_child(lst_cmd, lst_pid, "main");
 	}
 }
