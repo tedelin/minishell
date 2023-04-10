@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/10 14:57:39 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/10 15:36:18 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,15 +118,17 @@ void				ft_del(t_env **env, char *name);
 t_env				*ft_env(char **env, int get, char *var, char **res);
 
 // Expansion - ft_expansion.c
-void				magic_space(char *s, int rm);
 void				ft_expand(t_token **new, char *s, int type);
 void				new_token(t_token **new, char *s, int type);
+int					ft_lim_len(char *s);
+void				ft_lim(t_token **new, char *s, int type);
 int					ft_expansion(t_token **token);
 
 // Get token type - ft_parser.c
 int					ft_next_type(char *next);
 int					ft_type(t_token **token);
 int					check_quotes(char *s);
+void				magic_space(char *s, int rm);
 int					ft_parser(t_token **token);
 
 // Linked list for cmd - lst_cmd.c

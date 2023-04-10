@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:16:19 by mcatal-d          #+#    #+#             */
-/*   Updated: 2023/04/05 16:07:16 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/10 15:32:34 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	ft_get_env(t_env *env, char *var, char **res)
 	{
 		*res = ft_itoa(g_exit);
 		return ;
-		
 	}
 	while (cur)
 	{
@@ -97,7 +96,7 @@ void	append_env(t_env **env, char *name)
 	to_add = ft_strchr(name, '=') + 1;
 	while (cur)
 	{
-		j = ft_len_until(name, '=');
+		j = ft_len_until(cur->var, '=');
 		if (!ft_strncmp(name, cur->var, i) && i == j)
 		{
 			cur->var = ft_strjoin(cur->var, to_add, 1);
@@ -105,7 +104,7 @@ void	append_env(t_env **env, char *name)
 		}
 		cur = cur->next;
 	}
-	printf("export: not valid in this context: %s\n", name);
+	ft_env(NULL, EDIT, ft_strjoin(ft_substr(name, 0, i), to_add - 1, 1), NULL);
 }
 
 void	ft_del(t_env **env, char *name)

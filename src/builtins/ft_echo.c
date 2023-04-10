@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:41:46 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/07 17:01:48 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/10 15:33:15 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_echo(t_cmd *cmd)
 	if (!cmd->arg->next)
 	{
 		printf("\n");
-		return ;	
+		return ;
 	}
 	arg = cmd->arg->next;
 	if (!ft_strncmp(arg->value, "-n", 2))
@@ -50,17 +50,3 @@ void	ft_echo(t_cmd *cmd)
 	if (n == 0)
 		ft_putstr_fd("\n", 1);
 }
-
-// int	main(void)
-// {
-// 	t_cmd	*cmd;
-
-// 	lstadd_back_cmd(&cmd, lstnew_cmd());
-// 	t_lstadd_back(&cmd->arg, t_lstnew("echo", 0));
-// 	t_lstadd_back(&cmd->arg, t_lstnew("-n", 0));
-// 	t_lstadd_back(&cmd->arg, t_lstnew("-ne", 0));
-// 	t_lstadd_back(&cmd->arg, t_lstnew("premier", 0));
-// 	t_lstadd_back(&cmd->arg, t_lstnew("deuxieme", 0));
-// 	t_lstadd_back(&cmd->arg, t_lstnew("troisieme", 0));
-// 	ft_echo(cmd);
-// }

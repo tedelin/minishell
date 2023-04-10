@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:25:01 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/09 15:41:52 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/10 15:34:16 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ int	main(int ac, char **av, char **env)
 // // 	if (error == 1)
 // // 		return (printf("Parse Error\n"), 0);
 // // 	else if (error == 2)
-// // 		return (printf("Malloc failed\n"), ft_env(NULL, FREE, NULL, NULL), 2);
+// // 		return (printf("Malloc failed\n"),
+//  			ft_env(NULL, FREE, NULL, NULL), 2);
 // // // 	free(input);
 // // 	// }
 // // 	ft_env(NULL, FREE, NULL, NULL);

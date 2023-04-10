@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:41:41 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/05 14:25:11 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/10 15:31:28 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,3 @@ int	ft_exit(t_cmd *cmd, t_cmd **lst_cmd)
 	}
 	return (0);
 }
-
-// int	main(int ac, char **av)
-// {
-// 	t_cmd	*cmd;
-
-// 	(void) ac;
-// 	lstadd_back_cmd(&cmd, lstnew_cmd());
-// 	t_lstadd_back(&cmd->arg, t_lstnew("exit", 0));
-// 	// t_lstadd_back(&cmd->arg, t_lstnew("abc", 0));
-// 	// t_lstadd_back(&cmd->arg, t_lstnew("4", 0));
-// 	ft_exit(cmd);
-// }

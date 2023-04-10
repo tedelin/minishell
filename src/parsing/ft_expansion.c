@@ -6,23 +6,11 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:52:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/09 12:01:11 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/10 15:34:37 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	magic_space(char *s, int rm)
-{
-	int	i;
-
-	i = -1;
-	while (s && s[++i])
-	{
-		if ((s[i] == ' ' && rm == 0) || (s[i] == -32 && rm == 1))
-			s[i] = s[i] * -1;
-	}
-}
 
 void	ft_expand(t_token **new, char *s, int type)
 {

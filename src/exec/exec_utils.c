@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:25:05 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/09 16:53:28 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/10 15:32:57 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	**ft_lst_to_tab_env(t_env *lst)
 void	ft_wait(t_pid *lst)
 {
 	t_pid	*tmp;
-	int	sigint;
+	int		sigint;
 
 	sigint = 0;
 	while (lst)

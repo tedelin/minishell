@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 16:13:01 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/28 12:38:54 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/10 15:35:17 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,18 @@ int	check_quotes(char *s)
 	if (ft_status(0, 2) != 0)
 		return (1);
 	return (0);
+}
+
+void	magic_space(char *s, int rm)
+{
+	int	i;
+
+	i = -1;
+	while (s && s[++i])
+	{
+		if ((s[i] == ' ' && rm == 0) || (s[i] == -32 && rm == 1))
+			s[i] = s[i] * -1;
+	}
 }
 
 int	ft_parser(t_token **token)
