@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:28:26 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/07 14:51:41 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/09 16:36:50 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,18 @@ void	ft_process(t_cmd *cmd, t_pid **lst_pid, t_cmd **lst_cmd)
 	if (pid == -1)
 		exit_child(lst_cmd, lst_pid, "pid ");
 	if (pid == 0)
+	{
+		ft_signal(CHILD);
 		ft_child(cmd, lst_pid, lst_cmd);
+	}
 	else
 	{
+		ft_signal(IGNORE);
 		pid_lstadd_back(lst_pid, pid_lstnew(pid));
 		if (cmd->fd[1] > 2)
 			close(cmd->fd[1]);
 		if (cmd->in > 2)
 			close(cmd->in);
-		set_sign(1);
 	}
 }
 
@@ -79,7 +82,6 @@ void	ft_exec(t_cmd *cmd, t_pid **lst_pid, t_cmd **lst_cmd)
 	}
 	env = ft_lst_to_tab_env(ft_env(NULL, LST, NULL, NULL));
 	path = ft_access(args, env);
-	set_sign(0);
 	if (!path || execve(path, args, env) == -1)
 	{
 		errno = 127;

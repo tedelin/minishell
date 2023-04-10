@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:52:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/07 15:05:14 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/09 12:01:11 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,7 @@ void	new_token(t_token **new, char *s, int type)
 			;
 		str = ft_substr(s, j, len);
 		j += len + 1;
-		if (str && str[0] == '$' && ft_strlen(str) == 1)
-			;
-		else if ((state == 0 || state == 2) && ft_strchr(str, '$'))
+		if ((state == 0 || state == 2) && ft_strchr(str, '$'))
 			str = ft_dollar(str, state);
 		if (state != 0)
 			magic_space(str, 0);

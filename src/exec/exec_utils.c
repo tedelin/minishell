@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:25:05 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/04 21:41:57 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/09 16:53:28 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,16 @@ char	**ft_lst_to_tab_env(t_env *lst)
 void	ft_wait(t_pid *lst)
 {
 	t_pid	*tmp;
+	int	sigint;
 
+	sigint = 0;
 	while (lst)
 	{
 		waitpid(lst->content, &g_exit, 0);
+		if (g_exit == 2 && sigint++ == 0)
+			write(2, "\n", 1);
+		else if (g_exit == 131 && !lst->next)
+			write(2, "Quit (core dumped)\n", 19);
 		tmp = lst;
 		lst = lst->next;
 		free(tmp);

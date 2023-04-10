@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/07 17:57:24 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/10 14:57:39 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@
 # include <readline/readline.h>
 
 extern int			g_exit;
+
+enum				e_signals
+{
+	IGNORE,
+	DEFAULT,
+	CHILD,
+};
 
 enum				e_state
 {
@@ -205,7 +212,9 @@ char				*ft_access(char **args, char **env);
 char				**ft_path(char **env);
 
 // Signaux - signaux.c
-void				sigint_handler(int sig);
-void				set_sign(int opt);
+void				sig_int(int sig);
+void				cmd_sigint(int sig);
+void				cmd_core_dump(int sig);
+void				ft_signal(int opt);
 
 #endif
