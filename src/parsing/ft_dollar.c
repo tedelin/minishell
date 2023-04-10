@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:20:40 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/10 15:34:54 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/10 16:09:49 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char	*ft_dollar(char *s, int state)
 			new[++i] = s[j++];
 		if (s[j] == '$')
 		{
-			if (s[j + 1] && (ft_isalnum(s[j + 1]) || s[j + 1] == '_'))
+			if (s[j + 1] && (ft_isalnum(s[j + 1]) || s[j + 1] == '_' || s[j + 1] == '?'))
 				ft_expand_var(s, new, &i, &j);
 			else
 				new[++i] = s[j++];
