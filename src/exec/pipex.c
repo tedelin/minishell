@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcatal-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:28:26 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/10 16:57:38 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/11 07:25:36 by mcatal-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_process(t_cmd *cmd, t_pid **lst_pid, t_cmd **lst_cmd)
 {
 	pid_t	pid;
 
-	if (cmd->next && pipe(cmd->fd) == -1)
+	if (!cmd || (cmd->next && pipe(cmd->fd) == -1))
 		return ;
 	if (cmd->next && cmd->next->in == -2)
 		cmd->next->in = cmd->fd[0];

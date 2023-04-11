@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcatal-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:27:34 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/10 14:58:12 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/11 07:41:25 by mcatal-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,26 @@
 void	ft_heredoc(t_cmd *cmd)
 {
 	char	*line;
+	int 	cpy;
 
+	cpy = dup(0);
 	cmd->in = open(".tmp", O_CREAT | O_WRONLY | O_TRUNC, 0664);
 	if (cmd->in == -1)
 		return ;
+	ft_signal(HERE_DOC);
 	while (1)
 	{
 		line = readline(">");
 		if (!line || (ft_strncmp(cmd->red->value, line,
-					ft_strlen(cmd->red->value)) == 0
-				&& (ft_strlen(line) == ft_strlen(cmd->red->value))))
+			ft_strlen(cmd->red->value)) == 0
+			&& (ft_strlen(line) == ft_strlen(cmd->red->value))) || g_exit == 130)
 		{
+			// fprintf(stderr, "g_exit = %d\n", g_exit);
+			if (g_exit == 0 && !line)
+				fprintf(stderr, "minishell: warning: here-document at line 1 delimited by end-of-file (wanted `%s')\n", cmd->red->value);
 			free(line);
+			dup2(cpy, 0);
+			// ft_signal(IGNORE);
 			break ;
 		}
 		line = ft_dollar(line, 2);
@@ -34,7 +42,8 @@ void	ft_heredoc(t_cmd *cmd)
 		free(line);
 	}
 	close(cmd->in);
-	cmd->in = open(".tmp", O_RDONLY);
+	cmd->in = open(".tmp", O_RDONLY);	
+	free_cmd(&cmd);	
 }
 
 void	close_before(t_cmd *cmd, int type)
@@ -62,12 +71,13 @@ void	red_loop(t_token *red, t_cmd *cur)
 			ft_heredoc(cur);
 		else if (red->type == DROUT)
 			cur->out = open(red->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (cur->in == -1 || cur->out == -1)
+		if (cur && (cur->in == -1 || cur->out == -1))
 		{
 			perror(red->value);
 			break ;
 		}
-		red = red->next;
+		if (cur)
+			red = red->next;
 	}
 }
 
@@ -83,7 +93,8 @@ void	make_red(t_cmd **lst)
 		cur->out = -2;
 		red = cur->red;
 		red_loop(red, cur);
-		cur = cur->next;
+		if (cur)
+			cur = cur->next;
 	}
 }
 
@@ -95,6 +106,8 @@ int	launch_exec(t_cmd **lst)
 	cur = *lst;
 	lst_pid = NULL;
 	make_red(lst);
+	if (!lst)
+		return (0);
 	if (!cur->next && !is_builtin_no_child(cur, lst))
 	{
 		free_cmd(lst);

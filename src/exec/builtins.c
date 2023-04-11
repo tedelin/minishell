@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcatal-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 13:47:01 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/04 21:24:02 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/11 06:54:17 by mcatal-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// void	exec_child(t_cmd *cmd, t_cmd **lst_cmd)
-// {
-
-// }
 
 int	is_builtin_child(t_cmd *cmd, t_cmd **lst_cmd)
 {

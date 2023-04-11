@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   signaux.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcatal-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 20:29:14 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/10 15:31:50 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/11 07:17:54 by mcatal-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void		sig_here_doc(int sig)
+{
+	if (sig == SIGINT)
+	{
+		close(0);
+		write(2, "\n", 1);
+		g_exit = 130;
+	}
+}
 
 void	sig_int(int sig)
 {
@@ -49,5 +59,10 @@ void	ft_signal(int opt)
 	{
 		signal(SIGINT, cmd_sigint);
 		signal(SIGQUIT, cmd_core_dump);
+	}
+	if (opt == HERE_DOC)
+	{
+		signal(SIGINT, sig_here_doc);
+		signal(SIGQUIT, SIG_IGN);
 	}
 }
