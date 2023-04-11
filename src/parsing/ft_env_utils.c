@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:16:19 by mcatal-d          #+#    #+#             */
-/*   Updated: 2023/04/11 17:16:11 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/11 18:04:55 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,9 @@
 
 void	ft_build_env(t_env **lst_env, char **env)
 {
-	t_env	*tmp;
-	char	*add;
-
 	while (env && *env)
 	{
-		add = ft_strdup(*env);
-		if (add)
-			tmp = lstnew_env(add);
-		else
-		{
-			free(add);
-			return ;
-		}
-		if (tmp)
-			lstadd_back_env(lst_env, tmp);
-		else
-			return ;
+		lstadd_back_env(lst_env, lstnew_env(ft_strdup(*env)));
 		env++;
 	}
 }
@@ -126,10 +112,10 @@ void	ft_del(t_env **env, char *name)
 			if (prev)
 				prev->next = cur->next;
 			else
-				cur = cur->next;
+				cur = cur->next;	
+			// printf("env->var:%s\n", prev->var);
 			return ;
 		}
-		prev = cur;
 		cur = cur->next;
 	}
 }

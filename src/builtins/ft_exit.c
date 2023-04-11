@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:41:41 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/10 15:31:28 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/11 17:36:03 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	ft_exit_free(t_cmd **lst, char *s, int state)
 		printf("exit\n");
 	free_cmd(lst);
 	ft_env(NULL, FREE, NULL, NULL);
+	rl_clear_history();
 	exit(state);
 }
 

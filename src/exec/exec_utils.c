@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:25:05 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/11 15:33:04 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/11 17:38:46 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	exit_child(t_cmd **lst_cmd, t_pid **lst, char *msg)
 	}
 	free_cmd(lst_cmd);
 	ft_env(NULL, FREE, NULL, NULL);
+	rl_clear_history();
 	if (msg && ft_strncmp(msg, "main", 4))
 		perror(msg);
 	exit(tmp_errno);
