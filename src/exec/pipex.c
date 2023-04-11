@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:28:26 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/11 12:04:52 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/11 15:55:10 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ft_child(t_cmd *cmd, t_pid **lst_pid, t_cmd **lst_cmd)
 {
 	if (cmd->in == -1 || cmd->out == -1)
 	{
-		errno = 1;	
+		errno = 1;
 		exit_child(lst_cmd, lst_pid, "main");
 	}
 	if (cmd->in > 2)

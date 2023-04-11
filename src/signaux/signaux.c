@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signaux.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcatal-d <mcatal-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 20:29:14 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/11 10:38:29 by mcatal-d         ###   ########.fr       */
+/*   Updated: 2023/04/11 15:55:28 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void		sig_here_doc(int sig)
+void	sig_here_doc(int sig)
 {
 	if (sig == SIGINT)
 	{

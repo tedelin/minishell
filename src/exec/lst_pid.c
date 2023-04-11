@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bonus_lst.c                                        :+:      :+:    :+:   */
+/*   lst_pid.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:12:25 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/29 14:59:57 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/11 16:09:30 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,16 @@ void	pid_lstadd_back(t_pid **lst, t_pid *new)
 		last = pid_lstlast(*lst);
 		last->next = new;
 	}
+}
+
+void	close_before(t_cmd *cmd, int type)
+{
+	if (type == RIN && cmd->in > 2)
+		close(cmd->in);
+	else if (type == ROUT && cmd->out > 2)
+		close(cmd->out);
+	else if (type == DRIN && cmd->in > 2)
+		close(cmd->in);
+	else if (type == DROUT && cmd->out > 2)
+		close(cmd->out);
 }

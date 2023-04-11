@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:25:01 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/11 12:06:00 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/11 16:09:48 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 
 int	g_exit = 0;
 
-int	ft_loop(void)
+int	ft_loop(int error)
 {
 	char	*input;
-	int		error;
 	t_token	*lst;
 
-	error = 0;
 	while (1)
 	{
 		ft_signal(DEFAULT);
@@ -32,16 +30,16 @@ int	ft_loop(void)
 			error = make_token(&lst, input);
 		}
 		if (!input)
-			return (rl_clear_history(), ft_env(NULL, FREE, NULL, NULL), printf("exit\n"), 0);
+			return (rl_clear_history(), ft_env(NULL, FREE, NULL, NULL), \
+				printf("exit\n"), 0);
 		if (error == 1)
 			printf("Parse Error\n");
 		else if (error == 2)
-			return (rl_clear_history(), printf("Malloc fail\n"), ft_env(NULL, FREE, NULL, NULL), 2);
+			return (rl_clear_history(), printf("Malloc fail\n"),
+				ft_env(NULL, FREE, NULL, NULL), 2);
 		free(input);
 	}
-	ft_env(NULL, FREE, NULL, NULL);
-	rl_clear_history();
-	return (0);
+	return (ft_env(NULL, FREE, NULL, NULL), rl_clear_history(), 0);
 }
 
 int	main(int ac, char **av, char **env)
@@ -50,41 +48,5 @@ int	main(int ac, char **av, char **env)
 		return (printf("Usage: ./minishell\n"), 1);
 	ft_env(env, INIT, NULL, NULL);
 	rl_outstream = stderr;
-	return (ft_loop());
+	return (ft_loop(0));
 }
-
-// int	main(int ac, char **av, char **env)
-// {
-// 	(void) ac;
-// 	(void) av;
-// 	(void) env;
-// 	char *str = malloc(sizeof(char) * 3);
-// 	if (!str)
-// 		return (1);
-// 	return (free(str), 0);
-// // 	char	*input;
-// // 	int		error;
-// // 	t_token	*lst;
-
-// // 	(void)ac;
-// // 	(void)av;
-// // 	ft_env(env, INIT, NULL, NULL);
-// // 	// rl_outstream = stderr;
-// // 	// while (1)
-// // 	// {
-// // 	// 	input = readline("minishell$ ");
-// // 	input = "< Makefile | cat | cat | wc -l";
-// // 	if (!input)
-// // 		return (1);
-// // 	lst = NULL;
-// // 	// add_history(input);
-// // 	error = make_token(&lst, input);
-// // 	if (error == 1)
-// // 		return (printf("Parse Error\n"), 0);
-// // 	else if (error == 2)
-// // 		return (printf("Malloc failed\n"),
-//  			ft_env(NULL, FREE, NULL, NULL), 2);
-// // // 	free(input);
-// // 	// }
-// // 	ft_env(NULL, FREE, NULL, NULL);
-// }
