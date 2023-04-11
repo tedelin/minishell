@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcatal-d <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mcatal-d <mcatal-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:27:34 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/11 09:43:01 by mcatal-d         ###   ########.fr       */
+/*   Updated: 2023/04/11 10:20:03 by mcatal-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,12 @@ void	red_loop(t_token *red, t_cmd *cur)
 			ft_heredoc(cur);
 		else if (red->type == DROUT)
 			cur->out = open(red->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (cur && (cur->in == -1 || cur->out == -1))
+		if (cur->in == -1 || cur->out == -1)
 		{
 			perror(red->value);
 			break ;
 		}
-		if (cur)
-			red = red->next;
+		red = red->next;
 	}
 }
 
@@ -94,8 +93,7 @@ void	make_red(t_cmd **lst)
 		cur->out = -2;
 		red = cur->red;
 		red_loop(red, cur);
-		if (cur)
-			cur = cur->next;
+		cur = cur->next;
 	}
 }
 
@@ -107,8 +105,6 @@ int	launch_exec(t_cmd **lst)
 	cur = *lst;
 	lst_pid = NULL;
 	make_red(lst);
-	if (!lst)
-		return (0);
 	if (!cur->next && !is_builtin_no_child(cur, lst))
 	{
 		free_cmd(lst);

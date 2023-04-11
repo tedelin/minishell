@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcatal-d <mcatal-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:25:01 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/10 15:34:16 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/11 10:25:55 by mcatal-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ int	ft_loop(void)
 	while (1)
 	{
 		ft_signal(DEFAULT);
+		fprintf(stderr, "a\n");
 		input = readline("minishell$ ");
+		fprintf(stderr, "b\n");
 		if (input && input[0])
 		{
 			lst = NULL;

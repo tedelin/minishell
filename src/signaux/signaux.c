@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signaux.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcatal-d <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mcatal-d <mcatal-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 20:29:14 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/11 09:34:22 by mcatal-d         ###   ########.fr       */
+/*   Updated: 2023/04/11 10:38:29 by mcatal-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void		sig_here_doc(int sig)
 {
 	if (sig == SIGINT)
 	{
-		close(0);
 		write(2, "\n", 1);
+		close(0);
 		g_exit = 130;
 	}
 }
