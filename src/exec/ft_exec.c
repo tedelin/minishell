@@ -6,7 +6,7 @@
 /*   By: mcatal-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:27:34 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/11 09:20:49 by mcatal-d         ###   ########.fr       */
+/*   Updated: 2023/04/11 09:43:01 by mcatal-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_heredoc(t_cmd *cmd)
 		{
 			// fprintf(stderr, "g_exit = %d\n", g_exit);
 			if (g_exit == 0 && !line)
-				fprintf(stderr, "minishell: warning: here-document at line 1 delimited by end-of-file (wanted `%s')\n", cmd->red->value);
+				fprintf(stderr, "minishell: warning: here-document delimited by end-of-file (wanted `%s')\n", cmd->red->value);
 			free(line);
 			dup2(cpy, 0);
 			// ft_signal(IGNORE);
@@ -42,10 +42,11 @@ void	ft_heredoc(t_cmd *cmd)
 		free(line);
 	}
 	close(cmd->in);
-	cmd->in = open(".tmp", O_RDONLY);	
-	// free_cmd(&cmd);	
+	if (g_exit == 130)
+		cmd->in = open("/dev/null", O_RDONLY);
+	else
+		cmd->in = open(".tmp", O_RDONLY);	
 }
-
 void	close_before(t_cmd *cmd, int type)
 {
 	if (type == RIN && cmd->in > 2)
