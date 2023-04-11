@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:16:19 by mcatal-d          #+#    #+#             */
-/*   Updated: 2023/04/10 15:32:34 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/11 12:05:02 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	edit_env(t_env **env, char *var)
 		cur = cur->next;
 	}
 	ft_env(NULL, ADD, var, NULL);
+	free(var);
 }
 
 void	append_env(t_env **env, char *name)

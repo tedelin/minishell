@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:41:46 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/10 15:33:15 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/11 13:17:05 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	new_line(t_token **arg, int n)
 
 	i = 1;
 	while ((*arg)->value[i] && (*arg)->value[i] == 'n')
-			i++;
+		i++;
 	if (!(*arg)->value[i] && n++)
 		*arg = (*arg)->next;
 	return (n);
@@ -44,8 +44,8 @@ void	ft_echo(t_cmd *cmd)
 				&& arg->value[2]))
 			ft_putstr_fd(arg->value, 1);
 		arg = arg->next;
-		if (arg)
-			ft_putstr_fd(" ", 1);
+		// if (arg)
+		// 	ft_putstr_fd(" ", 1);
 	}
 	if (n == 0)
 		ft_putstr_fd("\n", 1);

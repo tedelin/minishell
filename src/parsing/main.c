@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcatal-d <mcatal-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:25:01 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/11 10:25:55 by mcatal-d         ###   ########.fr       */
+/*   Updated: 2023/04/11 12:06:00 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,11 @@ int	ft_loop(void)
 	int		error;
 	t_token	*lst;
 
+	error = 0;
 	while (1)
 	{
 		ft_signal(DEFAULT);
-		fprintf(stderr, "a\n");
 		input = readline("minishell$ ");
-		fprintf(stderr, "b\n");
 		if (input && input[0])
 		{
 			lst = NULL;
@@ -33,14 +32,15 @@ int	ft_loop(void)
 			error = make_token(&lst, input);
 		}
 		if (!input)
-			return (ft_env(NULL, FREE, NULL, NULL), printf("exit\n"), 0);
+			return (rl_clear_history(), ft_env(NULL, FREE, NULL, NULL), printf("exit\n"), 0);
 		if (error == 1)
 			printf("Parse Error\n");
 		else if (error == 2)
-			return (printf("Malloc fail\n"), ft_env(NULL, FREE, NULL, NULL), 2);
+			return (rl_clear_history(), printf("Malloc fail\n"), ft_env(NULL, FREE, NULL, NULL), 2);
 		free(input);
 	}
 	ft_env(NULL, FREE, NULL, NULL);
+	rl_clear_history();
 	return (0);
 }
 

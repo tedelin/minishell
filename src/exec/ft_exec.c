@@ -3,25 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcatal-d <mcatal-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:27:34 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/11 10:20:03 by mcatal-d         ###   ########.fr       */
+/*   Updated: 2023/04/11 12:20:48 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_heredoc(t_cmd *cmd)
+void	heredoc_loop(t_cmd *cmd, int cpy)
 {
-	char	*line;
-	int 	cpy;
-
-	cpy = dup(0);
-	cmd->in = open(".tmp", O_CREAT | O_WRONLY | O_TRUNC, 0664);
-	if (cmd->in == -1)
-		return ;
-	ft_signal(HERE_DOC);
+	char *line;
+	
 	while (1)
 	{
 		line = readline(">");
@@ -29,18 +23,29 @@ void	ft_heredoc(t_cmd *cmd)
 			ft_strlen(cmd->red->value)) == 0
 			&& (ft_strlen(line) == ft_strlen(cmd->red->value))) || g_exit == 130)
 		{
-			// fprintf(stderr, "g_exit = %d\n", g_exit);
 			if (g_exit == 0 && !line)
 				fprintf(stderr, "minishell: warning: here-document delimited by end-of-file (wanted `%s')\n", cmd->red->value);
 			free(line);
 			dup2(cpy, 0);
-			// ft_signal(IGNORE);
 			break ;
 		}
-		line = ft_dollar(line, 2);
+		if (ft_strchr(line, '$'))
+			line = ft_dollar(line, 2);
 		ft_putendl_fd(line, cmd->in);
 		free(line);
 	}
+}
+
+void	ft_heredoc(t_cmd *cmd)
+{
+	int 	cpy;
+
+	cpy = dup(0);
+	cmd->in = open(".tmp", O_CREAT | O_WRONLY | O_TRUNC, 0664);
+	if (cmd->in == -1)
+		return ;
+	ft_signal(HERE_DOC);
+	heredoc_loop(cmd, cpy);
 	close(cmd->in);
 	if (g_exit == 130)
 		cmd->in = open("/dev/null", O_RDONLY);
