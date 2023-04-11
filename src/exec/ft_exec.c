@@ -6,7 +6,7 @@
 /*   By: mcatal-d <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:27:34 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/11 07:41:25 by mcatal-d         ###   ########.fr       */
+/*   Updated: 2023/04/11 09:20:49 by mcatal-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ft_heredoc(t_cmd *cmd)
 	}
 	close(cmd->in);
 	cmd->in = open(".tmp", O_RDONLY);	
-	free_cmd(&cmd);	
+	// free_cmd(&cmd);	
 }
 
 void	close_before(t_cmd *cmd, int type)
