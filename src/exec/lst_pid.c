@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:12:25 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/12 14:14:49 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/12 17:22:31 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,17 @@ void	pid_lstadd_back(t_pid **lst, t_pid *new)
 	{
 		last = pid_lstlast(*lst);
 		last->next = new;
+	}
+}
+
+void	pid_free(t_pid **lst)
+{
+	t_pid	*tmp;
+
+	while (lst && *lst)
+	{
+		tmp = *lst;
+		(*lst) = (*lst)->next;
+		free(tmp);
 	}
 }

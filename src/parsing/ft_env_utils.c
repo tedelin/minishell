@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:16:19 by mcatal-d          #+#    #+#             */
-/*   Updated: 2023/04/12 14:30:13 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/12 17:45:19 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,12 +109,15 @@ void	ft_del(t_env **env, char *name)
 		j = ft_len_until(cur->var, '=');
 		if (!ft_strncmp(cur->var, name, i) && i == j)
 		{
-			if (prev)
+			if (prev != NULL)
 				prev->next = cur->next;
 			else
-				cur = cur->next;
+				*env = (*env)->next;
+			free(cur->var);
+			free(cur);
 			return ;
 		}
+		prev = cur;
 		cur = cur->next;
 	}
 }

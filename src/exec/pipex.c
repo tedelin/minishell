@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:28:26 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/11 17:38:24 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/12 17:16:55 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	ft_child(t_cmd *cmd, t_pid **lst_pid, t_cmd **lst_cmd)
 		close(cmd->fd[0]);
 		close(cmd->fd[1]);
 	}
-	if (is_builtin_child(cmd, lst_cmd))
+	if (is_builtin_child(cmd, lst_cmd, lst_pid))
 		ft_exec(cmd, lst_pid, lst_cmd);
 	exit_child(lst_cmd, lst_pid, "main");
 }

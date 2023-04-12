@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/12 15:20:57 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/12 17:18:23 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,8 @@ void				ft_unset(t_cmd *cmd);
 void				env_cmd(t_cmd *cmd);
 
 // Exec - ft_exec.c
-int					is_builtin_child(t_cmd *cmd, t_cmd **lst_cmd);
+int					is_builtin_child(t_cmd *cmd, t_cmd **lst_cmd,
+						t_pid **lst_pid);
 int					is_builtin_no_child(t_cmd *cmd, t_cmd **lst_cmd);
 
 // Exec - ft_exec.c
@@ -206,6 +207,7 @@ void				exit_child(t_cmd **lst_cmd, t_pid **lst, char *msg);
 t_pid				*pid_lstnew(pid_t content);
 t_pid				*pid_lstlast(t_pid *lst);
 void				pid_lstadd_back(t_pid **lst, t_pid *new);
+void				pid_free(t_pid **lst);
 
 // Pipex - pipex.c
 void				ft_process(t_cmd *cmd, t_pid **lst_pid, t_cmd **lst_cmd);

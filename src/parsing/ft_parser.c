@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 16:13:01 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/10 15:35:17 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/12 17:08:24 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,21 +89,21 @@ int	ft_parser(t_token **token)
 
 	begin = *token;
 	if (begin && begin->type == PIPE)
-		return (1);
+		return (free_lst(token), 1);
 	while (begin && begin->next)
 	{
 		if (check_quotes(begin->value))
-			return (1);
+			return (free_lst(token), 1);
 		if (begin->type >= RIN && begin->type <= DROUT)
 		{
 			if (begin->next && begin->next->type != FD
 				&& begin->next->type != LIM)
-				return (1);
+				return (free_lst(token), 1);
 		}
 		begin = begin->next;
 	}
 	if (check_quotes(begin->value) || (begin->type >= RIN
 			&& begin->type <= PIPE))
-		return (1);
+		return (free_lst(token), 1);
 	return (ft_expansion(token));
 }

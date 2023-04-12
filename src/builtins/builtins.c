@@ -6,16 +6,17 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 13:47:01 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/11 17:21:13 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/12 17:17:33 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_builtin_child(t_cmd *cmd, t_cmd **lst_cmd)
+int	is_builtin_child(t_cmd *cmd, t_cmd **lst_cmd, t_pid **lst_pid)
 {
 	int	len;
 
+	pid_free(lst_pid);
 	if (!cmd->arg || !cmd->arg->value)
 		return (1);
 	len = ft_strlen(cmd->arg->value);

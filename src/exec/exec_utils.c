@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 13:25:05 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/11 17:38:46 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/12 17:18:08 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,10 @@ void	ft_wait(t_pid *lst)
 
 void	exit_child(t_cmd **lst_cmd, t_pid **lst, char *msg)
 {
-	t_pid	*tmp;
 	int		tmp_errno;
 
 	tmp_errno = errno;
-	while (lst && *lst)
-	{
-		tmp = *lst;
-		(*lst) = (*lst)->next;
-		free(tmp);
-	}
+	pid_free(lst);
 	free_cmd(lst_cmd);
 	ft_env(NULL, FREE, NULL, NULL);
 	rl_clear_history();
