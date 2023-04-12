@@ -6,27 +6,27 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:14:33 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/12 15:05:53 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/12 19:11:05 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	heredoc_loop(t_cmd *cmd, int *cpy)
+void	heredoc_loop(t_cmd *cmd, t_token *red, int *cpy)
 {
 	char	*line;
 
 	while (1)
 	{
 		line = readline(">");
-		if (!line || (ft_strncmp(cmd->red->value, line,
-					ft_strlen(cmd->red->value)) == 0
-				&& (ft_strlen(line) == ft_strlen(cmd->red->value)))
+		if (!line || (ft_strncmp(red->value, line,
+					ft_strlen(red->value)) == 0
+				&& (ft_strlen(line) == ft_strlen(red->value)))
 			|| g_exit == 130)
 		{
 			if (g_exit == 0 && !line)
 				ft_fprintf(2, "minishell: warning: %s (wanted `%s')\n", \
-					"here-document delimited by end-of-file", cmd->red->value);
+					"here-document delimited by end-of-file", red->value);
 			free(line);
 			dup2(*cpy, 0);
 			break ;
@@ -38,7 +38,7 @@ void	heredoc_loop(t_cmd *cmd, int *cpy)
 	}
 }
 
-void	ft_heredoc(t_cmd *cmd)
+void	ft_heredoc(t_cmd *cmd, t_token *red)
 {
 	int		cpy;
 
@@ -47,7 +47,7 @@ void	ft_heredoc(t_cmd *cmd)
 	if (cmd->in == -1)
 		return ;
 	ft_signal(HERE_DOC);
-	heredoc_loop(cmd, &cpy);
+	heredoc_loop(cmd, red, &cpy);
 	close(cmd->in);
 	close(cpy);
 	if (g_exit == 130)

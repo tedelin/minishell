@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/12 17:18:23 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/12 19:16:17 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,11 +190,15 @@ int					is_builtin_child(t_cmd *cmd, t_cmd **lst_cmd,
 int					is_builtin_no_child(t_cmd *cmd, t_cmd **lst_cmd);
 
 // Exec - ft_exec.c
-void				ft_heredoc(t_cmd *cmd);
+
 void				close_before(t_cmd *cmd, int type);
 void				red_loop(t_token *red, t_cmd *cur);
 void				make_red(t_cmd **lst);
 int					launch_exec(t_cmd **lst);
+
+// Here_doc - here_doc.c
+void				heredoc_loop(t_cmd *cmd, t_token *red, int *cpy);
+void				ft_heredoc(t_cmd *cmd, t_token *red);
 
 // Exec Utils - exec_utils.c
 void				tab_free(char **tab);

@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:27:34 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/12 14:14:54 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/12 19:08:23 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	red_loop(t_token *red, t_cmd *cur)
 		else if (red->type == ROUT)
 			cur->out = open(red->value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		else if (red->type == DRIN)
-			ft_heredoc(cur);
+			ft_heredoc(cur, red);
 		else if (red->type == DROUT)
 			cur->out = open(red->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (cur->in == -1 || cur->out == -1)
