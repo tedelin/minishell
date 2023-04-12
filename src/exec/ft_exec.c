@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcatal-d <mcatal-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:27:34 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/12 19:08:23 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/12 19:51:23 by mcatal-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	launch_exec(t_cmd **lst)
 
 	cur = *lst;
 	lst_pid = NULL;
+	unlink(".tmp");
 	make_red(lst);
 	if (!cur->next && !is_builtin_no_child(cur, lst))
 	{
