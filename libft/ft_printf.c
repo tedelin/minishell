@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 01:26:39 by tedelin           #+#    #+#             */
-/*   Updated: 2022/12/13 15:22:57 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/12 14:43:29 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,31 +32,31 @@ int	ft_checknext(char c)
 	return (0);
 }
 
-int	ft_display(va_list va_l, char c)
+int	ft_display(int fd, va_list va_l, char c)
 {
 	int	count;
 
 	count = 0;
 	if (c == 'c')
-		count = ft_putchar(va_arg(va_l, int));
+		count = ft_putchar(fd, va_arg(va_l, int));
 	if (c == 's')
-		count = ft_putstr(va_arg(va_l, char *));
+		count = ft_putstr(fd, va_arg(va_l, char *));
 	if (c == 'p')
-		count = ft_adresse(va_arg(va_l, unsigned long));
+		count = ft_adresse(fd, va_arg(va_l, unsigned long));
 	if (c == 'i' || c == 'd')
-		count = ft_putnbr(va_arg(va_l, int));
+		count = ft_putnbr(fd, va_arg(va_l, int));
 	if (c == 'u')
-		count = ft_putunsnbr(va_arg(va_l, unsigned int));
+		count = ft_putunsnbr(fd, va_arg(va_l, unsigned int));
 	if (c == 'x')
-		count = ft_puthexamin(va_arg(va_l, unsigned int));
+		count = ft_puthexamin(fd, va_arg(va_l, unsigned int));
 	if (c == 'X')
-		count = ft_puthexamaj(va_arg(va_l, unsigned int));
+		count = ft_puthexamaj(fd, va_arg(va_l, unsigned int));
 	if (c == '%')
-		count = ft_putchar('%');
+		count = ft_putchar(fd, '%');
 	return (count);
 }
 
-int	ft_printf(const char *s, ...)
+int	ft_fprintf(int fd, const char *s, ...)
 {
 	va_list	va_l;
 	int		len;
@@ -68,9 +68,9 @@ int	ft_printf(const char *s, ...)
 	while (s[i])
 	{
 		if (s[i] == '%' && ft_checknext(s[i + 1]))
-			len += ft_display(va_l, s[++i]);
+			len += ft_display(fd, va_l, s[++i]);
 		else
-			len += ft_putchar(s[i]);
+			len += ft_putchar(fd, s[i]);
 		i++;
 	}
 	va_end(va_l);

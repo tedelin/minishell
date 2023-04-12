@@ -6,54 +6,22 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:27:34 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/11 16:10:30 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/12 14:14:54 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	heredoc_loop(t_cmd *cmd, int *cpy)
+void	close_before(t_cmd *cmd, int type)
 {
-	char	*line;
-
-	while (1)
-	{
-		line = readline(">");
-		if (!line || (ft_strncmp(cmd->red->value, line,
-					ft_strlen(cmd->red->value)) == 0
-				&& (ft_strlen(line) == ft_strlen(cmd->red->value)))
-			|| g_exit == 130)
-		{
-			if (g_exit == 0 && !line)
-				fprintf(stderr, "minishell: warning: here-document \
-					delimited by end-of-file (wanted `%s')\n", cmd->red->value);
-			free(line);
-			dup2(*cpy, 0);
-			break ;
-		}
-		if (ft_strchr(line, '$'))
-			line = ft_dollar(line, 2);
-		ft_putendl_fd(line, cmd->in);
-		free(line);
-	}
-}
-
-void	ft_heredoc(t_cmd *cmd)
-{
-	int		cpy;
-
-	cpy = dup(0);
-	cmd->in = open(".tmp", O_CREAT | O_WRONLY | O_TRUNC, 0664);
-	if (cmd->in == -1)
-		return ;
-	ft_signal(HERE_DOC);
-	heredoc_loop(cmd, &cpy);
-	close(cmd->in);
-	close(cpy);
-	if (g_exit == 130)
-		cmd->in = open("/dev/null", O_RDONLY);
-	else
-		cmd->in = open(".tmp", O_RDONLY);
+	if (type == RIN && cmd->in > 2)
+		close(cmd->in);
+	else if (type == ROUT && cmd->out > 2)
+		close(cmd->out);
+	else if (type == DRIN && cmd->in > 2)
+		close(cmd->in);
+	else if (type == DROUT && cmd->out > 2)
+		close(cmd->out);
 }
 
 void	red_loop(t_token *red, t_cmd *cur)

@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:41:41 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/11 17:36:03 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/12 15:25:24 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_exit_free(t_cmd **lst, char *s, int state)
 	exit(state);
 }
 
-int	ft_exit(t_cmd *cmd, t_cmd **lst_cmd)
+void	ft_exit(t_cmd *cmd, t_cmd **lst_cmd)
 {
 	t_token	*tmp;
 	int		i;
@@ -47,6 +47,8 @@ int	ft_exit(t_cmd *cmd, t_cmd **lst_cmd)
 			ft_exit_free(lst_cmd, NULL,
 				(unsigned int)ft_atoi(tmp->value) % 256);
 		printf("exit\nexit: too many arguments\n");
+		g_exit = 1;
+		return ;
 	}
-	return (0);
+	g_exit = 0;
 }

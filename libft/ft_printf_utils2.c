@@ -3,28 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 15:26:25 by tedelin           #+#    #+#             */
-/*   Updated: 2022/12/13 15:36:54 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/12 14:45:44 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_putstr(char *str)
+int	ft_putstr(int fd, char *str)
 {
-	int	i;
-
-	i = 0;
 	if (!str)
-		return (write(1, "(null)", 6));
-	while (str && str[i])
-		ft_putchar(str[i++]);
-	return (i);
+		return (write(fd, "(null)", 6));
+	return (write(fd, str, ft_strlen(str)));
 }
 
-int	ft_len(unsigned long p)
+int	ft_l_adresse(unsigned long p)
 {
 	int	len;
 
@@ -37,7 +32,7 @@ int	ft_len(unsigned long p)
 	return (len);
 }
 
-int	ft_adresse(unsigned long p)
+int	ft_adresse(int fd, unsigned long p)
 {
 	int		i;
 	char	*res;
@@ -45,8 +40,8 @@ int	ft_adresse(unsigned long p)
 	int		len;
 
 	if (!p)
-		return (write(1, "(nil)", 5));
-	i = ft_len(p);
+		return (write(fd, "(nil)", 5));
+	i = ft_l_adresse(p);
 	base = "0123456789abcdef";
 	res = (char *)malloc(sizeof(char) * (i + 1));
 	if (!res)
@@ -58,7 +53,7 @@ int	ft_adresse(unsigned long p)
 		p = p / 16;
 	}
 	res[i] = base[p % 16];
-	len = ft_putstr("0x") + ft_putstr(res);
+	len = ft_putstr(fd, "0x") + ft_putstr(fd, res);
 	free(res);
 	return (len);
 }

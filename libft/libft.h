@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcatal-d <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:12:21 by tedelin           #+#    #+#             */
-/*   Updated: 2023/03/26 17:46:23 by mcatal-d         ###   ########.fr       */
+/*   Updated: 2023/04/12 14:42:01 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,13 @@ char	*ft_strjoingnl(char *s1, char *s2);
 char	*ft_strdupgnl(char *s, char *f);
 char	*get_next_line(int fd);
 
-int		ft_adresse(unsigned long p);
-int		ft_putchar(char c);
-size_t	ft_puthexamaj(unsigned int nb);
-size_t	ft_puthexamin(unsigned int nb);
-int		ft_putnbr(int n);
-int		ft_putstr(char *str);
-int		ft_putunsnbr(unsigned int nb);
-int		ft_printf(const char *s, ...);
+int		ft_adresse(int fd, unsigned long p);
+int		ft_putchar(int fd, char c);
+size_t	ft_puthexamaj(int fd, unsigned int nb);
+size_t	ft_puthexamin(int fd, unsigned int nb);
+int		ft_putnbr(int fd, int n);
+int		ft_putstr(int fd, char *str);
+int		ft_putunsnbr(int fd, unsigned int nb);
+int		ft_fprintf(int fd, const char *s, ...);
 
 #endif

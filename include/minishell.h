@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:54:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/11 17:20:20 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/12 15:20:57 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ void				ft_echo(t_cmd *cmd);
 
 // Buitin exit - ft_exit.c
 void				ft_exit_free(t_cmd **lst, char *s, int state);
-int					ft_exit(t_cmd *cmd, t_cmd **lst_cmd);
+void				ft_exit(t_cmd *cmd, t_cmd **lst_cmd);
 
 // Buitin export - ft_export.c
 int					check_add(char *s);

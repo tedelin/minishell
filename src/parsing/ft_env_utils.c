@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:16:19 by mcatal-d          #+#    #+#             */
-/*   Updated: 2023/04/11 18:04:55 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/12 14:30:13 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,7 @@ void	ft_del(t_env **env, char *name)
 			if (prev)
 				prev->next = cur->next;
 			else
-				cur = cur->next;	
-			// printf("env->var:%s\n", prev->var);
+				cur = cur->next;
 			return ;
 		}
 		cur = cur->next;

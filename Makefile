@@ -6,18 +6,18 @@
 #    By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/27 14:55:19 by tedelin           #+#    #+#              #
-#    Updated: 2023/04/11 14:41:47 by tedelin          ###   ########.fr        #
+#    Updated: 2023/04/12 15:33:30 by tedelin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 INCLUDE = -I./include -I./libft
 CC = cc
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 SRC =  $(addprefix src/, $(addprefix parsing/, ft_parser.c lst_token.c ft_args.c \
 		ft_expansion.c ft_env.c ft_dollar.c lst_env.c t_cmd.c lst_cmd.c ft_env_utils.c main.c) \
-		$(addprefix builtins/, ft_cd.c ft_pwd.c ft_echo.c ft_export.c ft_exit.c ft_unset.c env_cmd.c) \
-		$(addprefix exec/, ft_exec.c lst_pid.c pipex.c exec_utils.c builtins.c) \
+		$(addprefix builtins/, builtins.c ft_cd.c ft_pwd.c ft_echo.c ft_export.c ft_exit.c ft_unset.c env_cmd.c) \
+		$(addprefix exec/, ft_exec.c lst_pid.c pipex.c exec_utils.c here_doc.c) \
 		$(addprefix signaux/, signaux.c))
 OBJS = $(patsubst src/%.c, obj/%.o, $(SRC))
 

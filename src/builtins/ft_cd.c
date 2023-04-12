@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:41:46 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/10 15:31:15 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/12 15:17:08 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	cd_size(t_cmd *cmd)
 			printf("minishell: cd: HOME not set\n");
 			return (1);
 		}
+		free(res);
 		ft_env(NULL, GET, "HOME", &res);
 		chdir(res);
 		pwd();
