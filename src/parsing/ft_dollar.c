@@ -6,7 +6,7 @@
 /*   By: tedelin <tedelin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 10:20:40 by tedelin           #+#    #+#             */
-/*   Updated: 2023/04/11 15:54:41 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/04/12 19:30:05 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ int	handle_len_dollar(char *s, int *i, int state)
 	len = 0;
 	res = NULL;
 	(void) state;
-	if (s[*i] && ft_isalnum(s[*i]))
+	if (s[*i] == '_')
+		return (0);
+	if (s[*i] && (ft_isalnum(s[*i]) || s[*i] == '?'))
 	{
 		tmp = ft_var(&s[*i]);
 		while (s[*i] && (ft_isalnum(s[*i]) || s[*i] == '_' || s[*i] == '?'))
